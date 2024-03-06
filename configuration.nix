@@ -97,9 +97,23 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Some packages need this outdated version of Electron
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
   ];
+
+  # Allow running executables
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged
+    # programs here, NOT in environment.systemPackages
+  ];
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -109,6 +123,7 @@
     htop
     git
     rustup
+    lf
     jetbrains.rust-rover
     obsidian
     mpv
@@ -122,6 +137,10 @@
     qbittorrent
     fzf
     tmux
+    runelite
+    steam
+    steam-run
+    lutris-unwrapped
 
     # Music software
     #musescore
