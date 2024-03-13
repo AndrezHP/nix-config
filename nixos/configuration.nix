@@ -124,7 +124,6 @@
     git
     rustup
     lf
-    jetbrains.rust-rover
     obsidian
     mpv
     ani-cli
@@ -143,7 +142,7 @@
     lutris-unwrapped
     home-manager
     # Music software
-    #musescore
+    musescore
     reaper    
 
     # Cyber security
