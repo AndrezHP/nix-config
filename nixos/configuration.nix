@@ -141,7 +141,7 @@
     steam
     steam-run
     lutris-unwrapped
-
+    home-manager
     # Music software
     #musescore
     reaper    
