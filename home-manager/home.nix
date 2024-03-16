@@ -55,16 +55,22 @@
     enable = true;
     autocd = true;
     enableAutosuggestions = true;
-    enableCompletion = true;
+    #enableCompletion = true;
     syntaxHighlighting.enable = true;
+    history.size = 10000;
+    oh-my-zsh = {
+      enable = true;
+      #theme = "aussiegeek";
+      #theme = "alanpeabody";
+      theme = "bira";
+      plugins = [
+        "git"
+        "history"
+        "rust"
+      ];
+    };
     shellAliases = {
       vim = "nvim";
-    };
-    history.size = 10000;
-    prezto = {
-      enable = true;
-      color = true;
-      prompt.theme = "sorin";
     };
   };
 
