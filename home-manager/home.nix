@@ -38,7 +38,6 @@
     };
   };
 
-  # TODO: Set your username
   home = {
     username = "andreas";
     homeDirectory = "/home/andreas";
@@ -51,6 +50,23 @@
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
+
+  programs.zsh = {
+    enable = true;
+    autocd = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    shellAliases = {
+      vim = "nvim";
+    };
+    history.size = 10000;
+    prezto = {
+      enable = true;
+      color = true;
+      prompt.theme = "sorin";
+    };
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
