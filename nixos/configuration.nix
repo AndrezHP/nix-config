@@ -16,6 +16,30 @@
     efi.canTouchEfiVariables = true;
   };
 
+  # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = ["nvidia"];
+  # Nvidia driver options
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    prime = {
+      sync.enable = true;
+      nvidiaBusId = "PCI:10:0:0";
+      intelBusId = "PCI:0:0:0";
+    };
+    #forceFullCompositionPipeline = true;
+  };
+
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
@@ -149,6 +173,7 @@
     steam
     steam-run
     lutris-unwrapped
+    lshw
     # Music software
     musescore
     reaper    
