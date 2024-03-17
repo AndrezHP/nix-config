@@ -144,6 +144,7 @@
     dedicatedServer.openFirewall = true;
   };
 
+  # Use zsh as default shell (configured with home-manager)
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
@@ -157,26 +158,10 @@
     git
     rustup
     lf
-    obsidian
     mpv
-    ani-cli
-    keepassxc
-    signal-desktop
-    discord
-    kodi-wayland
-    qemu_full
-    virt-manager
-    qbittorrent
     fzf
     tmux
-    runelite
-    steam
-    steam-run
-    lutris-unwrapped
     lshw
-    # Music software
-    musescore
-    reaper    
 
     # Cyber security
     wireshark
