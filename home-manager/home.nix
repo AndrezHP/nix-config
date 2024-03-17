@@ -49,7 +49,7 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git { 
+  programs.git = { 
     enable = true;
     userName = "andreas";
     userEmail = "usermail@mail.com";
