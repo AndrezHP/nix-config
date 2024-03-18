@@ -59,6 +59,14 @@
     keepassxc
     ani-cli
     discord
+    syncthing
+    
+    # Terminals to try out
+    wezterm
+    alacritty
+    kitty
+
+    jetbrains-toolbox
 
     # Virtualization 
     qemu
@@ -81,6 +89,46 @@
     enable = true;
     userName = "andreas";
     userEmail = "usermail@mail.com";
+  };
+
+  gtk = {
+    enable = true;
+    gtk3.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
+    gtk4.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
+  };
+  home.sessionVariables.GTK_THEME = "palenight";
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+    "org/gnome/desktop/background" = {
+      picture-uri = "file:///home/andreas/nix-config/home-manager/wallpapers/wallhaven-car.jpg";
+      picture-uri-dark = "file:///home/andreas/nix-config/home-manager/wallpapers/wallhaven-car.jpg";
+    };
+    "org/gnome/desktop/wm/keybindings" = {
+      close = ["<Super>q"];
+    };
+    "org/gnome/desktop/peripherals/touchpad" = {
+      tap-to-click = true;
+    };
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+      ];
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      name = "Console";
+      command = "alacritty";
+      binding = "<Super>Return";
+    };
   };
 
   programs.zsh = {
@@ -110,6 +158,17 @@
       vim = "nvim";
     };
   };
+
+  xdg.enable = true;
+  xdg.userDirs = {
+    enable = true;
+    music = "${config.home.homeDirectory}/Media/Music";
+    videos = "${config.home.homeDirectory}/Media/Videos";
+    pictures = "${config.home.homeDirectory}/Media/Pictures";
+    download = "${config.home.homeDirectory}/Downloads";
+    documents = "${config.home.homeDirectory}/Documents";
+    desktop = null;
+    };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
