@@ -148,7 +148,7 @@
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
-  
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [ 
@@ -162,6 +162,7 @@
     fzf
     tmux
     lshw
+    mako # Wayland notification daemon
 
     # Cyber security
     wireshark

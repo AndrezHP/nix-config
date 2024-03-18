@@ -43,9 +43,37 @@
     homeDirectory = "/home/andreas";
   };
 
+  # Allow electron version 25.9.0
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+  ];
+
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  home.packages = with pkgs; [
+    # User Applications
+    obsidian
+    kodi-wayland
+    qbittorrent
+    signal-desktop
+    keepassxc
+    ani-cli
+    discord
+
+    # Virtualization 
+    qemu
+    virt-manager
+    
+    # Games
+    steam
+    steam-run
+    runelite
+    lutris-unwrapped
+
+    # Music
+    musescore
+    reaper
+  ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
