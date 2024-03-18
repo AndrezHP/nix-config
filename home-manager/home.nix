@@ -96,6 +96,7 @@
       #theme = "aussiegeek";
       #theme = "alanpeabody";
       theme = "bira";
+      #theme = "half-life";
       plugins = [
         "git"
         "history"
