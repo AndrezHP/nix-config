@@ -144,6 +144,8 @@
     dedicatedServer.openFirewall = true;
   };
 
+  programs.noisetorch.enable = true;
+
   # Use zsh as default shell (configured with home-manager)
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
