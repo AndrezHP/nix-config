@@ -60,6 +60,7 @@
     ani-cli
     discord
     syncthing
+    spotify
     
     # Terminals to try out
     wezterm
@@ -130,6 +131,8 @@
       binding = "<Super>Return";
     };
   };
+
+  services.syncthing.enable = true;
 
   programs.zsh = {
     enable = true;
