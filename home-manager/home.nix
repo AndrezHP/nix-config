@@ -53,14 +53,17 @@
   home.packages = with pkgs; [
     # User Applications
     obsidian
-    kodi-wayland
+    #kodi-wayland
     qbittorrent
     signal-desktop
     keepassxc
     ani-cli
     discord
     syncthing
-    spotify
+
+    zathura
+    sxiv
+    neovide
     
     # Terminals to try out
     wezterm
@@ -80,8 +83,9 @@
     lutris-unwrapped
 
     # Music
+    spotify
     musescore
-    reaper
+    # reaper
   ];
 
   # Enable home-manager and git
@@ -94,6 +98,8 @@
 
   gtk = {
     enable = true;
+    theme.name = "adw-gtk3";
+    iconTheme.name = "GruvboxPlus";
     gtk3.extraConfig = {
       Settings = ''
         gtk-application-prefer-dark-theme=1
@@ -123,12 +129,18 @@
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       name = "Console";
       command = "alacritty";
       binding = "<Super>Return";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+      name = "Open Firefox";
+      command = "firefox";
+      binding = "<Super>w";
     };
   };
 
@@ -138,7 +150,7 @@
     enable = true;
     autocd = true;
     enableAutosuggestions = true;
-    #enableCompletion = true;
+    enableCompletion = true;
     syntaxHighlighting.enable = true;
     history.size = 10000;
     prezto.caseSensitive = true;
@@ -162,16 +174,26 @@
     };
   };
 
-  xdg.enable = true;
-  xdg.userDirs = {
+  xdg = {
     enable = true;
-    music = "${config.home.homeDirectory}/Media/Music";
-    videos = "${config.home.homeDirectory}/Media/Videos";
-    pictures = "${config.home.homeDirectory}/Media/Pictures";
-    download = "${config.home.homeDirectory}/Downloads";
-    documents = "${config.home.homeDirectory}/Documents";
-    desktop = null;
+    mimeApps.defaultApplications = {
+      "text/plain" = [ "neovide" ];
+      "application/pdf" = [ "zathura.desktop" ];
+      "image/*" = [ "sxiv.desktop" ];
+      "video/png" = [ "mpv.desktop" ];
+      "video/jpg" = [ "mpv.desktop" ];
+      "video/*" = [ "mpv.desktop" ];
     };
+    userDirs = {
+      enable = true;
+      music = "${config.home.homeDirectory}/Media/Music";
+      videos = "${config.home.homeDirectory}/Media/Videos";
+      pictures = "${config.home.homeDirectory}/Media/Pictures";
+      download = "${config.home.homeDirectory}/Downloads";
+      documents = "${config.home.homeDirectory}/Documents";
+      desktop = null;
+    };
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
