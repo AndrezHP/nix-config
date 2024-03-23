@@ -9,6 +9,8 @@
 }: {
   # You can import other home-manager modules here
   imports = [
+    ./modules/zsh.nix
+    ./modules/firefox.nix
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
@@ -17,7 +19,6 @@
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
       # If you want to use overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -31,7 +32,6 @@
     ];
     # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = _: true;
@@ -49,23 +49,24 @@
   ];
 
   # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
   home.packages = with pkgs; [
     # User Applications
-    obsidian
-    #kodi-wayland
+    obsidian # Notes
     qbittorrent
     signal-desktop
     keepassxc
     ani-cli
     discord
-    syncthing
+    syncthing # Synchronization between devices
+    # kodi-wayland
+    # obs-studio
+    calibre # E-book software
+    dolphin # File manager
 
-    zathura
-    sxiv
-    neovide
+    zathura # PDF viewer
+    sxiv # Image viewer
     
-    # Terminals to try out
+    # Terminals
     wezterm
     alacritty
     kitty
@@ -85,7 +86,7 @@
     # Music
     spotify
     musescore
-    # reaper
+    # reaper # Digital audio workstation
   ];
 
   # Enable home-manager and git
@@ -98,7 +99,8 @@
 
   gtk = {
     enable = true;
-    theme.name = "adw-gtk3";
+    #theme.name = "adw-gtk3";
+    cursorTheme.name = "Bibata-Modern-Ice";
     iconTheme.name = "GruvboxPlus";
     gtk3.extraConfig = {
       Settings = ''
@@ -112,72 +114,12 @@
     };
   };
   home.sessionVariables.GTK_THEME = "palenight";
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-    "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/andreas/nix-config/home-manager/wallpapers/wallhaven-car.jpg";
-      picture-uri-dark = "file:///home/andreas/nix-config/home-manager/wallpapers/wallhaven-car.jpg";
-    };
-    "org/gnome/desktop/wm/keybindings" = {
-      close = ["<Super>q"];
-    };
-    "org/gnome/desktop/peripherals/touchpad" = {
-      tap-to-click = true;
-    };
-    "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-      ];
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      name = "Console";
-      command = "alacritty";
-      binding = "<Super>Return";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      name = "Open Firefox";
-      command = "firefox";
-      binding = "<Super>w";
-    };
-  };
-
+  
   services.syncthing.enable = true;
-
-  programs.zsh = {
-    enable = true;
-    autocd = true;
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    history.size = 10000;
-    prezto.caseSensitive = true;
-    oh-my-zsh = {
-      enable = true;
-      #theme = "aussiegeek";
-      #theme = "alanpeabody";
-      theme = "bira";
-      #theme = "half-life";
-      plugins = [
-        "git"
-        "history"
-        "rust"
-      ];
-      extraConfig = ''
-        CASE_SENSITIVE="true"
-      '';
-    };
-    shellAliases = {
-      vim = "nvim";
-    };
-  };
 
   xdg = {
     enable = true;
     mimeApps.defaultApplications = {
-      "text/plain" = [ "neovide" ];
       "application/pdf" = [ "zathura.desktop" ];
       "image/*" = [ "sxiv.desktop" ];
       "video/png" = [ "mpv.desktop" ];

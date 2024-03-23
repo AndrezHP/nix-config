@@ -36,9 +36,9 @@
       sync.enable = true;
       nvidiaBusId = "PCI:10:0:0";
       intelBusId = "PCI:0:0:0";
-    };
-    #forceFullCompositionPipeline = true;
+    };  
   };
+  hardware.cpu.amd.updateMicrocode = true;
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -59,7 +59,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "da_DK.UTF-8";
     LC_IDENTIFICATION = "da_DK.UTF-8";
@@ -74,10 +73,18 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.sddm.wayland.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -97,8 +104,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -159,12 +165,20 @@
     htop
     git
     rustup
-    lf
-    mpv
+    lf # Terminal file manager
+    mpv # Video player
     fzf
     tmux
     lshw
+    waybar # Wayland bar
     mako # Wayland notification daemon
+    libnotify # mako depends on this
+    dolphin # File manager
+    networkmanagerapplet
+
+    swww # For setting background
+    rofi-wayland # Menu
+    kitty # Hyprland default terminal
 
     # Cyber security
     wireshark
@@ -174,6 +188,17 @@
     john
     yersinia
     hashcat
+  ];
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-emoji
+    nerdfonts
+    liberation_ttf
+    inconsolata
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
