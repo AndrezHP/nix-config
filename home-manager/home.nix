@@ -41,7 +41,13 @@
   home = {
     username = "andreas";
     homeDirectory = "/home/andreas";
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
   };
+
+  # Import the hyprland configuration
+  xdg.configFile."hypr".source = ./hypr;
 
   # Allow electron version 25.9.0
   nixpkgs.config.permittedInsecurePackages = [
