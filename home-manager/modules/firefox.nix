@@ -3,6 +3,19 @@
 {
   programs.firefox = {
     enable = true;
+    policies = {
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      EnableTrackingProtection = {
+        Value = true;
+        Fingerprinting = true;
+      };
+      HardwareAcceleration = true;
+      Permissions.Microphone.BlockNewRequests = true;
+      Permissions.Location.BlockNewRequests = true;
+      Permissions.Notifications.BlockNewRequests = true;
+      Permissions.Camera.BlockNewRequests = true;
+    };
     profiles.andreas = {
       # bookmarks = [];
       # settings = {};

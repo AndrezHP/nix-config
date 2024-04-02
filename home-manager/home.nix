@@ -76,6 +76,8 @@
     calibre # E-book software
     dolphin # File manager
 
+    brave
+
     zathura # PDF viewer
     sxiv # Image viewer
 
