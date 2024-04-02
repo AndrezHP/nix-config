@@ -11,9 +11,11 @@
   imports = [
     ./modules/zsh.nix
     ./modules/firefox.nix
+    ../homeModules/waybar.nix
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-
+    
+    #./modules/dconf_gnome.nix
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
   ];
@@ -47,8 +49,13 @@
   };
 
   # Import the hyprland configuration
-  xdg.configFile."hypr".source = ./hypr;
-
+  xdg.configFile."hypr".source = ../dotfiles/hypr;
+  # Import eww config
+  #xdg.configFile."eww".source = ../dotfiles/eww;
+  xdg.configFile."dunst".source = ../dotfiles/dunst;
+  #xdg.configFile."waybar".source = ../dotfiles/waybar;
+  xdg.configFile."rofi".source = ../dotfiles/rofi;
+  
   # Allow electron version 25.9.0
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
@@ -71,6 +78,8 @@
 
     zathura # PDF viewer
     sxiv # Image viewer
+
+    brave
     
     # Terminals
     wezterm
@@ -82,12 +91,15 @@
     # Virtualization 
     qemu
     virt-manager
+    wine # Windows compatibility
     
     # Games
     steam
     steam-run
     runelite
     lutris-unwrapped
+    bottles-unwrapped
+    heroic-unwrapped
 
     # Music
     spotify
@@ -105,9 +117,12 @@
 
   gtk = {
     enable = true;
+    theme.package = pkgs.adw-gtk3;
     theme.name = "adw-gtk3";
-    cursorTheme.name = "Bibata-Modern-Ice";
-    iconTheme.name = "GruvboxPlus";
+    #cursorTheme.package = pkgs.bibata-cursors;
+    #cursorTheme.name = "Bibate-Modern-Ice";
+    iconTheme.package = pkgs.papirus-icon-theme;
+    iconTheme.name = "Papirus";
     gtk3.extraConfig = {
       Settings = ''
         gtk-application-prefer-dark-theme=1
@@ -121,6 +136,10 @@
   };
   home.sessionVariables.GTK_THEME = "palenight";
   
+  qt.enable = true;
+  qt.platformTheme = "gtk";
+  qt.style.name = "adwaita-dark";
+
   services.syncthing.enable = true;
 
   xdg = {

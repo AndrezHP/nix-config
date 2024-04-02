@@ -6,8 +6,8 @@
       color-scheme = "prefer-dark";
     };
     "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/andreas/nix-config/home-manager/wallpapers/wallha>
-      picture-uri-dark = "file:///home/andreas/nix-config/home-manager/wallpapers/w>
+      picture-uri = "file:///home/andreas/nix-config/home-manager/wallpapers/chihiro-sea.jpg";
+      picture-uri-dark = "file:///home/andreas/nix-config/home-manager/wallpapers/chihiro-sea.jpg";
     };
     "org/gnome/desktop/wm/keybindings" = {
       close = ["<Super>q"];

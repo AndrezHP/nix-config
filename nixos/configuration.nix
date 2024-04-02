@@ -33,10 +33,12 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     prime = {
+      #offload.enable = true;
       sync.enable = true;
       nvidiaBusId = "PCI:10:0:0";
       intelBusId = "PCI:0:0:0";
-    };  
+    }; 
+    #forceFullCompositionPipeline = true;
   };
   hardware.cpu.amd.updateMicrocode = true;
 
@@ -72,24 +74,34 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.sddm.wayland.enable = true;
+  services.xserver = { 
+    enable = true;
+    displayManager = {
+      sddm.enable = true;
+      sddm.wayland.enable = true;
+      sddm.theme = "${import ../pkgs/sddm-theme.nix { inherit pkgs; }}";
+    };
+    # Configure keymap in X11
+    xkb.layout = "us";
+    xkb.variant = "";
+  };
 
   # Enable the GNOME Desktop Environment.
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
 
+  # Enable hyprland (mutually exclusive with gnome)
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
+  environment.sessionVariables = {
+    # If your cursor becomes invisible
+    WLR_NO_HARDWARE_CURSORS = "1";
+    # Make electron apps use wayland
+    NIXOS_OZONE_WL = "1";
   };
 
   # Enable CUPS to print documents.
@@ -171,14 +183,21 @@
     tmux
     lshw
     waybar # Wayland bar
-    mako # Wayland notification daemon
-    libnotify # mako depends on this
+    eww-wayland # Elkowars wacky widgets wayland bar
+    
+    dunst # Notification daemon
+    libnotify # Notification daemon depends on this
     dolphin # File manager
     networkmanagerapplet
+    libva
 
     swww # For setting background
     rofi-wayland # Menu
     kitty # Hyprland default terminal
+
+    # sddm theme dependencies
+    libsForQt5.qt5.qtquickcontrols2
+    libsForQt5.qt5.qtgraphicaleffects
 
     # Cyber security
     wireshark
@@ -199,6 +218,8 @@
     nerdfonts
     liberation_ttf
     inconsolata
+    jetbrains-mono
+    font-awesome
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -217,8 +238,6 @@
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
