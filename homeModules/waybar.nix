@@ -49,9 +49,9 @@
                  background-color: transparent;
                }
                window > box {
-                 margin-left: 5px;
-                 margin-right: 5px;
-                 margin-top: 5px;
+                 margin-left: 0px;
+                 margin-right: 0px;
+                 margin-top: 0px;
                  background-color: rgb(30, 30, 46);
                }
          #workspaces {

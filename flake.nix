@@ -1,29 +1,25 @@
 {
-  description = "Nixos config flake";
+  description = "Nixos flake!";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nix-colors.url = "github:misterio77/nix-colors";
     
     home-manager = { 
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
-    
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-
-    nix-colors.url = "github:misterio77/nix-colors";
-
-    # hardware.url = "github:nixos/nixos-hardware";
   };
 
   outputs = {
@@ -37,20 +33,35 @@
     pkgs = nixpkgs.legacyPackages.${system};
     lib = nixpkgs.lib;
   in {
-    # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs system;};
-        modules = [./nixos/configuration.nix];
+      default = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          inherit outputs;
+          inherit system;
+        };
+        modules = [./hosts/desktop/configuration.nix];
+      };
+      laptop = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          inherit outputs;
+          inherit system;
+        };
+        modules = [./hosts/laptop/configuration.nix];
       };
     };
-
-    # Available through 'home-manager --flake .#your-username@your-hostname'
+    
     homeConfigurations = {
-      "andreas@nixos" = home-manager.lib.homeManagerConfiguration {
+      default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home-manager/home.nix];
+        modules = [./hosts/desktop/home.nix];
+      };
+      laptop = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./hosts/laptop/home.nix];
       };
     };
   };

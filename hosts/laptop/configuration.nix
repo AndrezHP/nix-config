@@ -41,6 +41,7 @@
     #forceFullCompositionPipeline = true;
   };
   hardware.cpu.amd.updateMicrocode = true;
+  powerManagement.cpuFreqGovernor = "performance";
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -79,7 +80,7 @@
     displayManager = {
       sddm.enable = true;
       sddm.wayland.enable = true;
-      sddm.theme = "${import ../pkgs/sddm-theme.nix { inherit pkgs; }}";
+      sddm.theme = "${import ../../pkgs/sddm-theme.nix { inherit pkgs; }}";
     };
     # Configure keymap in X11
     xkb.layout = "us";
@@ -89,6 +90,14 @@
   # Enable the GNOME Desktop Environment.
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
+  
+  systemd.user.services.noisetorch-service = {
+    description = "Open noisetorch for noise suppression on input";
+    script = ''
+      noisetorch -i
+    '';
+  };
+
 
   # Enable hyprland (mutually exclusive with gnome)
   programs.hyprland = {

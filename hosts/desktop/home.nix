@@ -9,9 +9,9 @@
 }: {
   # You can import other home-manager modules here
   imports = [
-    ./modules/zsh.nix
-    ./modules/firefox.nix
-    ../homeModules/waybar.nix
+    ../../homeModules/zsh.nix
+    ../../homeModules/firefox.nix
+    ../../homeModules/waybar.nix
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
     
@@ -49,12 +49,12 @@
   };
 
   # Import the hyprland configuration
-  xdg.configFile."hypr".source = ../dotfiles/hypr;
+  xdg.configFile."hypr".source = ../../dotfiles/hypr;
   # Import eww config
   #xdg.configFile."eww".source = ../dotfiles/eww;
-  xdg.configFile."dunst".source = ../dotfiles/dunst;
+  xdg.configFile."dunst".source = ../../dotfiles/dunst;
   #xdg.configFile."waybar".source = ../dotfiles/waybar;
-  xdg.configFile."rofi".source = ../dotfiles/rofi;
+  xdg.configFile."rofi".source = ../../dotfiles/rofi;
   
   # Allow electron version 25.9.0
   nixpkgs.config.permittedInsecurePackages = [
