@@ -1,4 +1,4 @@
-# Edit this configuration file to define what should be installed on
+# Edit this configuration file to define what should be installed onconfi
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
@@ -21,7 +21,9 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    extraPackages = with pkgs; [nvidia-vaapi-driver];
   };
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
   # Nvidia driver options
@@ -42,6 +44,17 @@
   };
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
+
+  environment.sessionVariables = {
+    # If your cursor becomes invisible
+    WLR_NO_HARDWARE_CURSORS = "1";
+    # Make electron apps use wayland
+    NIXOS_OZONE_WL = "1";
+    # Some other settings
+    GBM_BACKEND = "nvidia-drm";
+    LIBVA_DRIVER_NAME = "nvidia";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  };
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -93,9 +106,11 @@
   
   systemd.user.services.noisetorch-service = {
     description = "Open noisetorch for noise suppression on input";
+    serviceConfig.PassEnvironment = "DISPLAY";
     script = ''
       noisetorch -i
     '';
+    wantedBy = [ "multi-user.target" ];
   };
 
 
@@ -104,13 +119,6 @@
     enable = true;
     xwayland.enable = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-  };
-
-  environment.sessionVariables = {
-    # If your cursor becomes invisible
-    WLR_NO_HARDWARE_CURSORS = "1";
-    # Make electron apps use wayland
-    NIXOS_OZONE_WL = "1";
   };
 
   # Enable CUPS to print documents.
@@ -207,6 +215,11 @@
     # sddm theme dependencies
     libsForQt5.qt5.qtquickcontrols2
     libsForQt5.qt5.qtgraphicaleffects
+
+    # For nvidia compatibility
+    vulkan-loader
+    vulkan-validation-layers
+    vulkan-tools
 
     # Cyber security
     wireshark

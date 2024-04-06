@@ -160,11 +160,11 @@
         modules-left = [
           "custom/launcher"
           "hyprland/workspaces"
-          "temperature"
+          #"temperature"
           #"idle_inhibitor"
-          "custom/wall"
-          "mpd"
-          "custom/cava-internal"
+          #"custom/wall"
+          #"mpd"
+          #"custom/cava-internal"
         ];
         modules-center = [
           "clock"
@@ -176,12 +176,12 @@
           "cpu"
           "network"
           "battery"
-          "custom/powermenu"
           "tray"
+          "custom/powermenu"
         ];
         "custom/launcher" = {
           "format" = " ";
-          "on-click" = "pkill rofi || ~/.config/rofi/launcher.sh";
+          "on-click" = "pkill rofi || rofi -show drun";
           "tooltip" = false;
         };
         "custom/wall" = {
@@ -242,8 +242,8 @@
           "interval" = 1;
           "format" = "{:%I:%M %p  %A %b %d}";
           "tooltip" = true;
-          /* "tooltip-format"= "{=%A; %d %B %Y}\n<tt>{calendar}</tt>" */
-          "tooltip-format" = "上午：高数\n下午：Ps\n晚上：Golang\n<tt>{calendar}</tt>";
+          "tooltip-format"= "{=%A; %d %B %Y}\n<tt>{calendar}</tt>";
+          /* "tooltip-format" = "上午：高数\n下午：Ps\n晚上：Golang\n<tt>{calendar}</tt>"; */
         };
         "memory" = {
           "interval" = 1;
@@ -272,9 +272,9 @@
         };
         "network" = {
           "format-disconnected" = "󰯡 Disconnected";
-          "format-ethernet" = "󰀂 {ifname} ({ipaddr})";
-          "format-linked" = "󰖪 {essid} (No IP)";
-          "format-wifi" = "󰖩 {essid}";
+          "format-ethernet" = "󰀂 ";
+          "format-linked" = "󰖪 ";
+          "format-wifi" = "󰖩 ";
           "interval" = 1;
           "tooltip" = false;
         };
@@ -389,8 +389,8 @@
               "cpu",
               "network",
               "battery",
-              "custom/powermenu",
               "tray"
+              "custom/powermenu",
             ],
             "mpd": {
               "format": "<span foreground='#FF99FF'></span> {title}",
@@ -408,9 +408,9 @@
             },
             "network": {
               "interval": 1,
-              "format-wifi": "󰖩 {essid}",
-              "format-ethernet": "󰀂  {ifname} ({ipaddr})",
-              "format-linked": "󰖪 {essid} (No IP)",
+              "format-wifi": "󰖩 ",
+              "format-ethernet": "󰀂 ",
+              "format-linked": "󰖪 ",
               "format-disconnected": "󰯡 Disconnected",
               "tooltip": false,
             },
@@ -666,9 +666,9 @@
             "modules-left": [
               "custom/launcher",
               "hyprland/workspaces",
-              "temperature",
+              //"temperature",
               //"idle_inhibitor",
-              "custom/wall",
+              //"custom/wall",
               "mpd",
               "custom/cava-internal"
             ],
@@ -679,8 +679,8 @@
               "cpu",
               "network",
               "battery",
-              "custom/powermenu",
               "tray"
+              "custom/powermenu",
             ],
             "mpd": {
               "format": "<span foreground='#8EBBBA'></span> {title}",
@@ -698,9 +698,9 @@
             },
             "network": {
               "format-disconnected": "󰯡 Disconnected",
-              "format-ethernet": "󰀂 {ifname} ({ipaddr})",
-              "format-linked": "󰖪 {essid} (No IP)",
-              "format-wifi": "󰖩 {essid}",
+              "format-ethernet": "󰀂 "
+              "format-linked": "󰖪 ",
+              "format-wifi": "󰖩 ",
               "interval": 1,
               "tooltip": false
             },

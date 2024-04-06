@@ -76,12 +76,15 @@
     calibre # E-book software
     dolphin # File manager
 
-    brave
+    brave # Another browser
 
     zathura # PDF viewer
     sxiv # Image viewer
 
     brave
+
+    stylua
+    rust-analyzer
     
     # Terminals
     wezterm
