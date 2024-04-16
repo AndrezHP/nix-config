@@ -1,9 +1,3 @@
 # nix-config
 
-TODO
-[] Extract nixos/home config into modules
-[] Icons
-[] Cursors/theme/colors (nix-colors?)
-[] Fix dolphin alternating color bug (may be a part of above)
-[] Setup neovim with nix lsp (and rust)
-
+Just trying to learn NixOS since I thought it would be nice to have a reproducible build for my systems. Would not recommend :)
