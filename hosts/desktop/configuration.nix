@@ -35,12 +35,10 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     prime = {
-      #offload.enable = true;
       sync.enable = true;
       nvidiaBusId = "PCI:10:0:0";
       intelBusId = "PCI:0:0:0";
     }; 
-    #forceFullCompositionPipeline = true;
   };
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
@@ -103,15 +101,15 @@
   # Enable the GNOME Desktop Environment.
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
-  
-  systemd.user.services.noisetorch-service = {
-    description = "Open noisetorch for noise suppression on input";
-    serviceConfig.PassEnvironment = "DISPLAY";
-    script = ''
-      noisetorch -i
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
+
+  # systemd.user.services.noisetorch-service = {
+  #   description = "Open noisetorch for noise suppression on input";
+  #   serviceConfig.PassEnvironment = "DISPLAY";
+  #   script = ''
+  #     noisetorch -i
+  #   '';
+  #   wantedBy = [ "multi-user.target" ];
+  # };
 
 
   # Enable hyprland (mutually exclusive with gnome)
@@ -197,11 +195,11 @@
     lf # Terminal file manager
     mpv # Video player
     fzf
-    tmux
     lshw
     waybar # Wayland bar
-    eww-wayland # Elkowars wacky widgets wayland bar
-    
+    wl-clipboard
+    wireplumber
+
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
     dolphin # File manager
@@ -229,6 +227,7 @@
     john
     yersinia
     hashcat
+    xdg-desktop-portal-gtk
   ];
 
   xdg.portal.enable = true;
