@@ -199,6 +199,7 @@
     waybar # Wayland bar
     wl-clipboard
     wireplumber
+    jq
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
