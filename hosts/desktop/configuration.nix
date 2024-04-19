@@ -41,6 +41,10 @@
     }; 
   };
   hardware.cpu.amd.updateMicrocode = true;
+  boot.kernelParams = [ 
+    "amd_pstate=active"
+    # "intel_pstate=active" # (Probably) only for intel cpu
+  ]; 
   powerManagement.cpuFreqGovernor = "performance";
 
   environment.sessionVariables = {
@@ -102,16 +106,6 @@
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
 
-  # systemd.user.services.noisetorch-service = {
-  #   description = "Open noisetorch for noise suppression on input";
-  #   serviceConfig.PassEnvironment = "DISPLAY";
-  #   script = ''
-  #     noisetorch -i
-  #   '';
-  #   wantedBy = [ "multi-user.target" ];
-  # };
-
-
   # Enable hyprland (mutually exclusive with gnome)
   programs.hyprland = {
     enable = true;
@@ -132,7 +126,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
-
+    wireplumber.enable = true;
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
@@ -159,30 +153,24 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Some packages need this outdated version of Electron
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
-  # Allow running executables
+    # Allow running executables
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged
     # programs here, NOT in environment.systemPackages
   ];
 
+  programs.noisetorch.enable = true;
+  programs.zsh.enable = true;
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
 
-  programs.noisetorch.enable = true;
-
   # Use zsh as default shell (configured with home-manager)
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -194,18 +182,21 @@
     rustup
     lf # Terminal file manager
     mpv # Video player
-    fzf
-    lshw
+    fzf # Fuzzy finder
+    lshw # List hardware
     waybar # Wayland bar
     wl-clipboard
-    wireplumber
-    jq
+    wireplumber # PipeWire session/policy manager
+    jq # Commandline JSON processor
+    zip
+    unzip
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
     dolphin # File manager
     networkmanagerapplet
     libva
+    xdg-desktop-portal-gtk
 
     swww # For setting background
     rofi-wayland # Menu
@@ -228,7 +219,6 @@
     john
     yersinia
     hashcat
-    xdg-desktop-portal-gtk
   ];
 
   xdg.portal.enable = true;

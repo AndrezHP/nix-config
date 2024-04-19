@@ -13,11 +13,10 @@
     ../../homeModules/firefox.nix
     ../../homeModules/waybar.nix
     ../../homeModules/nvim/nvim.nix
+    ../../homeModules/git.nix
+    ../../homeModules/tmux.nix
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-    
-    #./modules/dconf_gnome.nix
-    # You can also split up your configuration and import pieces of it here:
   ];
 
   programs.neovim.nvimdots = {
@@ -60,7 +59,6 @@
   xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
 
-  # Allow electron version 25.9.0
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
   ];
@@ -79,13 +77,15 @@
     calibre # E-book software
     dolphin # File manager
     brave # Another browser
-    newsflash # RSS readers
+    newsflash # RSS reader
     zathura # PDF viewer
     sxiv # Image viewer
     jetbrains-toolbox
+    spotify
+    musescore # Sheet music editor
+    # reaper # Digital audio workstation
     # kodi-wayland
 
-    # nvim lsps/linters
     stylua
     rust-analyzer
     nil
@@ -93,7 +93,6 @@
     # Terminals
     wezterm
     alacritty
-    kitty
 
     # Virtualization 
     qemu
@@ -107,69 +106,12 @@
     lutris-unwrapped
     bottles-unwrapped
     heroic-unwrapped
-
-    # Music
-    spotify
-    musescore
-    # reaper # Digital audio workstation
   ];
 
-  # Enable home-manager and git
+  services.syncthing.enable = true;
+
+  # Enable home-manager
   programs.home-manager.enable = true;
-  programs.git = { 
-    enable = true;
-    userName = "andreas";
-    userEmail = "usermail@mail.com";
-    extraConfig = {
-
-    };
-  };
-
-  programs.tmux = {
-    enable = true;
-    clock24 = true;
-    baseIndex = 1;
-    escapeTime = 1500;
-    keyMode = "vi";
-
-    plugins = [
-      pkgs.tmuxPlugins.vim-tmux-navigator
-      pkgs.tmuxPlugins.catppuccin
-    ];
-
-    extraConfig = ''
-      set -g prefix C-s
-      set -g mouse on
-      set-option -g status-position top
-
-      set -g @catppuccin_window_left_separator ""
-      set -g @catppuccin_window_right_separator " "
-      set -g @catppuccin_window_middle_separator " █"
-      set -g @catppuccin_window_number_position "right"
-
-      set -g @catppuccin_window_default_fill "number"
-      set -g @catppuccin_window_default_text "#W"
-
-      set -g @catppuccin_window_current_fill "number"
-      set -g @catppuccin_window_current_text "#W"
-
-      set -g @catppuccin_status_modules_right "directory session"
-      set -g @catppuccin_status_left_separator  " "
-      set -g @catppuccin_status_right_separator ""
-      set -g @catppuccin_status_fill "icon"
-      set -g @catppuccin_status_connect_separator "no"
-
-      set -g @catppuccin_directory_text "#{pane_current_path}"
-
-      bind-key h select-pane -L
-      bind-key j select-pane -D
-      bind-key k select-pane -U
-      bind-key l select-pane -R
-
-      bind C-p previous-window
-      bind C-n next-window
-    '';
-  };
 
   gtk = {
     enable = true;
@@ -196,7 +138,6 @@
   qt.platformTheme = "gtk";
   qt.style.name = "adwaita-dark";
 
-  services.syncthing.enable = true;
 
   xdg = {
     enable = true;
