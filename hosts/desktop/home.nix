@@ -23,7 +23,6 @@
     enable = true;
     setBuildEnv = true;
     withBuildTools = true;
-    withHaskell = true;
   };
 
   nixpkgs = {
@@ -75,7 +74,10 @@
     syncthing # Synchronization between devices
     obs-studio
     calibre # E-book software
-    dolphin # File manager
+    # dolphin # File manager
+    xfce.thunar
+    xfce.thunar-volman
+    ranger
     brave # Another browser
     newsflash # RSS reader
     zathura # PDF viewer
@@ -118,26 +120,28 @@
     theme.package = pkgs.adw-gtk3;
     theme.name = "adw-gtk3";
     cursorTheme.package = pkgs.bibata-cursors;
-    cursorTheme.name = "Bibate-Modern-Ice";
+    cursorTheme.name = "Bibata-Modern-Ice";
     iconTheme.package = pkgs.papirus-icon-theme;
     iconTheme.name = "Papirus";
-    # gtk3.extraConfig = {
-    #   Settings = ''
-    #     gtk-application-prefer-dark-theme=1
-    #   '';
-    # };
-    # gtk4.extraConfig = {
-    #   Settings = ''
-    #     gtk-application-prefer-dark-theme=1
-    #   '';
-    # };
+    gtk3.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
+    gtk4.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
   };
-  # home.sessionVariables.GTK_THEME = "palenight";
+  home.sessionVariables.GTK_THEME = "palenight";
 
-  qt.enable = true;
-  qt.platformTheme = "gtk";
-  qt.style.name = "adwaita-dark";
-
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
+  };
 
   xdg = {
     enable = true;

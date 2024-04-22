@@ -794,5 +794,22 @@ vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+require("lspconfig").nil_ls.setup({
+	autostart = true,
+	capabilities = capabilities,
+	cmd = { "nil" },
+	settings = {
+		["nil"] = {
+			testSetting = 42,
+			formatting = {
+				command = { "nixpkgs-fmt" },
+			},
+		},
+	},
+})
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -20,12 +20,17 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    split-monitor-workspaces,
     ...
   } @ inputs: let
     inherit (self) outputs;

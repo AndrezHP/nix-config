@@ -18,10 +18,6 @@ in
           Include basic build tools like `gcc` and `pkg-config`.
           Required for NixOS.
         '';
-        withHaskell = mkEnableOption ''
-          Enable the Haskell compiler. Set to `true` to
-          use Haskell plugins.
-        '';
         extraDependentPackages = mkOption {
           type = with types; listOf package;
           default = [ ];
@@ -90,12 +86,12 @@ in
     xdg.configFile = {
       "nvim/init.lua".source = ./init.lua;
       "nvim/lua".source = ./lua;
-      # "nvim/snips".source = ./snips;
-      # "nvim/tutor".source = ./tutor;
     };
     home.packages = with pkgs; [
       ripgrep
-    ] ++ optionals cfg.setBuildEnv [
+    ] ++ (with pkgs.vimPlugins; [
+      vim-nix # File type and syntax highlighting.
+    ]) ++ optionals cfg.setBuildEnv [
       nvim-depends-include
       nvim-depends-library
       nvim-depends-pkgconfig
@@ -108,9 +104,6 @@ in
       enable = true;
       withNodeJs = true;
       withPython3 = true;
-      # plugins = with pkgs.vimPlugins; [
-      #   vim-tmux-navigator
-      # ];
       extraPackages = with pkgs;
         [
           # Dependent packages used by default plugins
@@ -126,14 +119,6 @@ in
           ninja
           pkg-config
           yarn
-        ]
-        ++ optionals cfg.withHaskell [
-          (pkgs.writeShellApplication {
-            name = "stack";
-            text = ''
-              exec "${pkgs.stack}/bin/stack" "--extra-include-dirs=${config.home.profileDirectory}/lib/nvim-depends/include" "--extra-lib-dirs=${config.home.profileDirectory}/lib/nvim-depends/lib" "$@"
-            '';
-          })
         ];
 
       extraLuaPackages = ls: with ls; [
