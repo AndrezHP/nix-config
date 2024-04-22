@@ -1,8 +1,6 @@
 # This is your home-manager configuration filedhom
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  inputs,
-  lib,
   config,
   pkgs,
   ...

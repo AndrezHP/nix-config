@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ pkgs, ... }: {
   programs.tmux = {
     enable = true;
     clock24 = true;

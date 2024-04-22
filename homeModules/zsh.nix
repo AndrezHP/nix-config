@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, config, ... }:
+{ ... }:
 
 { 
   programs.zsh = { 
@@ -10,10 +10,7 @@
     prezto.caseSensitive = true;
     oh-my-zsh = {
       enable = true;
-      #theme = "aussiegeek";
-      #theme = "alanpeabody";
       theme = "bira";
-      #theme = "half-life";
       extraConfig = ''
         CASE_SENSITIVE="true"
       '';
