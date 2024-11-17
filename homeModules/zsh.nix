@@ -1,6 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 
 { 
+  home.packages = with pkgs; [ direnv ];
+
   programs.zsh = { 
     enable = true;
     enableAutosuggestions = true;
@@ -14,6 +16,7 @@
       extraConfig = ''
         CASE_SENSITIVE="true"
       '';
+      plugins = [ "direnv" ];
     };
     shellAliases = {
       vim = "nvim";

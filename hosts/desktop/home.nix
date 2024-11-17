@@ -98,6 +98,7 @@
     qemu
     virt-manager
     wine # Windows compatibility
+    lazygit
 
     # Games
     steam
