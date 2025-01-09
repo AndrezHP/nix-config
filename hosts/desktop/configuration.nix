@@ -168,6 +168,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [ 
+    # Terminal applications
     neovim
     neofetch
     htop
@@ -181,6 +182,9 @@
     jq # Commandline JSON processor
     zip
     unzip
+    # Experimental
+    eza
+    zoxide
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
