@@ -13,12 +13,15 @@
 
   services.xserver = {
     enable = true;
-
     displayManager = {
-      sddm.enable = true;
-      sddm.wayland.enable = true;
-      sddm.theme = "${import ../pkgs/sddm-theme.nix { inherit pkgs; }}";
+      gdm.enable = true;
+      gdm.wayland = true;
     };
+    # displayManager = {
+    #   sddm.enable = true;
+    #   sddm.wayland.enable = true;
+    #   # sddm.theme = "${import ../pkgs/sddm-theme.nix { inherit pkgs; }}";
+    # };
 
   };
 
