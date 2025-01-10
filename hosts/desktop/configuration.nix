@@ -60,17 +60,17 @@
   boot.supportedFilesystems = [ "ntfs" ];
   fileSystems = {
     "/mnt/disk1" = {
-      device = "/dev/sdb/by-uuid/CA367026367015A3";
+      device = "/dev/disk/by-uuid/CA367026367015A3";
       fsType = "ntfs-3g";
       options = [ "nofail" ];
     };
     "/mnt/disk2" = {
-      device = "/dev/sda/by-uuid/5AD4EDF9D4EDD6F3";
+      device = "/dev/disk/by-uuid/5AD4EDF9D4EDD6F3";
       fsType = "ntfs-3g";
       options = [ "nofail" ];
     };
     "/mnt/windowsPartition" = {
-      device = "/dev/nvme0n1/by-uuid/5A78427D784257C1";
+      device = "/dev/disk/by-uuid/5A78427D784257C1";
       fsType = "ntfs-3g";
       options = [ "nofail" ];
     };
