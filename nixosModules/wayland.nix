@@ -6,6 +6,7 @@
     wl-clipboard # Wayland clipboard functionality
     rofi-wayland # Menu
     swww # Wayland wallpaper manager
+    hyprpaper
   ];
 
    # Make electron apps use wayland
