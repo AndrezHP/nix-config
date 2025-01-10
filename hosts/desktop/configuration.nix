@@ -57,18 +57,28 @@
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
-  # fileSystems = {
-  #   "/harddisk1" = {
-  #     device = "/dev/sda";
-  #     fsType = "ntfs";
-  #     options = [ "nofail" ];
-  #   };
-  #   "/harddisk2" = {
-  #     device = "/dev/sdb";
-  #     fsType = "ntfs";
-  #     options = [ "nofail" ];
-  #   };
-  # };
+  boot.supportedFilesystems = [ "ntfs" ];
+  fileSystems = {
+    "/mnt/disk1" = {
+      device = "/dev/sdb/by-uuid/CA367026367015A3";
+      fsType = "ntfs-3g";
+      options = [ "nofail" ];
+    };
+    "/mnt/disk2" = {
+      device = "/dev/sda/by-uuid/5AD4EDF9D4EDD6F3";
+      fsType = "ntfs-3g";
+      options = [ "nofail" ];
+    };
+    "/mnt/windowsPartition" = {
+      device = "/dev/nvme0n1/by-uuid/5A78427D784257C1";
+      fsType = "ntfs-3g";
+      options = [ "nofail" ];
+    };
+  };
+
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -185,6 +195,11 @@
     # Experimental
     eza
     zoxide
+    tealdeer
+
+    usbutils
+    udiskie
+    udisks
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
