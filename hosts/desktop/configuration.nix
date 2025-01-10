@@ -13,7 +13,14 @@
 
   # Bootloader.
   boot.loader = {
-    systemd-boot.enable = true;
+    grub = {
+      enable = true;
+      device = "nodev";
+      useOSProber = true;
+      efiSupport = true;
+      fsIdentifier = "uuid";
+    };
+    # systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
   };
 
@@ -207,6 +214,7 @@
     usbutils
     udiskie
     udisks
+    efibootmgr
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
