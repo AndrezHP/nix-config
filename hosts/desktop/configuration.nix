@@ -57,6 +57,13 @@
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
+  # Automatic garbage collection of old generations
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   boot.supportedFilesystems = [ "ntfs" ];
   fileSystems = {
     "/mnt/disk1" = {
