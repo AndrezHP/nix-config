@@ -20,6 +20,11 @@
     };
     shellAliases = {
       vim = "nvim";
+      lg = "lazygit";
+      conf = "cd ~/nix-config && nvim";
+      bh = "home-manager switch --flake ~/nix-config/#default";
+      bs = "sudo nixos-rebuild switch --flake ~/nix-config#default";
+      dev-rust = "nix-shell ~/nix-config/rust-shell/shell.nix";
     };
   };
 }
