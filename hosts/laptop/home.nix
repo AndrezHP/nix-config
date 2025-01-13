@@ -139,7 +139,7 @@
   home.sessionVariables.GTK_THEME = "palenight";
   
   qt.enable = true;
-  qt.platformTheme = "gtk";
+  qt.platformTheme.name = "gtk";
   qt.style.name = "adwaita-dark";
 
   services.syncthing.enable = true;

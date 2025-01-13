@@ -10,18 +10,19 @@
     ../../homeModules/zsh.nix
     ../../homeModules/firefox.nix
     ../../homeModules/waybar.nix
-    ../../homeModules/nvim/nvim.nix
+    # ../../homeModules/nvim/nvim.nix
     ../../homeModules/git.nix
     ../../homeModules/tmux.nix
+    ../../homeModules/nvf.nix
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
   ];
 
-  programs.neovim.nvimdots = {
-    enable = true;
-    setBuildEnv = true;
-    withBuildTools = true;
-  };
+  # programs.neovim.nvimdots = {
+  #   enable = true;
+  #   setBuildEnv = true;
+  #   withBuildTools = true;
+  # };
 
   nixpkgs = {
     overlays = [
@@ -94,7 +95,7 @@
     wezterm
     alacritty
 
-    # Virtualization 
+    # Virtualization
     qemu
     virt-manager
     wine # Windows compatibility
@@ -137,7 +138,7 @@
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
     style.name = "adwaita-dark";
     style.package = pkgs.adwaita-qt;
   };
@@ -145,11 +146,11 @@
   xdg = {
     enable = true;
     mimeApps.defaultApplications = {
-      "application/pdf" = [ "zathura.desktop" ];
-      "image/*" = [ "sxiv.desktop" ];
-      "video/png" = [ "mpv.desktop" ];
-      "video/jpg" = [ "mpv.desktop" ];
-      "video/*" = [ "mpv.desktop" ];
+      "application/pdf" = ["zathura.desktop"];
+      "image/*" = ["sxiv.desktop"];
+      "video/png" = ["mpv.desktop"];
+      "video/jpg" = ["mpv.desktop"];
+      "video/*" = ["mpv.desktop"];
     };
     userDirs = {
       enable = true;
