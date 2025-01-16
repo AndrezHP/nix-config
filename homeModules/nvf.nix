@@ -12,23 +12,58 @@
     enable = true;
 
     settings.vim = {
+      extraPackages = [];
       # Custom imported plugin
       extraPlugins = with pkgs.vimPlugins; {
-        harpoon = {
-          package = harpoon;
-          setup = "require('harpoon').setup {}";
-          # after = ["aerial"]; # place harpoon configuration after aerial
+        # oil-nvim = {
+        #   package = oil-nvim;
+        #   setup = "require('oil-nvim').setup{}";
+        # };
+        # leetcode-nvim = {
+        #   package = leetcode-nvim;
+        #   setup = "require('leetcode-nvim').setup {}";
+        # };
+        # plenary-nvim = {
+        #   package = plenary-nvim;
+        #   setup = "require('plenary').setup {}";
+        # };
+        # harpoon = {
+        #   package = harpoon;
+        #   setup = "require('harpoon').setup {}";
+        # };
+      };
+      lazy.plugins = {
+        "harpoon" = {
+          enable = true;
+          package = pkgs.vimPlugins.harpoon;
+          setupModule = "harpoon";
+          setupOpts = {
+            option_name = true;
+          };
+          keys = [
+            {
+              key = "<leader>a";
+              action = "function() harpoon:list():add() end";
+              mode = "n";
+            }
+            {
+              key = "<C-e>";
+              action = "function() harpoon.ui.toggle_quick_menu(harpoon:list()) end";
+              mode = "n";
+            }
+          ];
         };
       };
       startPlugins = [
         pkgs.vimPlugins.oil-nvim
-        # "harpoon"
-        # "oil-nvim" # Does not work :(
-        # "blink-cmp"
+        pkgs.vimPlugins.leetcode-nvim
+        pkgs.vimPlugins.plenary-nvim
+        # pkgs.vimPlugins.harpoon
       ];
       viAlias = false;
       vimAlias = true;
 
+      # Theme
       theme = {
         enable = true;
         name = "catppuccin";
@@ -91,52 +126,82 @@
         enableTreesitter = true;
 
         # Languages
+        rust = {
+          enable = true;
+          crates.enable = true;
+        };
+        clang.enable = true;
         nix.enable = true;
-        rust.enable = true;
-        rust.crates.enable = true;
         go.enable = true;
         python.enable = true;
-        clang.enable = true;
         zig.enable = true;
-        ts.enable = true;
         lua.enable = true;
         haskell.enable = true;
-        bash.enable = true;
-        svelte.enable = false;
-        assembly.enable = true;
         ocaml.enable = true;
-        sql.enable = true;
         java.enable = true;
+        php.enable = true;
+        ## Web stuff
+        ts.enable = true;
+        svelte.enable = true;
+        ruby.enable = true;
+        css.enable = true;
+        ## Etc
+        sql.enable = true;
+        bash.enable = true;
+        assembly.enable = true;
+
+        markdown.enable = true;
+        # yaml.enable = true;
+        # toml.enable = true;
+        nu.enable = true;
       };
 
+      # Nice stuff
       visuals = {
         fidget-nvim.enable = true;
         highlight-undo.enable = true;
         cinnamon-nvim.enable = true;
       };
+
+      # Built in plugins
       telescope.enable = true;
       autocomplete.nvim-cmp.enable = true;
       autopairs.nvim-autopairs.enable = true;
       snippets.luasnip.enable = true;
-      filetree.neo-tree.enable = true;
+      # filetree.neo-tree.enable = true;
       treesitter.context.enable = true;
       comments.comment-nvim.enable = true;
+      binds.whichKey.enable = true;
+      binds.cheatsheet.enable = true;
 
-      binds = {
-        whichKey.enable = true;
-        cheatsheet.enable = true;
-      };
-      notes = {
-        neorg.enable = true;
-        todo-comments.enable = true;
-      };
+      # Notes stuff
+      notes.neorg.enable = true;
+      notes.todo-comments.enable = true;
+
+      # Git stuff
       git = {
         enable = true;
         gitsigns.enable = true;
       };
 
+      # Keymaps obviously
       keymaps = [
         # {key=""; mode=[""]; silent=true; action=""; desc="";}
+        # {
+        #   key = "<leader>a";
+        #   mode = ["n"];
+        #   action = "function() require('harpoon'):list():add() end";
+        #   desc = "";
+        # }
+        # {
+        #   key = "<C-e>";
+        #   mode = ["n"];
+        #   action = "";
+        #   desc = "function() require('harpoon').ui:toggle_quick_menu(harpoon:list()) end";
+        # }
+
+        # vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+        # vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
         {
           key = "<ESC>";
           mode = ["n"];
@@ -176,7 +241,7 @@
         }
       ];
 
-      # Straight lua part of config
+      # Straight lua config
       luaConfigRC.TextYankPost = ''
         vim.api.nvim_create_autocmd("TextYankPost", {
           desc = "Highlight when yanking (copying) text",
@@ -212,9 +277,13 @@
             },
           },
         }
+
         require("oil").setup()
+        require("leetcode").setup()
+
       '';
 
+      extraLuaFiles = [];
       # Plugins needed
       # require("plugins.vim-tmux-navigator"),
       # { "numToStr/Comment.nvim", opts = {} },
