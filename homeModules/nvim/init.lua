@@ -1,50 +1,24 @@
 -- Set <space> as the leader key
 -- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
--- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = true -- If Nerd Font installed
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
-
--- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, for help with jumping.
---  Experiment for yourself to see if you like it!
-vim.opt.relativenumber = false
-
--- Enable mouse mode, can be useful for resizing splits for example!
+vim.opt.relativenumber = true
 vim.opt.mouse = "a"
-
--- Don't show the mode, since it's already in status line
-vim.opt.showmode = false
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
-
--- Enable break indent
-vim.opt.breakindent = true
-
--- Save undo history
-vim.opt.undofile = true
-
--- Case-insensitive searching UNLESS \C or capital in search
-vim.opt.ignorecase = true
+vim.opt.showmode = false -- Already in status line
+vim.opt.clipboard = "unnamedplus" -- Sync clipboard with OS
+vim.opt.breakindent = true -- Enable break indent
+vim.opt.undofile = true -- Save undo history
+vim.opt.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
 vim.opt.smartcase = true
-
--- Keep signcolumn on by default
-vim.opt.signcolumn = "yes"
-
--- Decrease update time
-vim.opt.updatetime = 250
-
+vim.opt.signcolumn = "yes" -- Keep signcolumn on by default
+vim.opt.updatetime = 250 -- Decrease update time
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 300
@@ -54,18 +28,10 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Sets how neovim will display certain whitespace in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-
--- Preview substitutions live, as you type!
-vim.opt.inccommand = "split"
-
--- Show which line your cursor is on
+vim.opt.list = true --  See `:help 'list'`
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" } --  and `:help 'listchars'`
+vim.opt.inccommand = "split" -- Preview substitutions live, as you type!
 vim.opt.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
 -- [[ Basic Keymaps ]]
@@ -148,6 +114,9 @@ local options = {
 		},
 	},
 }
+
+-- require("leap").create_default_mappings()
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -163,8 +132,6 @@ require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
-	require("plugins.vim-tmux-navigator"),
-
 	-- NOTE: Plugins can also be added by using a table,
 	-- with the first argument being the link and the following
 	-- keys can be used to configure plugin behavior/loading/etc.
@@ -174,8 +141,50 @@ require("lazy").setup({
 	--  This is equivalent to:
 	--    require('Comment').setup({})
 
-	-- "gc" to comment visual regions/lines
-	{ "numToStr/Comment.nvim", opts = {} },
+	{ "numToStr/Comment.nvim", opts = {} }, -- "gc" to comment visual regions/lines
+	{
+		"folke/ts-comments.nvim",
+		opts = {},
+		event = "VeryLazy",
+		enabled = vim.fn.has("nvim-0.10.0") == 1,
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		ops = {
+			enable_close = true, -- Auto close tags
+			enable_rename = true, -- Auto rename pairs of tags
+			enable_close_on_slash = true, -- Auto close on trailing </
+		},
+		per_filetype = {
+			["html"] = {
+				enable_close = false,
+			},
+		},
+	},
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+
+	{ "akinsho/toggleterm.nvim", version = "*", config = true },
+	{ "ThePrimeagen/vim-be-good" },
+	{ "sindrets/diffview.nvim" },
+	-- { "nvim-neorg/neorg", lazy = false, version = "*", config = true },
+	-- { "stevearc/oil" },
+
+	require("plugins.vim-tmux-navigator"),
+	require("plugins.theme"),
+	require("plugins.conform"),
+	require("plugins.git-blame"),
+	require("plugins.chatGPT"),
+	require("plugins.telescope"),
+	require("plugins.harpoon"),
+	-- require("plugins.octo"), --- NOTE This doesn't work for some reason
+	-- require("plugins.obsidian"),
 
 	-- Here is a more advanced example where we pass configuration
 	-- options to `gitsigns.nvim`. This is equivalent to the following lua:
@@ -192,6 +201,26 @@ require("lazy").setup({
 				topdelete = { text = "‾" },
 				changedelete = { text = "~" },
 			},
+		},
+	},
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+			bigfile = { enabled = true },
+			dashboard = { enabled = true },
+			indent = { enabled = true },
+			input = { enabled = true },
+			notifier = { enabled = true },
+			quickfile = { enabled = true },
+			-- scroll = { enabled = true },
+			statuscolumn = { enabled = true },
+			words = { enabled = true },
 		},
 	},
 
@@ -230,15 +259,10 @@ require("lazy").setup({
 		end,
 	},
 
-	-- NOTE: Plugins can specify dependencies.
-	--
-	-- The dependencies are proper plugin specifications as well - anything
-	-- you do for a plugin at the top level, you can do for a dependency.
-	--
-	-- Use the `dependencies` key to specify the dependencies of a particular plugin
+	-- use opts = {} for passing setup options
+	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
 
-	require("plugins.telescope"),
-
+	--
 	{ -- LSP Configuration & Plugins
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -430,8 +454,6 @@ require("lazy").setup({
 		end,
 	},
 
-	require("plugins.conform"),
-
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
@@ -452,12 +474,12 @@ require("lazy").setup({
 					-- `friendly-snippets` contains a variety of premade snippets.
 					--    See the README about individual language/framework/plugin snippets:
 					--    https://github.com/rafamadriz/friendly-snippets
-					-- {
-					--   'rafamadriz/friendly-snippets',
-					--   config = function()
-					--     require('luasnip.loaders.from_vscode').lazy_load()
-					--   end,
-					-- },
+					{
+						"rafamadriz/friendly-snippets",
+						config = function()
+							require("luasnip.loaders.from_vscode").lazy_load()
+						end,
+					},
 				},
 			},
 			"saadparwaiz1/cmp_luasnip",
@@ -499,7 +521,7 @@ require("lazy").setup({
 					-- Accept ([y]es) the completion.
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<Return>"] = cmp.mapping.confirm({ select = true }),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
@@ -536,8 +558,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-	require("plugins.theme"),
 
 	-- Highlight todo, notes, etc in comments
 	{

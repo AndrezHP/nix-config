@@ -109,6 +109,7 @@ in
         [
           # Dependent packages used by default plugins
           doq
+          luarocks
         ]
         ++ optionals cfg.withBuildTools [
           cargo
