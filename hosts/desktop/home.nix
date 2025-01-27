@@ -18,6 +18,17 @@
     # inputs.nix-colors.homeManagerModule
   ];
 
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      image = "~/nix-config/dotfiles/wallpapers/garden.png";
+      daemonize = true;
+      ignore-empty-password = true;
+    };
+  };
+
+  programs.nushell.enable = true;
+
   programs.neovim.nvimdots = {
     enable = true;
     setBuildEnv = true;
