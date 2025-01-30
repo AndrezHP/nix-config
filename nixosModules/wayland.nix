@@ -1,6 +1,4 @@
-{ pkgs, inputs, ... }:
-
-{
+{ pkgs, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     waybar # Wayland bar
     wl-clipboard # Wayland clipboard functionality
@@ -34,4 +32,12 @@
     package = inputs.hyprland.packages."${pkgs.system}".hyprland; 
   };
 
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      image = "~/nix-config/dotfiles/wallpapers/garden.png";
+      daemonize = true;
+      ignore-empty-password = true;
+    };
+  };
 }

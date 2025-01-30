@@ -161,9 +161,9 @@
       isNormalUser = true;
       description = "Andreas";
       extraGroups = ["networkmanager" "wheel" "docker"];
-      packages = with pkgs; [
-        firefox
-      ];
+      # packages = with pkgs; [
+      #   firefox
+      # ];
     };
   };
 

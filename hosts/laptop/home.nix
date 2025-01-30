@@ -1,41 +1,25 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
-  # You can import other home-manager modules here
+{config, pkgs, ...}: {
   imports = [
     ../../homeModules/zsh.nix
     ../../homeModules/firefox.nix
     ../../homeModules/waybar.nix
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
-    
-    #./modules/dconf_gnome.nix
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    ../../homeModules/theme.nix
+    ../../homeModules/desktop_apps.nix
+    ../../homeModules/git.nix
+    ../../homeModules/tmux.nix
+    ../../homeModules/nvim/nvim.nix
   ];
 
-  nixpkgs = {
-    overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
+  programs.neovim.nvimdots = {
+    enable = true;
+    setBuildEnv = true;
+    withBuildTools = true;
+  };
 
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
+  nixpkgs = {
+    overlays = [];
     config = {
       allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = _: true;
     };
   };
@@ -48,100 +32,16 @@
     };
   };
 
-  # Import the hyprland configuration
   xdg.configFile."hypr".source = ../../dotfiles/hypr;
-  # Import eww config
-  #xdg.configFile."eww".source = ../dotfiles/eww;
   xdg.configFile."dunst".source = ../../dotfiles/dunst;
-  #xdg.configFile."waybar".source = ../dotfiles/waybar;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
   
-  # Allow electron version 25.9.0
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
-  # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
-    # User Applications
-    obsidian # Notes
-    qbittorrent
-    signal-desktop
-    keepassxc
-    ani-cli
-    discord
-    syncthing # Synchronization between devices
-    # kodi-wayland
-    # obs-studio
-    calibre # E-book software
-    dolphin # File manager
-
-    brave
-
-    zathura # PDF viewer
-    sxiv # Image viewer
-
-    brave
-    
-    # Terminals
-    wezterm
     alacritty
-    kitty
-
-    jetbrains-toolbox
-
-    # Virtualization 
-    qemu
-    virt-manager
-    wine # Windows compatibility
-    
-    # Games
-    steam
-    steam-run
-    runelite
-    lutris-unwrapped
-    bottles-unwrapped
-    heroic-unwrapped
-
-    # Music
-    spotify
-    musescore
-    # reaper # Digital audio workstation
+    ani-cli
   ];
 
-  # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git = { 
-    enable = true;
-    userName = "andreas";
-    userEmail = "usermail@mail.com";
-  };
-
-  gtk = {
-    enable = true;
-    theme.package = pkgs.adw-gtk3;
-    theme.name = "adw-gtk3";
-    #cursorTheme.package = pkgs.bibata-cursors;
-    #cursorTheme.name = "Bibate-Modern-Ice";
-    iconTheme.package = pkgs.papirus-icon-theme;
-    iconTheme.name = "Papirus";
-    gtk3.extraConfig = {
-      Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
-    };
-    gtk4.extraConfig = {
-      Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
-    };
-  };
-  home.sessionVariables.GTK_THEME = "palenight";
-  
-  qt.enable = true;
-  qt.platformTheme.name = "gtk";
-  qt.style.name = "adwaita-dark";
-
   services.syncthing.enable = true;
 
   xdg = {

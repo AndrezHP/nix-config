@@ -153,11 +153,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Some packages need this outdated version of Electron
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
   # Allow running executables
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [

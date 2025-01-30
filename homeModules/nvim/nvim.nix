@@ -90,6 +90,9 @@ in
     home.packages = with pkgs; [
       ripgrep
       black
+      stylua
+      rust-analyzer
+      nil
     ] ++ (with pkgs.vimPlugins; [
       vim-nix # File type and syntax highlighting.
     ]) ++ optionals cfg.setBuildEnv [

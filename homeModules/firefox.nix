@@ -1,6 +1,4 @@
-{ inputs, ... }:
-
-{
+{ inputs, ... }: {
   programs.firefox = {
     enable = true;
     policies = {
@@ -15,6 +13,7 @@
       Permissions.Location.BlockNewRequests = true;
       Permissions.Notifications.BlockNewRequests = true;
       Permissions.Camera.BlockNewRequests = true;
+      DefaultDownloadDirectory = "\${home}/Downloads";
     };
     profiles.andreas = {
       # bookmarks = [];

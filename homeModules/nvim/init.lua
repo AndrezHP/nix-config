@@ -155,7 +155,7 @@ require("lazy").setup({
 	require("plugins.vim-tmux-navigator"),
 	require("plugins.theme"),
 	require("plugins.conform"),
-	require("plugins.git-blame"),
+	-- require("plugins.git-blame"),
 	require("plugins.telescope"),
 	require("plugins.harpoon"),
 	require("plugins.snacks"),
