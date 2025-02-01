@@ -147,7 +147,6 @@ require("lazy").setup({
 	},
 
 	{ "tpope/vim-sleuth" }, -- Detect tabstop and shiftwidth automatically
-	{ "tpope/vim-surround" }, -- Surround text object with quotes, brackets or parenthesis
 	{ "numToStr/Comment.nvim", opts = {} }, -- "gc" to comment visual regions/lines
 	{ "ThePrimeagen/vim-be-good" },
 	{ "sindrets/diffview.nvim" },
@@ -171,6 +170,7 @@ require("lazy").setup({
 	require("plugins.noice"), -- NOTE: I'm not sure that I like this
 	-- require("plugins.chatGPT"), does not work...
 	-- require("plugins.octo"), --- NOTE: This doesn't work for some reason
+	-- TODO: add vim Dadbod
 
 	require("plugins.lsp-config"),
 	require("plugins.treesitter"),
