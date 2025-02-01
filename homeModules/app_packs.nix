@@ -6,6 +6,9 @@ in
 {
   options.packs = {
     games.enable = mkEnableOption "Enable games";
+    games.modernEmulation = {
+      enable = mkEnableOption "Enable emulator for modern consoles";
+    };
     cliTools.enable = mkEnableOption "Enable cli tools";
     cyberTools.enable = mkEnableOption "Enable common cyber security tools";
   };
@@ -51,6 +54,11 @@ in
       lutris-unwrapped
       bottles-unwrapped
       heroic-unwrapped
+      retroarch-full
+    ] ++ optionals cfg.games.modernEmulation.enable [
+      cemu
+      suyu
+      ryujinx
     ] ++ optionals cfg.cliTools.enable [
       # Experimental
       eza

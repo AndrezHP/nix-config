@@ -118,8 +118,6 @@ local options = {
 -- require("leap").create_default_mappings() NOTE: This does not work for some reason
 
 require("lazy").setup({
-	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-	{ "numToStr/Comment.nvim", opts = {} }, -- "gc" to comment visual regions/lines
 	{
 		"folke/ts-comments.nvim",
 		opts = {},
@@ -148,10 +146,14 @@ require("lazy").setup({
 		end,
 	},
 
-	{ "akinsho/toggleterm.nvim", version = "*", config = true },
+	{ "tpope/vim-sleuth" }, -- Detect tabstop and shiftwidth automatically
+	{ "tpope/vim-surround" }, -- Surround text object with quotes, brackets or parenthesis
+	{ "numToStr/Comment.nvim", opts = {} }, -- "gc" to comment visual regions/lines
 	{ "ThePrimeagen/vim-be-good" },
 	{ "sindrets/diffview.nvim" },
 	{ "nvim-neorg/neorg", lazy = false, version = "*", config = true },
+	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = { theme = "catpuccin" } },
+	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
 	require("plugins.vim-tmux-navigator"),
 	require("plugins.theme"),
 	require("plugins.conform"),
@@ -164,10 +166,11 @@ require("lazy").setup({
 	require("plugins.todo-comments"),
 	require("plugins.oil"),
 	require("plugins.gitsigns"),
-	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
+	require("plugins.obsidian"),
+	require("plugins.zen-mode"),
+	require("plugins.noice"), -- NOTE: I'm not sure that I like this
 	-- require("plugins.chatGPT"), does not work...
 	-- require("plugins.octo"), --- NOTE: This doesn't work for some reason
-	-- require("plugins.obsidian"),
 
 	require("plugins.lsp-config"),
 	require("plugins.treesitter"),
