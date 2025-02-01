@@ -13,25 +13,6 @@
 
     settings.vim = {
       extraPackages = [];
-      # Custom imported plugin
-      extraPlugins = with pkgs.vimPlugins; {
-        # oil-nvim = {
-        #   package = oil-nvim;
-        #   setup = "require('oil-nvim').setup{}";
-        # };
-        # leetcode-nvim = {
-        #   package = leetcode-nvim;
-        #   setup = "require('leetcode-nvim').setup {}";
-        # };
-        # plenary-nvim = {
-        #   package = plenary-nvim;
-        #   setup = "require('plenary').setup {}";
-        # };
-        # harpoon = {
-        #   package = harpoon;
-        #   setup = "require('harpoon').setup {}";
-        # };
-      };
       lazy.plugins = {
         "harpoon" = {
           enable = true;
@@ -58,7 +39,6 @@
         pkgs.vimPlugins.oil-nvim
         pkgs.vimPlugins.leetcode-nvim
         pkgs.vimPlugins.plenary-nvim
-        # pkgs.vimPlugins.harpoon
       ];
       viAlias = false;
       vimAlias = true;
@@ -151,8 +131,6 @@
         assembly.enable = true;
 
         markdown.enable = true;
-        # yaml.enable = true;
-        # toml.enable = true;
         nu.enable = true;
       };
 
@@ -187,21 +165,6 @@
       # Keymaps obviously
       keymaps = [
         # {key=""; mode=[""]; silent=true; action=""; desc="";}
-        # {
-        #   key = "<leader>a";
-        #   mode = ["n"];
-        #   action = "function() require('harpoon'):list():add() end";
-        #   desc = "";
-        # }
-        # {
-        #   key = "<C-e>";
-        #   mode = ["n"];
-        #   action = "";
-        #   desc = "function() require('harpoon').ui:toggle_quick_menu(harpoon:list()) end";
-        # }
-
-        # vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
-        # vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
         {
           key = "<ESC>";
           mode = ["n"];
@@ -284,24 +247,6 @@
       '';
 
       extraLuaFiles = [];
-      # Plugins needed
-      # require("plugins.vim-tmux-navigator"),
-      # { "numToStr/Comment.nvim", opts = {} },
-      # { -- Adds git related signs to the gutter, as well as utilities for managing changes
-      # 	"lewis6991/gitsigns.nvim",
-      # 	opts = {
-      # 		signs = {
-      # 			add = { text = "+" },
-      # 			change = { text = "~" },
-      # 			delete = { text = "_" },
-      # 			topdelete = { text = "‾" },
-      # 			changedelete = { text = "~" },
-      # 		},
-      # 	},
-      # },
-      # require("plugins.telescope"),
-      # 		{ "folke/neodev.nvim", opts = {} },
-      # 		{ "j-hui/fidget.nvim", opts = {} },
     };
   };
 }

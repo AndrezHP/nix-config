@@ -47,6 +47,8 @@
       intelBusId = "PCI:0:0:0";
     };
   };
+
+  hardware.bluetooth.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
   boot.kernelParams = [
     "amd_pstate=active"
@@ -61,6 +63,8 @@
     GBM_BACKEND = "nvidia-drm";
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    MOZ_ENABLE_WAYLAND = 1;
+    GDK_BACKEND = "wayland";
   };
 
   # Automatic garbage collection of old generations
@@ -132,12 +136,10 @@
     xkb.variant = "";
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  services.libinput.enable = true;
+  services.printing.enable = true;
+  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -147,28 +149,14 @@
     wireplumber.enable = true;
   };
 
-  # named to `services.libinput.enable'.
-
-  # Enable bluetooth
-  hardware.bluetooth.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = {
     andreas = {
       isNormalUser = true;
       description = "Andreas";
       extraGroups = ["networkmanager" "wheel" "docker"];
-      # packages = with pkgs; [
-      #   firefox
-      # ];
     };
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # Allow running executables
   programs.nix-ld.enable = true;
@@ -178,7 +166,6 @@
   ];
 
   programs.noisetorch.enable = true;
-  programs.zsh.enable = true;
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
@@ -186,31 +173,28 @@
   };
 
   # Use zsh as default shell (configured with home-manager)
+  programs.zsh.enable = true;
   environment.shells = with pkgs; [zsh];
   users.defaultUserShell = pkgs.zsh;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     # Terminal applications
     neovim
-    neofetch
     htop
     git
-    rustup
     lf # Terminal file manager
     mpv # Video player
     fzf # Fuzzy finder
     lshw # List hardware
     wireplumber # PipeWire session/policy manager
-    jq # Commandline JSON processor
     zip
     unzip
-    # Experimental
-    eza
-    zoxide
-    tealdeer
 
+    rustup
+
+    # Mounting flash drives and other harddrives
     usbutils
     udiskie
     udisks
@@ -218,30 +202,17 @@
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
-    dolphin # File manager
     networkmanagerapplet
+    dolphin # File manager
     libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
 
     kitty # Hyprland default terminal
 
-    # sddm theme dependencies
-    libsForQt5.qt5.qtquickcontrols2
-    libsForQt5.qt5.qtgraphicaleffects
-
     # For nvidia compatibility
     vulkan-loader
     vulkan-validation-layers
     vulkan-tools
-
-    # Cyber security
-    wireshark
-    nmap
-    netcat
-    metasploit
-    john
-    yersinia
-    hashcat
   ];
 
   xdg.portal.enable = true;

@@ -31,13 +31,4 @@
     # withUWSM = true; # if you want to have several wayland compositors
     package = inputs.hyprland.packages."${pkgs.system}".hyprland; 
   };
-
-  programs.swaylock = {
-    enable = true;
-    settings = {
-      image = "~/nix-config/dotfiles/wallpapers/garden.png";
-      daemonize = true;
-      ignore-empty-password = true;
-    };
-  };
 }

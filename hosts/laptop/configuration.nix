@@ -77,11 +77,6 @@
   # Enable the X11 windowing system.
   services.xserver = { 
     enable = true;
-    displayManager = {
-      sddm.enable = true;
-      sddm.wayland.enable = true;
-      sddm.theme = "${import ../../pkgs/sddm-theme.nix { inherit pkgs; }}";
-    };
     # Configure keymap in X11
     xkb.layout = "us";
     xkb.variant = "";
@@ -186,31 +181,15 @@
     fzf
     tmux
     lshw
-    waybar # Wayland bar
-    eww-wayland # Elkowars wacky widgets wayland bar
-    
+
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
     dolphin # File manager
     networkmanagerapplet
     libva
 
-    swww # For setting background
     rofi-wayland # Menu
     kitty # Hyprland default terminal
-
-    # sddm theme dependencies
-    libsForQt5.qt5.qtquickcontrols2
-    libsForQt5.qt5.qtgraphicaleffects
-
-    # Cyber security
-    wireshark
-    nmap
-    netcat
-    metasploit
-    john
-    yersinia
-    hashcat
   ];
 
   xdg.portal.enable = true;

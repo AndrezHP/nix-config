@@ -7,12 +7,26 @@
     ../../homeModules/git.nix
     ../../homeModules/tmux.nix
     ../../homeModules/theme.nix
-    ../../homeModules/games.nix
-    ../../homeModules/desktop_apps.nix
+    ../../homeModules/app_packs.nix
     # ../../homeModules/nvf.nix
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
   ];
+
+  packs = {
+    games.enable = true;
+    cliTools.enable = true;
+    cyberTools.enable = true;
+  };
+
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      image = "~/nix-config/dotfiles/wallpapers/garden.png";
+      daemonize = true;
+      ignore-empty-password = true;
+    };
+  };
 
   programs.home-manager.enable = true;
   programs.nushell.enable = true;
@@ -45,9 +59,7 @@
 
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
-    ani-cli
     alacritty
-    lazygit
   ];
 
   services.syncthing.enable = true;

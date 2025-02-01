@@ -4,7 +4,7 @@
     ../../homeModules/firefox.nix
     ../../homeModules/waybar.nix
     ../../homeModules/theme.nix
-    ../../homeModules/desktop_apps.nix
+    ../../homeModules/app_packs.nix
     ../../homeModules/git.nix
     ../../homeModules/tmux.nix
     ../../homeModules/nvim/nvim.nix
@@ -38,7 +38,6 @@
   
   home.packages = with pkgs; [
     alacritty
-    ani-cli
   ];
 
   programs.home-manager.enable = true;
