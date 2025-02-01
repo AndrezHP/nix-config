@@ -10,6 +10,7 @@ return {
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
 	},
+
 	keys = {
 		{
 			"<leader>gb",
@@ -18,8 +19,6 @@ return {
 			end,
 			desc = "Git blame for current line",
 		},
-
-		-- NOTE: trying extra config
 		{
 			"<leader>cR",
 			function()

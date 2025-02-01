@@ -42,6 +42,16 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagn
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
+-- Resize windows with arrow keys
+local moveLeftDesc = { expr = true, replace_keycodes = false, desc = "Decrease window width" }
+vim.keymap.set("n", "<C-Left>", '"<Cmd>vertical resize -" . v:count1 . "<CR>"', moveLeftDesc)
+local moveDownDesc = { expr = true, replace_keycodes = false, desc = "Decrease window height" }
+vim.keymap.set("n", "<C-Down>", '"<Cmd>resize -"          . v:count1 . "<CR>"', moveDownDesc)
+local moveUpDesc = { expr = true, replace_keycodes = false, desc = "Increase window height" }
+vim.keymap.set("n", "<C-Up>", '"<Cmd>resize +"          . v:count1 . "<CR>"', moveUpDesc)
+local moveRightDesc = { expr = true, replace_keycodes = false, desc = "Increase window width" }
+vim.keymap.set("n", "<C-Right>", '"<Cmd>vertical resize +" . v:count1 . "<CR>"', moveRightDesc)
+
 -- Open and new file in insert mode
 vim.keymap.set("n", "<leader>nf", "<cmd>ene | startinsert<CR>", { desc = "Open new file in insert mode" })
 
@@ -115,7 +125,15 @@ local options = {
 	},
 }
 
--- require("leap").create_default_mappings() NOTE: This does not work for some reason
+-- remap open URL (only useful if using mini.operators)
+vim.keymap.set("n", "<leader>gx", function()
+	local url = vim.fn.expand("<cfile>")
+	if url ~= "" then
+		vim.cmd("silent !xdg-open " .. url .. " &")
+	else
+		print("No URL found under cursor")
+	end
+end, { silent = true, noremap = true })
 
 require("lazy").setup({
 	{
@@ -147,7 +165,7 @@ require("lazy").setup({
 	},
 
 	{ "tpope/vim-sleuth" }, -- Detect tabstop and shiftwidth automatically
-	{ "numToStr/Comment.nvim", opts = {} }, -- "gc" to comment visual regions/lines
+	{ "mg979/vim-visual-multi" }, -- Multi cursor functionality = very nice
 	{ "ThePrimeagen/vim-be-good" },
 	{ "sindrets/diffview.nvim" },
 	{ "nvim-neorg/neorg", lazy = false, version = "*", config = true },
