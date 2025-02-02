@@ -11,6 +11,7 @@ in
     };
     cliTools.enable = mkEnableOption "Enable cli tools";
     cyberTools.enable = mkEnableOption "Enable common cyber security tools";
+    devTools.enable = mkEnableOption "Enable development tools";
   };
 
   config = {
@@ -28,6 +29,7 @@ in
       xfce.thunar
       xfce.thunar-volman
       lf
+      yazi
 
       brave # Another browser
 
@@ -41,7 +43,6 @@ in
       virt-manager
       wine
 
-      jetbrains-toolbox
       musescore
       # reaper # Digital audio workstation
       # kodi-wayland
@@ -76,6 +77,17 @@ in
       john
       yersinia
       hashcat
+    ] ++ optionals cfg.devTools.enable [
+      jetbrains-toolbox
+
+      # Container alternative to docker
+      podman
+      podman-compose
+      podman-desktop
+      podman-tui
+
+      # PostgreSQL platform
+      pgadmin4
     ];
   };
 }
