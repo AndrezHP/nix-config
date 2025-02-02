@@ -12,75 +12,25 @@ return {
 	},
 
 	keys = {
-		{
-			"<leader>gb",
-			function()
-				Snacks.git.blame_line()
-			end,
-			desc = "Git blame for current line",
-		},
-		{
-			"<leader>cR",
-			function()
-				Snacks.rename.rename_file()
-			end,
-			desc = "Rename File",
-		},
+		{ "<leader>gb", function() require('snacks').git.blame_line() end,     desc = "Git blame for current line" },
+		{ "<leader>cR", function() require('snacks').rename.rename_file() end, desc = "Rename File" },
+		{ "<leader>gb", function() require('snacks').git.blame_line() end,     desc = "Git Blame Line" },
+		{ "<leader>gf", function() require('snacks').lazygit.log_file() end,   desc = "Lazygit Current File History" },
+		{ "<leader>lg", function() require('snacks').lazygit() end,            desc = "Lazygit" },
+		{ "<leader>gl", function() require('snacks').lazygit.log() end,        desc = "Lazygit Log (cwd)" },
+		{ "<leader>.",  function() require('snacks').scratch() end,            desc = "Toggle Scratch Buffer" },
+		{ "<leader>S",  function() require('snacks').scratch.select() end,     desc = "Select Scratch Buffer" },
 		{
 			"<leader>gB",
-			function()
-				Snacks.gitbrowse()
-			end,
+			function() require('snacks').gitbrowse() end,
 			desc = "Git Browse",
-			mode = { "n", "v" },
-		},
-		{
-			"<leader>gb",
-			function()
-				Snacks.git.blame_line()
-			end,
-			desc = "Git Blame Line",
-		},
-		{
-			"<leader>gf",
-			function()
-				Snacks.lazygit.log_file()
-			end,
-			desc = "Lazygit Current File History",
-		},
-		{
-			"<leader>lg",
-			function()
-				Snacks.lazygit()
-			end,
-			desc = "Lazygit",
-		},
-		{
-			"<leader>gl",
-			function()
-				Snacks.lazygit.log()
-			end,
-			desc = "Lazygit Log (cwd)",
-		},
-		{
-			"<leader>.",
-			function()
-				Snacks.scratch()
-			end,
-			desc = "Toggle Scratch Buffer",
-		},
-		{
-			"<leader>S",
-			function()
-				Snacks.scratch.select()
-			end,
-			desc = "Select Scratch Buffer",
+			mode = { "n", "v" }
 		},
 		{
 			"<leader>N",
 			desc = "Neovim News",
 			function()
-				Snacks.win({
+				require('snacks').win({
 					file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
 					width = 0.6,
 					height = 0.6,
@@ -94,29 +44,8 @@ return {
 				})
 			end,
 		},
-		{
-			"<c-/>",
-			function()
-				Snacks.terminal()
-			end,
-			desc = "Toggle Terminal",
-			mode = { "n", "t" },
-		},
-		{
-			"]]",
-			function()
-				Snacks.words.jump(vim.v.count1)
-			end,
-			desc = "Next Reference",
-			mode = { "n", "t" },
-		},
-		{
-			"[[",
-			function()
-				Snacks.words.jump(-vim.v.count1)
-			end,
-			desc = "Prev Reference",
-			mode = { "n", "t" },
-		},
+		{ "<c-/>", function() require('snacks').terminal() end,                desc = "Toggle Terminal", mode = { "n", "t" }, },
+		{ "]]",    function() require('snacks').words.jump(vim.v.count1) end,  desc = "Next Reference",  mode = { "n", "t" }, },
+		{ "[[",    function() require('snacks').words.jump(-vim.v.count1) end, desc = "Prev Reference",  mode = { "n", "t" }, },
 	},
 }

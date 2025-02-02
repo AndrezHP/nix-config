@@ -45,12 +45,13 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 -- Resize windows with arrow keys
 local moveLeftDesc = { expr = true, replace_keycodes = false, desc = "Decrease window width" }
 vim.keymap.set("n", "<C-Left>", '"<Cmd>vertical resize -" . v:count1 . "<CR>"', moveLeftDesc)
-local moveDownDesc = { expr = true, replace_keycodes = false, desc = "Decrease window height" }
-vim.keymap.set("n", "<C-Down>", '"<Cmd>resize -"          . v:count1 . "<CR>"', moveDownDesc)
-local moveUpDesc = { expr = true, replace_keycodes = false, desc = "Increase window height" }
-vim.keymap.set("n", "<C-Up>", '"<Cmd>resize +"          . v:count1 . "<CR>"', moveUpDesc)
 local moveRightDesc = { expr = true, replace_keycodes = false, desc = "Increase window width" }
 vim.keymap.set("n", "<C-Right>", '"<Cmd>vertical resize +" . v:count1 . "<CR>"', moveRightDesc)
+
+-- local moveDownDesc = { expr = true, replace_keycodes = false, desc = "Decrease window height" }
+-- vim.keymap.set("n", "<C-Down>", '"<Cmd>resize -"          . v:count1 . "<CR>"', moveDownDesc)
+-- local moveUpDesc = { expr = true, replace_keycodes = false, desc = "Increase window height" }
+-- vim.keymap.set("n", "<C-Up>", '"<Cmd>resize +"          . v:count1 . "<CR>"', moveUpDesc)
 
 -- Open and new file in insert mode
 vim.keymap.set("n", "<leader>nf", "<cmd>ene | startinsert<CR>", { desc = "Open new file in insert mode" })
@@ -168,8 +169,8 @@ require("lazy").setup({
 	{ "mg979/vim-visual-multi" }, -- Multi cursor functionality = very nice
 	{ "ThePrimeagen/vim-be-good" },
 	{ "sindrets/diffview.nvim" },
-	{ "nvim-neorg/neorg", lazy = false, version = "*", config = true },
-	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = { theme = "catpuccin" } },
+	{ "nvim-neorg/neorg", version = "*", config = true },
+	{ "nvim-lualine/lualine.nvim", opts = { theme = "catpuccin" }, dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
 	require("plugins.vim-tmux-navigator"),
 	require("plugins.theme"),
@@ -178,20 +179,18 @@ require("lazy").setup({
 	require("plugins.harpoon"),
 	require("plugins.snacks"),
 	require("plugins.which-key"),
-	require("plugins.cmp"), -- Completion
 	require("plugins.mini"),
 	require("plugins.todo-comments"),
 	require("plugins.oil"),
 	require("plugins.gitsigns"),
 	require("plugins.obsidian"),
 	require("plugins.zen-mode"),
-	require("plugins.noice"), -- NOTE: I'm not sure that I like this
-	-- require("plugins.chatGPT"), does not work...
-	-- require("plugins.octo"), --- NOTE: This doesn't work for some reason
-	-- TODO: add vim Dadbod
+	-- require("plugins.noice"),
+	-- TODO: add vim Dadbod for database stuff
 
 	require("plugins.lsp-config"),
 	require("plugins.treesitter"),
+	require("plugins.cmp"), -- Completion
 
 	require("kickstart.plugins.debug"),
 	require("kickstart.plugins.indent_line"),
