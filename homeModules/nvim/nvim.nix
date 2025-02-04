@@ -3,33 +3,26 @@ with lib; let
   cfg = config.programs.neovim.nvimdots;
 in
 {
-  options = {
-    programs.neovim = {
-      nvimdots = {
-        enable = mkEnableOption ''
-          Enable nvimdots
-        '';
-        setBuildEnv = mkEnableOption ''
-          Sets environment variables that resolve build dependencies as required by `mason.nvim` and `nvim-treesitter`
-          Environment variables are only visible to `nvim` and have no effect on any parent sessions.
-          Required for NixOS.
-        '';
-        withBuildTools = mkEnableOption ''
-          Include basic build tools like `gcc` and `pkg-config`.
-          Required for NixOS.
-        '';
-        extraDependentPackages = mkOption {
-          type = with types; listOf package;
-          default = [ ];
-          example = literalExpression "[ pkgs.openssl ]";
-          description = "Extra build depends to add `LIBRARY_PATH` and `CPATH`.";
-        };
-      };
+  options.programs.neovim.nvimdots = {
+    enable = mkEnableOption "Enable nvimdots";
+    setBuildEnv = mkEnableOption ''
+      Sets environment variables that resolve build dependencies as required by `mason.nvim` and `nvim-treesitter`
+      Environment variables are only visible to `nvim` and have no effect on any parent sessions.
+      Required for NixOS.
+    '';
+    withBuildTools = mkEnableOption ''
+      Include basic build tools like `gcc` and `pkg-config`.
+      Required for NixOS.
+    '';
+    extraDependentPackages = mkOption {
+      type = with types; listOf package;
+      default = [ ];
+      example = literalExpression "[ pkgs.openssl ]";
+      description = "Extra build depends to add `LIBRARY_PATH` and `CPATH`.";
     };
   };
   config =
     let
-      # Inspired from https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/nix-ld.nix
       build-dependent-pkgs = with pkgs; [
           acl
           attr
@@ -110,7 +103,7 @@ in
       withPython3 = true;
       extraPackages = with pkgs;
         [
-          # Dependent packages used by default plugins
+          # Dependent packages used by plugins
           doq
           luarocks
         ]

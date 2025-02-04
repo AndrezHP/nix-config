@@ -89,7 +89,7 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 --  See `:help lua-guide-autocommands`
 vim.api.nvim_create_autocmd("TextYankPost", { -- Highlight when yanking (copying) text
 	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
 	end,
@@ -192,8 +192,8 @@ require("lazy").setup({
 	require("plugins.treesitter"),
 	require("plugins.cmp"), -- Completion
 
-	require("kickstart.plugins.debug"),
-	require("kickstart.plugins.indent_line"),
+	require("plugins.debug"),
+	require("plugins.indent_line"),
 }, options)
 
 vim.cmd("set expandtab")
