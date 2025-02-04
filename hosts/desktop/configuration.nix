@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed onconfi
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   config,
   pkgs,
@@ -9,8 +6,12 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../nixosModules/wayland.nix
+    ../../nixosModules/displayserver.nix
+    # ../../nixosModules/wayland.nix
   ];
+
+  env.displayServer = "wayland";
+  
 
   # Bootloader.
   boot.loader = {
@@ -135,6 +136,7 @@
     xkb.layout = "us";
     xkb.variant = "";
   };
+  programs.dconf.enable = true;
 
   security.rtkit.enable = true;
   services.libinput.enable = true;
