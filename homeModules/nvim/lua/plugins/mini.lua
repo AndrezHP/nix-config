@@ -28,7 +28,6 @@ return { -- Collection of various small independent plugins/modules
 		-- Other nice stuff
 		require("mini.splitjoin").setup() -- toggle split/join on function arguments or structs <leader>gS
 		require("mini.move").setup() -- move any selected block (setup keymapping)
-		require("mini.files").setup() -- small window where you can create and rename files
 		require("mini.git").setup() -- execute git commands from neovim with :Git
 		require("mini.comment").setup()
 		require("mini.pairs").setup()
@@ -37,6 +36,9 @@ return { -- Collection of various small independent plugins/modules
 				prefix = "<leader>gr",
 			},
 		})
-		require("mini.jump").setup() -- extend f, F, t, T to work on multiple lines
+		require("mini.files").setup() -- small window where you can create and rename files
+		vim.keymap.set("n", "<leader>of", "<CMD>lua MiniFiles.open()<CR>")
+
+		-- require("mini.jump").setup() -- extend f, F, t, T to work on multiple lines
 	end,
 }
