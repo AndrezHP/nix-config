@@ -84,8 +84,10 @@ in
       ripgrep
       black
       stylua
+      prettierd
       rust-analyzer
       nil
+      typescript-language-server
     ] ++ (with pkgs.vimPlugins; [
       vim-nix # File type and syntax highlighting.
     ]) ++ optionals cfg.setBuildEnv [

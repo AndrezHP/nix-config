@@ -16,9 +16,10 @@ in
 
   config = {
     home.packages = with pkgs; [
-      spotify
+      spicetify-cli # spotify
       webcord
       obsidian
+      emacs
 
       qbittorrent
       signal-desktop
@@ -38,6 +39,9 @@ in
       zathura # PDF viewer
       sxiv # Image viewer
 
+      libreoffice
+
+
       # Virtualization 
       qemu
       virt-manager
@@ -47,6 +51,7 @@ in
       # reaper # Digital audio workstation
       # kodi-wayland
       # newsflash # RSS reader
+      # mattermost # Slack alternative
     ] ++ optionals cfg.games.enable [
       wine
       steam

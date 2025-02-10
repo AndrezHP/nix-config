@@ -1,4 +1,4 @@
-{config, pkgs, ...}: {
+{ lib, config, inputs, pkgs, ... }: {
   imports = [
     ../../homeModules/zsh.nix
     ../../homeModules/firefox.nix
@@ -8,10 +8,22 @@
     ../../homeModules/tmux.nix
     ../../homeModules/theme.nix
     ../../homeModules/app_packs.nix
-    # ../../homeModules/nvf.nix
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
+    inputs.ags.homeManagerModules.default
   ];
+
+
+  wayland.windowManager.hyprland.settings.general."col.active_border" = 
+    lib.mkForce "rgb(${config.stylix.base16Scheme.base0E})";
+
+  programs.ags = {
+    enable = true;
+    configDir = ../../dotfiles/ags;
+    extraPackages = with pkgs; [
+      gtksourceview
+      webkitgtk
+      accountsservice
+    ];
+  };
 
   packs = {
     games.enable = true;
@@ -56,10 +68,15 @@
   xdg.configFile."hypr".source = ../../dotfiles/hypr;
   xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
+  xdg.configFile."kitty".source = ../../dotfiles/kitty;
 
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
     alacritty
+    wezterm
+    ghostty
+    kitty
+    st
   ];
 
   services.syncthing.enable = true;

@@ -183,6 +183,7 @@ return { -- LSP Configuration & Plugins
 		})
 		require("mason-lspconfig").setup({
 			"nil_ls",
+			"eslint-lsp",
 		})
 		require("lspconfig").nil_ls.setup({
 			autostart = true,

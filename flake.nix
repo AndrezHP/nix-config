@@ -3,8 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nix-colors.url = "github:misterio77/nix-colors";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,13 +22,8 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
-
-    # obsidian-nvim.url = "github:epwalsh/obsidian.nvim";
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # inputs.obsidian-nvim.follows = "obsidian-nvim";
-    };
+    ags.url = "github:Aylur/ags";
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = {
@@ -38,7 +31,7 @@
     nixpkgs,
     home-manager,
     split-monitor-workspaces,
-    nvf,
+    stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -52,7 +45,10 @@
           inherit outputs;
           inherit system;
         };
-        modules = [./hosts/desktop/configuration.nix];
+        modules = [
+          ./hosts/desktop/configuration.nix
+          stylix.nixosModules.stylix
+        ];
       };
       laptop = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -60,7 +56,10 @@
           inherit outputs;
           inherit system;
         };
-        modules = [./hosts/laptop/configuration.nix];
+        modules = [
+          ./hosts/laptop/configuration.nix
+          stylix.nixosModules.stylix
+        ];
       };
     };
 
@@ -68,18 +67,12 @@
       default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          nvf.homeManagerModules.default
-          ./hosts/desktop/home.nix
-        ];
+        modules = [./hosts/desktop/home.nix];
       };
       laptop = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          nvf.homeManagerModules.default
-          ./hosts/laptop/home.nix
-        ];
+        modules = [./hosts/laptop/home.nix];
       };
     };
   };
