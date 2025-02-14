@@ -15,12 +15,11 @@ in
     ../../homeModules/tmux.nix
     ../../homeModules/theme.nix
     ../../homeModules/app_packs.nix
+    ../../homeModules/emacs.nix
     inputs.ags.homeManagerModules.default
   ];
 
-
-  wayland.windowManager.hyprland.settings.general."col.active_border" = 
-    lib.mkForce "rgb(${config.stylix.base16Scheme.base0E})";
+  editors.emacs.enable = true;
 
   programs.ags = {
     enable = true;

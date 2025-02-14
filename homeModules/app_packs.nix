@@ -19,7 +19,6 @@ in
       spicetify-cli # spotify
       webcord
       obsidian
-      emacs
 
       qbittorrent
       signal-desktop
@@ -52,6 +51,8 @@ in
       # kodi-wayland
       # newsflash # RSS reader
       # mattermost # Slack alternative
+
+      meson
     ] ++ optionals cfg.games.enable [
       wine
       steam

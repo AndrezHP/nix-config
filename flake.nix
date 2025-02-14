@@ -23,7 +23,8 @@
       inputs.hyprland.follows = "hyprland";
     };
     ags.url = "github:Aylur/ags";
-    stylix.url = "github:danth/stylix";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -31,7 +32,6 @@
     nixpkgs,
     home-manager,
     split-monitor-workspaces,
-    stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -45,10 +45,7 @@
           inherit outputs;
           inherit system;
         };
-        modules = [
-          ./hosts/desktop/configuration.nix
-          stylix.nixosModules.stylix
-        ];
+        modules = [./hosts/desktop/configuration.nix];
       };
       laptop = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -56,10 +53,7 @@
           inherit outputs;
           inherit system;
         };
-        modules = [
-          ./hosts/laptop/configuration.nix
-          stylix.nixosModules.stylix
-        ];
+        modules = [./hosts/laptop/configuration.nix];
       };
     };
 
