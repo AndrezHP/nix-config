@@ -1,4 +1,11 @@
-{ lib, config, inputs, pkgs, ... }: {
+{ config, inputs, pkgs, ... }: 
+let
+  agsPackages = with inputs.ags; [
+    packages.${pkgs.system}.io 
+    packages.${pkgs.system}.notifd 
+  ];
+in
+{
   imports = [
     ../../homeModules/zsh.nix
     ../../homeModules/firefox.nix
@@ -19,8 +26,13 @@
     enable = true;
     configDir = ../../dotfiles/ags;
     extraPackages = with pkgs; [
+      meson
+      vala
+      json-glib
+      gobject-introspection
+
       gtksourceview
-      webkitgtk
+      webkitgtk_6_0
       accountsservice
     ];
   };
@@ -77,7 +89,7 @@
     ghostty
     kitty
     st
-  ];
+  ] ++ agsPackages;
 
   services.syncthing.enable = true;
 
