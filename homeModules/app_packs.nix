@@ -7,7 +7,7 @@ in
   options.packs = {
     games.enable = mkEnableOption "Enable games";
     games.modernEmulation = {
-      enable = mkEnableOption "Enable emulator for modern consoles";
+      enable = mkEnableOption "Enable emulators for modern consoles";
     };
     cliTools.enable = mkEnableOption "Enable cli tools";
     cyberTools.enable = mkEnableOption "Enable common cyber security tools";
@@ -16,7 +16,8 @@ in
 
   config = {
     home.packages = with pkgs; [
-      spicetify-cli # spotify
+      spicetify-cli 
+      spotify
       webcord
       obsidian
 
@@ -39,7 +40,6 @@ in
       sxiv # Image viewer
 
       libreoffice
-
 
       # Virtualization 
       qemu

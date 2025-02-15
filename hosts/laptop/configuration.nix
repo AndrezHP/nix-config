@@ -86,14 +86,6 @@
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
   
-  systemd.user.services.noisetorch-service = {
-    description = "Open noisetorch for noise suppression on input";
-    script = ''
-      noisetorch -i
-    '';
-  };
-
-
   # Enable hyprland (mutually exclusive with gnome)
   programs.hyprland = {
     enable = true;
