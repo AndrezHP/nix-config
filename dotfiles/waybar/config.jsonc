@@ -1,76 +1,123 @@
 {
   "mainBar": {
+    "layer": "top",
     "position": "top",
-    "modules-left": ["wlr/workspaces"],
-    "modules-center": ["custom/spotify"],
-    "modules-right": ["network", "pulseaudio", "battery", "clock"],
-    "wlr/workspaces": {
-      "format": "{icon}",
-      "on-click": "activate",
-      "persistent_workspaces": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": [],
-        "8": [],
-        "9": [],
-        "10": []
-      }
+    "height": 32,
+    "modules-left": [
+        "custom/launcher",
+        "clock"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "tray",
+        "network",
+        "bluetooth",
+        "cpu",
+        "memory",
+        "hyprland/language",
+        "battery",
+        "custom/powermenu"
+    ],
+    "custom/launcher": {
+      "format": " ",
+      "on-click": "pkill rofi || rofi -show drun",
+      "tooltip": false
     },
-    "custom/spotify": {
-      "format": "<span foreground='#E5B4E2'> </span><span font='OperatorMonoSSm Nerd Font weight=325 Italic'>{}</span>",
-      "interval": 1,
-      "exec-if": "pgrep spotify",
-      "on-click": "playerctl -p spotify play-pause",
-      "on-scroll-up": "playerctl -p spotify previous",
-      "on-scroll-down": "playerctl -p spotify next",
-      "tooltip": false,
-      "escape": true,
-      "max-length": 60,
-      "exec": "$HOME/bin/spotify.sh"
-    },
-    "clock": {
-      "format": "<span foreground='#C6AAE8'> </span>{:%a %d %H:%M}",
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-    },
-    "battery": {
-      "states": {
-        "warning": 30,
-        "critical": 15
-      },
-      "format": "<span size='13000' foreground='#B1E3AD'>{icon}</span> {capacity}%",
-      "format-warning": "<span size='13000' foreground='#B1E3AD'>{icon}</span> {capacity}%",
-      "format-critical": "<span size='13000' foreground='#E38C8F'>{icon}</span> {capacity}%",
-      "format-charging": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
-      "format-plugged": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
-      "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon}</span> {time}",
-      "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
-      "format-icons": ["", "", "", "", ""],
-      "tooltip-format": "{time}"
-    },
-    "network": {
-      "format-wifi": "<span size='13000' foreground='#F2CECF'> </span>{essid}",
-      "format-ethernet": "<span size='13000' foreground='#F2CECF'>󰤭</span> Disconnected",
-      "format-linked": "{ifname} (No IP) ",
-      "format-disconnected": "<span size='13000' foreground='#F2CECF'> </span>Disconnected",
-      "tooltip-format-wifi": "Signal Strenght: {signalStrength}%"
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "warp-on-scroll": false,
+        "format": "{name}",
+        "format-icons": {
+            "urgent": "",
+            "active": "",
+            "default": ""
+        }
     },
     "pulseaudio": {
-      "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-      "format": "<span size='13000' foreground='#EBDDAA'>{icon}</span> {volume}%",
-      "format-muted": "<span size='14000' foreground='#EBDDAA'></span> Muted",
-      "format-icons": {
-        "headphone": "",
-        "hands-free": "",
-        "headset": "",
-        "phone": "",
-        "portable": "",
-        "car": "",
-        "default": ["", ""]
-      }
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%  {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol",
+        "max-volume": 150
+    },
+    "network": {
+        "format-wifi": " {icon}",
+        "format-ethernet": " ",
+        "format-linked": "{ifname} ",
+        "format-disconnected": "Disconnected ⚠",
+        "on-click": "kitty -e 'nmtui'"
+    },
+    "bluetooth": {
+        "format": "󰂯",
+        "format-on": "󰂯",
+        "format-off": "BT-off",
+        "format-disabled": "󰂲",
+        "format-connected-battery": "{device_battery_percentage}% 󰂯",
+        "format-alt": "󰂯",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
+        "on-click-right": "blueman-manager",
+        "tooltip": false
+    },
+    "cpu": {
+        "format": "  {usage}%",
+        "on-click": "kitty htop",
+        "tooltip": true
+    },
+    "memory": {
+        "format": "  {}%",
+	     "tooltip": true
+    },
+    "hyprland/language": {
+       "format": "  {}",
+       "format-en": "EN",
+       "format-ru": "RU",
+       "on-click": "bash ~/.config/hypr/switch-keyboard-layout.sh",
+       "tooltip-format": "Switch keyboard layout"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        "format-full": "{icon}  {capacity}%",
+        "format-charging": "  {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-alt": "{time}  {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "format": "{:%H:%M | %e %B} ",
+        "on-click": "gnome-calendar",
+        "tooltip": false
+    },
+    "custom/powermenu": {
+        "format": "  ",
+        "on-click": "pkill rofi || ~/.config/rofi/powermenu.sh",
+        "tooltip": false
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
     }
   }
 }

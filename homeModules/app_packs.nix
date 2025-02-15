@@ -20,6 +20,10 @@ in
       spotify
       webcord
       obsidian
+      pavucontrol
+      gnome-calendar
+      blueman
+      solaar # Manager for Logitech Unifying Receiver
 
       qbittorrent
       signal-desktop

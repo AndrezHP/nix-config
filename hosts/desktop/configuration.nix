@@ -44,6 +44,7 @@
     };
   };
 
+  hardware.logitech.wireless.enable = true;
   hardware.bluetooth.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
   boot.kernelParams = [
