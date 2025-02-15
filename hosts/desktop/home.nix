@@ -1,10 +1,4 @@
 { config, inputs, pkgs, ... }: 
-let
-  agsPackages = with inputs.ags; [
-    packages.${pkgs.system}.io 
-    packages.${pkgs.system}.notifd 
-  ];
-in
 {
   imports = [
     ../../homeModules/zsh.nix
@@ -16,25 +10,9 @@ in
     ../../homeModules/theme.nix
     ../../homeModules/app_packs.nix
     ../../homeModules/emacs.nix
-    inputs.ags.homeManagerModules.default
   ];
 
   editors.emacs.enable = true;
-
-  programs.ags = {
-    enable = true;
-    configDir = ../../dotfiles/ags;
-    extraPackages = with pkgs; [
-      meson
-      vala
-      json-glib
-      gobject-introspection
-
-      gtksourceview
-      webkitgtk_6_0
-      accountsservice
-    ];
-  };
 
   packs = {
     games.enable = true;
@@ -88,7 +66,7 @@ in
     ghostty
     kitty
     st
-  ] ++ agsPackages;
+  ];
 
   services.syncthing.enable = true;
 
