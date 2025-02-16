@@ -21,15 +21,6 @@
     cyberTools.enable = true;
   };
 
-  programs.swaylock = {
-    enable = true;
-    settings = {
-      image = "~/nix-config/dotfiles/wallpapers/garden.png";
-      daemonize = true;
-      ignore-empty-password = true;
-    };
-  };
-
   programs.home-manager.enable = true;
   programs.nushell.enable = true;
   programs.neovim.nvimdots = {
