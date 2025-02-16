@@ -11,26 +11,21 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces";
-      inputs.hyprland.follows = "hyprland";
-    };
-    emacs-overlay ={
+    emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    split-monitor-workspaces,
+    hyprland,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -60,12 +55,12 @@
       default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./hosts/desktop/home.nix];
+        modules = [ ./hosts/desktop/home.nix ];
       };
       laptop = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./hosts/laptop/home.nix];
+        modules = [ ./hosts/laptop/home.nix ];
       };
     };
   };

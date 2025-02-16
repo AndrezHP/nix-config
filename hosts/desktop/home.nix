@@ -10,6 +10,7 @@
     ../../homeModules/theme.nix
     ../../homeModules/app_packs.nix
     ../../homeModules/emacs.nix
+    ../../homeModules/wlogout.nix
   ];
 
   editors.emacs.enable = true;
@@ -59,6 +60,27 @@
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
   xdg.configFile."kitty".source = ../../dotfiles/kitty;
 
+  services.hypridle = {
+    settings = {
+      general = {
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+        ignore_dbus_inhibit = false;
+        lock_cmd = "hyprlock";
+      };
+      listener = [
+        {
+          timeout = 900;
+          on-timeout = "hyprlock";
+        }
+        {
+          timeout = 1200;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+      ];
+    };
+  };
+
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
     alacritty
@@ -66,6 +88,9 @@
     ghostty
     kitty
     st
+
+    hyprlock
+    hypridle
   ];
 
   services.syncthing.enable = true;
