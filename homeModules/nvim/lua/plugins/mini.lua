@@ -35,10 +35,21 @@ return { -- Collection of various small independent plugins/modules
 			replace = {
 				prefix = "<leader>gr",
 			},
+			config = {
+				function()
+					-- remap open URL (only useful if using mini.operators)
+					vim.keymap.set("n", "<leader>gx", function()
+						local url = vim.fn.expand("<cfile>")
+						if url ~= "" then
+							vim.cmd("silent !xdg-open " .. url .. " &")
+						else
+							print("No URL found under cursor")
+						end
+					end, { silent = true, noremap = true })
+				end,
+			},
 		})
 		require("mini.files").setup() -- small window where you can create and rename files
 		vim.keymap.set("n", "<leader>of", "<CMD>lua MiniFiles.open()<CR>")
-
-		-- require("mini.jump").setup() -- extend f, F, t, T to work on multiple lines
 	end,
 }
