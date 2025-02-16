@@ -24,6 +24,11 @@
         inputs.firefox-addons.packages."x86_64-linux".darkreader
         inputs.firefox-addons.packages."x86_64-linux".youtube-shorts-block
         inputs.firefox-addons.packages."x86_64-linux".vimium
+        inputs.firefox-addons.packages."x86_64-linux".sponsorblock
+        inputs.firefox-addons.packages."x86_64-linux".privacy-badger
+        inputs.firefox-addons.packages."x86_64-linux".return-youtube-dislikes
+        inputs.firefox-addons.packages."x86_64-linux".facebook-container
+        inputs.firefox-addons.packages."x86_64-linux".multi-account-containers
       ];
     };
   };
