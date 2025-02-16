@@ -7,37 +7,37 @@
     layout = [
       {
         "label" = "shutdown";
-        "action" = "sleep 1; systemctl poweroff";
+        "action" = "systemctl poweroff";
         "text" = "Shutdown";
         "keybind" = "s";
       }
       {
         "label" = "reboot";
-        "action" = "sleep 1; systemctl reboot";
+        "action" = "systemctl reboot";
         "text" = "Reboot";
         "keybind" = "r";
       }
       {
         "label" = "logout";
-        "action" = "sleep 1; hyprctl dispatch exit";
+        "action" = "hyprctl dispatch exit";
         "text" = "Exit";
         "keybind" = "e";
       }
       {
         "label" = "suspend";
-        "action" = "sleep 1; systemctl suspend";
+        "action" = "systemctl suspend";
         "text" = "Suspend";
         "keybind" = "u";
       }
       {
         "label" = "lock";
-        "action" = "sleep 1; hyprlock";
+        "action" = "hyprlock";
         "text" = "Lock";
         "keybind" = "l";
       }
       {
         "label" = "hibernate";
-        "action" = "sleep 1; systemctl hibernate";
+        "action" = "systemctl hibernate";
         "text" = "Hibernate";
         "keybind" = "h";
       }
