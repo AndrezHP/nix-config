@@ -16,6 +16,7 @@ in
 
   config = {
     home.packages = with pkgs; [
+      ani-cli
       spicetify-cli 
       spotify
       webcord
@@ -53,11 +54,11 @@ in
       musescore
       # reaper # Digital audio workstation
       # kodi-wayland
-      # newsflash # RSS reader
       # mattermost # Slack alternative
 
       meson
-    ] ++ optionals cfg.games.enable [
+    ] 
+    ++ optionals cfg.games.enable [
       wine
       steam
       steam-run
@@ -66,20 +67,22 @@ in
       bottles-unwrapped
       heroic-unwrapped
       retroarch-full
-    ] ++ optionals cfg.games.modernEmulation.enable [
+    ] 
+    ++ optionals cfg.games.modernEmulation.enable [
       cemu
       suyu
       ryujinx
-    ] ++ optionals cfg.cliTools.enable [
+    ] 
+    ++ optionals cfg.cliTools.enable [
       # Experimental
-      eza
-      zoxide
-      tealdeer
-      ani-cli
-      jq
+      eza # better ls?
+      zoxide # better file path navigation
+      tealdeer # tldr command
+      jq # like sed, but for JSON
       lazygit
       neofetch
-    ] ++ optionals cfg.cyberTools.enable [
+    ] 
+    ++ optionals cfg.cyberTools.enable [
       wireshark
       nmap
       netcat
@@ -87,7 +90,8 @@ in
       john
       yersinia
       hashcat
-    ] ++ optionals cfg.devTools.enable [
+    ]
+    ++ optionals cfg.devTools.enable [
       jetbrains-toolbox
 
       # Container alternative to docker

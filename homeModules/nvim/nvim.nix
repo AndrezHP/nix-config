@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 with lib; let
-  cfg = config.programs.neovim.nvimdots;
+  cfg = config.homeModules.nvimConfig;
 in
 {
-  options.programs.neovim.nvimdots = {
-    enable = mkEnableOption "Enable nvimdots";
+  options.homeModules.nvimConfig = {
+    enable = mkEnableOption "Enable neovim config";
     setBuildEnv = mkEnableOption ''
       Sets environment variables that resolve build dependencies as required by `mason.nvim` and `nvim-treesitter`
       Environment variables are only visible to `nvim` and have no effect on any parent sessions.

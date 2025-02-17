@@ -1,18 +1,22 @@
 { config, pkgs, ... }: 
 {
   imports = [
-    ../../homeModules/zsh.nix
-    ../../homeModules/firefox.nix
-    ../../homeModules/waybar.nix
-    ../../homeModules/nvim/nvim.nix
-    ../../homeModules/git.nix
-    ../../homeModules/tmux.nix
-    ../../homeModules/theme.nix
-    ../../homeModules/app_packs.nix
-    ../../homeModules/emacs.nix
-    ../../homeModules/wlogout.nix
+    ../../homeModules
   ];
 
+  homeModules = {
+    wlogout.enable = true;
+    waybar.enable = true;
+    zsh.enable = true;
+    firefox.enable = true;
+    tmux.enable = true;
+    theme.enable = true;
+    nvimConfig = {
+      enable = true;
+      setBuildEnv = true;
+      withBuildTools = true;
+    };
+  };
   editors.emacs.enable = true;
 
   packs = {
@@ -23,11 +27,6 @@
 
   programs.home-manager.enable = true;
   programs.nushell.enable = true;
-  programs.neovim.nvimdots = {
-    enable = true;
-    setBuildEnv = true;
-    withBuildTools = true;
-  };
 
   nixpkgs = {
     overlays = [];
@@ -75,11 +74,7 @@
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
     alacritty
-    wezterm
-    ghostty
     kitty
-    st
-
     hyprlock
     hypridle
   ];

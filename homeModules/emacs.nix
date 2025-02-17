@@ -1,6 +1,6 @@
 { lib, inputs, config, pkgs, ... }:
 with lib;
-let cfg = config.editors.emacs;
+let cfg = config.homeModules.emacs;
     emacs = with pkgs; (emacsPackagesFor(emacs-pgtk))
     .emacsWithPackages (epkgs: with epkgs; [
          treesit-grammars.with-all-grammars
@@ -8,7 +8,7 @@ let cfg = config.editors.emacs;
          mu4e
        ]);
 in {
-  options.editors.emacs = {
+  options.homeModules.emacs = {
     enable = mkEnableOption "Enable Emacs";
   };
 
