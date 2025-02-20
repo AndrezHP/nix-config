@@ -3,10 +3,12 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../nixosModules/displayserver.nix
-    # ../../nixosModules/wayland.nix
   ];
 
-  env.displayServer = "wayland";
+  nixosModules.displayServer.wayland = {
+    enable = true;
+    hyprland.enable = true;
+  };
 
   # Bootloader.
   boot.loader = {
@@ -49,7 +51,6 @@
   hardware.cpu.amd.updateMicrocode = true;
   boot.kernelParams = [
     "amd_pstate=active"
-    # "intel_pstate=active" # (Probably) only for intel cpu
   ];
   powerManagement.cpuFreqGovernor = "performance";
 
@@ -72,6 +73,7 @@
     options = "--delete-older-than 30d";
   };
 
+  # Setup desktop extra harddisks and windows partition
   boot.supportedFilesystems = ["ntfs"];
   fileSystems = {
     "/mnt/disk1" = {

@@ -1,14 +1,16 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { inputs, config, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../nixosModules/displayserver.nix
     ];
+
+  nixosModules.displayServer.wayland = {
+    enable = true;
+    hyprland.enable = true;
+  };
 
   # Bootloader.
   boot.loader = {
@@ -160,28 +162,40 @@
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
+    # Terminal applications
     neovim
-    neofetch
     htop
     git
+    mpv # Video player
+    fzf # Fuzzy finder
+    lshw # List hardware
+    wireplumber # PipeWire session/policy manager
+    zip
+    unzip
+
     rustup
     lf # Terminal file manager
-    mpv # Video player
-    fzf
-    tmux
-    lshw
+    dolphin # File manager
+    kitty # Hyprland default terminal
+
+    # Mounting flash drives and other harddrives
+    usbutils
+    udisks
+    udiskie # Removable disk automounter for udisks
+
+    efibootmgr # Efi boot manager
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
-    dolphin # File manager
     networkmanagerapplet
-    libva
+    libva # Implementation of VA-API (Video acceleration)
+    xdg-desktop-portal-gtk
 
-    rofi-wayland # Menu
-    kitty # Hyprland default terminal
+    # For nvidia compatibility
+    vulkan-loader
+    vulkan-validation-layers
+    vulkan-tools
   ];
 
   xdg.portal.enable = true;
