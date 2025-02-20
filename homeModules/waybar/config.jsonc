@@ -86,16 +86,16 @@
         "tooltip-format": "Bluetooth Settings"
     },
     "cpu": {
-        "format": "  {usage}%",
+        "format": " {usage}%",
         "on-click": "kitty htop",
         "tooltip": true
     },
     "memory": {
-        "format": "  {}%",
+        "format": " {}%",
 	     "tooltip": true
     },
     "hyprland/language": {
-       "format": "  {}",
+       "format": " {}",
        "format-en": "EN",
        "format-ru": "RU",
        "on-click": "bash ~/.config/hypr/switch-keyboard-layout.sh",
