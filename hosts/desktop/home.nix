@@ -11,18 +11,18 @@
     firefox.enable = true;
     tmux.enable = true;
     theme.enable = true;
+    emacs.enable = true;
+    kitty.enable = true;
     nvimConfig = {
       enable = true;
       setBuildEnv = true;
       withBuildTools = true;
     };
-  };
-  editors.emacs.enable = true;
-
-  packs = {
-    games.enable = true;
-    cliTools.enable = true;
-    cyberTools.enable = true;
+    applications = {
+      games.enable = true;
+      cliTools.enable = true;
+      cyberTools.enable = true;
+    };
   };
 
   programs.home-manager.enable = true;
@@ -48,7 +48,6 @@
   xdg.configFile."hypr".source = ../../dotfiles/hypr;
   xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
-  xdg.configFile."kitty".source = ../../dotfiles/kitty;
 
   services.hypridle = {
     settings = {

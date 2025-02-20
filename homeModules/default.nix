@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ./app_packs.nix
+    ./applications.nix
     ./git.nix
     ./nvim/nvim.nix
     ./waybar/waybar.nix
@@ -11,5 +11,6 @@
     ./dconf_gnome.nix
     ./emacs.nix
     ./theme.nix
+    ./kitty/kitty.nix
   ];
 }

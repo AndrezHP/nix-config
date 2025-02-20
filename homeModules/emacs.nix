@@ -59,14 +59,12 @@ in {
       fava
       # :lang nix
       age
+    ] ++ [
+      pkgs.nerd-fonts.jetbrains-mono
     ];
 
     # environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
 
     # modules.shell.zsh.rcFiles = [ "${hey.configDir}/emacs/aliases.zsh" ];
-
-    # fonts.packages = [
-    #   (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-    # ];
   };
 }

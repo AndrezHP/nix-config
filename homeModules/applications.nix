@@ -1,10 +1,10 @@
 {pkgs, config, lib, ...}:
 with lib;
 let
-  cfg = config.packs;
+  cfg = config.homeModules.applications;
 in 
 {
-  options.packs = {
+  options.homeModules.applications = {
     games.enable = mkEnableOption "Enable games";
     games.modernEmulation = {
       enable = mkEnableOption "Enable emulators for modern consoles";

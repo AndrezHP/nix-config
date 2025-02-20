@@ -10,10 +10,24 @@
     ../../homeModules/nvim/nvim.nix
   ];
 
-  programs.neovim.nvimdots = {
-    enable = true;
-    setBuildEnv = true;
-    withBuildTools = true;
+
+  homeModules = {
+    wlogout.enable = true;
+    waybar.enable = true;
+    zsh.enable = true;
+    firefox.enable = true;
+    tmux.enable = true;
+    theme.enable = true;
+    emacs.enable = true;
+    nvimConfig = {
+      enable = true;
+      setBuildEnv = true;
+      withBuildTools = true;
+    };
+    applications = {
+      cliTools.enable = true;
+      cyberTools.enable = true;
+    };
   };
 
   nixpkgs = {
