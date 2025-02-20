@@ -2,13 +2,14 @@
   "mainBar": {
     "layer": "top",
     "position": "top",
-    "height": 32,
+    "height": 34,
     "modules-left": [
         "custom/launcher",
-        "clock"
+        "hyprland/workspaces",
+        "hyprland/mode"
     ],
     "modules-center": [
-        "hyprland/workspaces"
+        "clock"
     ],
     "modules-right": [
         "pulseaudio",
@@ -26,6 +27,10 @@
       "on-click": "pkill rofi || rofi -show drun",
       "tooltip": false
     },
+    "hyprland/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -61,7 +66,9 @@
         "format-ethernet": " ",
         "format-linked": "{ifname} ",
         "format-disconnected": "Disconnected ⚠",
-        "on-click": "kitty -e 'nmtui'"
+        "on-click": "kitty -e 'nmtui'",
+        "tooltip": true,
+        "tooltip-format": "Network"
     },
     "bluetooth": {
         "format": "󰂯",
@@ -75,7 +82,8 @@
         "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
         "on-click-right": "blueman-manager",
-        "tooltip": false
+        "tooltip": true,
+        "tooltip-format": "Bluetooth Settings"
     },
     "cpu": {
         "format": "  {usage}%",
@@ -91,7 +99,8 @@
        "format-en": "EN",
        "format-ru": "RU",
        "on-click": "bash ~/.config/hypr/switch-keyboard-layout.sh",
-       "tooltip-format": "Switch keyboard layout"
+       "tooltip": true,
+       "tooltip-format": "Switch keyboard laybout"
     },
     "battery": {
         "states": {
