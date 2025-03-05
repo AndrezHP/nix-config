@@ -25,6 +25,7 @@ in
       gnome-calendar
       blueman
       solaar # Manager for Logitech Unifying Receiver
+      ncmpcpp # Music player
 
       qbittorrent
       signal-desktop

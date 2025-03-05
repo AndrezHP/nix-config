@@ -121,7 +121,6 @@ require("lazy").setup({
 	require("plugins.todo-comments"),
 	require("plugins.oil"),
 	require("plugins.gitsigns"),
-	require("plugins.obsidian"),
 	require("plugins.zen-mode"),
 	require("plugins.nvim-ts-autotag"),
 	require("plugins.ts-comments"),
