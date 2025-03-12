@@ -76,6 +76,18 @@
     kitty
     hyprlock
     hypridle
+    hyprshot
+    nwg-look
+    (python312.withPackages(p: with p; [
+      numpy
+      pandas
+      scipy
+      matplotlib
+      requests
+      seaborn
+      beautifulsoup4
+    ]))
+    (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
     (pkgs.writeShellScriptBin "gamemode"
       ''
       HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
@@ -91,6 +103,24 @@
           exit
       fi
       hyprctl reload
+      '')
+    (pkgs.writeShellScriptBin "sshot"
+      ''
+      CHOICE=$(printf "Active window\nActive monitor\nSelect window\nSelect region" | rofi -dmenu -p "Screenshot:")
+      case ''${CHOICE} in
+          "Active window")
+            hyprshot -m window -m active
+            ;;
+          "Active monitor")
+            hyprshot -m output -m active
+            ;;
+          "Select window")
+            hyprshot -m window
+            ;;
+          "Select region")
+            hyprshot -m region
+            ;;
+      esac
       '')
   ];
 

@@ -26,6 +26,7 @@ in
       blueman
       solaar # Manager for Logitech Unifying Receiver
       ncmpcpp # Music player
+      ventoy # Create bootable USB drives
 
       qbittorrent
       signal-desktop
