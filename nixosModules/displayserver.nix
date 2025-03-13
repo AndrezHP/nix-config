@@ -8,7 +8,9 @@ with lib; let
       wl-clipboard # Wayland clipboard functionality
       rofi-wayland # Menu
       hyprpaper
+      hyprpicker
     ];
+
      # Make electron apps use wayland
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     services.xserver = {
