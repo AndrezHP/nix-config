@@ -19,6 +19,9 @@ in
       ani-cli
       spicetify-cli 
       spotify
+      mpd # Music Player Daemon
+      ncspot # ncurses spotify
+
       webcord
       obsidian
       pavucontrol
@@ -27,6 +30,7 @@ in
       solaar # Manager for Logitech Unifying Receiver
       ncmpcpp # Music player
       ventoy # Create bootable USB drives
+      porsmo # Cli Pomodoro
 
       qbittorrent
       signal-desktop
