@@ -47,6 +47,7 @@
   };
 
   xdg.configFile."hypr".source = ../../dotfiles/hypr;
+  xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
   
   home.packages = with pkgs; [

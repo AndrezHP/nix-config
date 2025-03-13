@@ -201,6 +201,7 @@
     udisks
     efibootmgr
 
+    dunst # Notification daemon
     libnotify # Notification daemon depends on this
     networkmanagerapplet
     dolphin # File manager
