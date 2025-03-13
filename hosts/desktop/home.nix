@@ -46,9 +46,9 @@
 
   # Import dotfile configs
   xdg.configFile."hypr".source = ../../dotfiles/hypr;
-  xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
 
+  services.syncthing.enable = true;
   services.hypridle = {
     settings = {
       general = {
@@ -123,8 +123,6 @@
       esac
       '')
   ];
-
-  services.syncthing.enable = true;
 
   xdg = {
     enable = true;

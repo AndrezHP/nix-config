@@ -186,7 +186,6 @@
 
     efibootmgr # Efi boot manager
 
-    dunst # Notification daemon
     libnotify # Notification daemon depends on this
     networkmanagerapplet
     libva # Implementation of VA-API (Video acceleration)
