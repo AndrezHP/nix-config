@@ -176,7 +176,6 @@
 
     rustup
     lf # Terminal file manager
-    dolphin # File manager
     kitty # Hyprland default terminal
 
     # Mounting flash drives and other harddrives

@@ -46,7 +46,6 @@ in
       brave # Another browser
 
       calibre # E-book software
-      dolphin # File manager
       zathura # PDF viewer
       sxiv # Image viewer
 

@@ -204,7 +204,6 @@
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
     networkmanagerapplet
-    dolphin # File manager
     libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
 
