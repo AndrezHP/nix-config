@@ -18,10 +18,6 @@ with lib; let
       displayManager = {
         gdm.enable = true;
         gdm.wayland = true;
-        gdm.settings."org/gnome/desktop/background" = {
-          picture-uri = "file:///home/andreas/Downloads/wallpapers/the-road-to-samarkand-by-thomas-thiemeyer.png";
-          picture-uri-dark = "file:///home/andreas/Downloads/wallpapers/the-road-to-samarkand-by-thomas-thiemeyer.png";
-        };
       };
     };
     # Enable hyprland (mutually exclusive with gnome)
