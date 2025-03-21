@@ -61,6 +61,7 @@ in {
       age
     ] ++ [
       pkgs.nerd-fonts.jetbrains-mono
+      pkgs.ubuntu-sans
     ];
 
     # environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];

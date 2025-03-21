@@ -5,14 +5,25 @@ in
 {
   options.homeModules.theme.enable = mkEnableOption "Enable theming of gtk/qt";
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      gnome-themes-extra
+      catppuccin-gtk
+      dracula-theme
+      nwg-look
+      nordic
+      tokyonight-gtk-theme
+    ];
     dconf.settings."org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+    };
+    home.sessionVariables = {
+      GTK_THEME = "Nordic-darker";
     };
     gtk = {
       enable = true;
       theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome-themes-extra;
+        name = "nordic-darker"; # Adjust variant as needed
+        package = pkgs.nordic;
       };
       cursorTheme.package = pkgs.bibata-cursors;
       cursorTheme.name = "Bibata-Modern-Ice";
@@ -29,8 +40,8 @@ in
     qt = {
       enable = true;
       platformTheme.name = "gtk";
-      style.name = "adwaita-dark";
-      style.package = pkgs.adwaita-qt;
+      style.name = "catppuccin-qt5ct";
+      style.package = pkgs.catppuccin-qt5ct;
     };
   };
 }
