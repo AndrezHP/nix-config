@@ -73,6 +73,7 @@
 
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
+    sqlite
     alacritty
     kitty
     hyprlock
@@ -104,24 +105,6 @@
           exit
       fi
       hyprctl reload
-      '')
-    (pkgs.writeShellScriptBin "sshot"
-      ''
-      CHOICE=$(printf "Active window\nActive monitor\nSelect window\nSelect region" | rofi -dmenu -p "Screenshot:")
-      case ''${CHOICE} in
-          "Active window")
-            hyprshot -m window -m active
-            ;;
-          "Active monitor")
-            hyprshot -m output -m active
-            ;;
-          "Select window")
-            hyprshot -m window
-            ;;
-          "Select region")
-            hyprshot -m region
-            ;;
-      esac
       '')
   ];
 

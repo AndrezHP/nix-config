@@ -6,29 +6,29 @@ in
   options.homeModules.theme.enable = mkEnableOption "Enable theming of gtk/qt";
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      gnome-themes-extra
-      catppuccin-gtk
-      dracula-theme
       nwg-look
-      nordic
-      tokyonight-gtk-theme
+      arc-theme
     ];
     dconf.settings."org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
     home.sessionVariables = {
-      GTK_THEME = "Nordic-darker";
+      GTK_THEME = "Arc-Dark";
     };
     gtk = {
       enable = true;
       theme = {
-        name = "nordic-darker"; # Adjust variant as needed
-        package = pkgs.nordic;
+        name = "Arc-Dark";
+        package = pkgs.arc-theme;
       };
-      cursorTheme.package = pkgs.bibata-cursors;
-      cursorTheme.name = "Bibata-Modern-Ice";
-      iconTheme.package = pkgs.papirus-icon-theme;
-      iconTheme.name = "Papirus-Dark";
+      cursorTheme = {
+        name = "Bibata-Modern-Ice";
+        package = pkgs.bibata-cursors;
+      };
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
       gtk3.extraConfig = {
         gtk-application-prefer-dark-theme = 1;
       };

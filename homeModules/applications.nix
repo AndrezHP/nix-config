@@ -44,13 +44,13 @@ in
       yazi
 
       brave # Another browser
-
       calibre # E-book software
-      
       zathura # PDF viewer
       sxiv # Image viewer
 
       libreoffice
+      gimp # Gnu image manipulation program
+      krita # Foss painting program
 
       # Virtualization 
       qemu
@@ -62,7 +62,7 @@ in
       # kodi-wayland
       # mattermost # Slack alternative
 
-      meson
+      meson # Build something
     ] 
     ++ optionals cfg.games.enable [
       wine
@@ -72,7 +72,7 @@ in
       lutris-unwrapped
       bottles-unwrapped
       heroic-unwrapped
-      retroarch-full
+      retroarch
     ] 
     ++ optionals cfg.games.modernEmulation.enable [
       cemu
