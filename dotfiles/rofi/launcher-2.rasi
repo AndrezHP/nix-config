@@ -1,18 +1,25 @@
 /*****----- Configuration -----*****/
 configuration {
 	modi:                       "drun,run,filebrowser,window";
-    show-icons:                 false;
-    display-drun:               " ";
-    display-run:                " ";
-    display-filebrowser:        " ";
-    display-window:             " ";
+    show-icons:                 true;
+    display-drun:               "";
+    display-run:                "";
+    display-filebrowser:        "";
+    display-window:             "";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c} · {t}";
 }
 
 /*****----- Global Properties -----*****/
-@import                          "./colors.rasi"
-@import                          "./fonts.rasi"
+* {
+    font:               "JetBrains Mono Nerd Font 12";
+    background:         #1E1D2F;
+    background-alt:     #282839;
+    foreground:         #D9E0EE;
+    selected:           #7AA2F7;
+    active:             #ABE9B3;
+    urgent:             #F28FAD;
+}
 
 * {
     border-colour:               var(selected);
@@ -47,7 +54,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       400px;
+    width:                       600px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -57,7 +64,7 @@ window {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                #89B4FA;
+    border-color:                @border-colour;
     cursor:                      "default";
     /* Backgroud Colors */
     background-color:            @background-colour;
@@ -78,10 +85,9 @@ mainbox {
     margin:                      0px;
     padding:                     30px;
     border:                      0px solid;
-    border-radius:               15px;
-    border-color:                #6f91c9;
+    border-radius:               0px 0px 0px 0px;
+    border-color:                @border-colour;
     background-color:            transparent;
-    transparency :               "real";
     children:                    [ "inputbar", "message", "listview" ];
 }
 
@@ -170,7 +176,7 @@ listview {
     cursor:                      "default";
 }
 scrollbar {
-    handle-width:                3px ;
+    handle-width:                5px ;
     handle-color:                @handle-colour;
     border-radius:               10px;
     background-color:            @alternate-background;
@@ -299,4 +305,3 @@ error-message {
     background-color:            @background-colour;
     text-color:                  @foreground-colour;
 }
-

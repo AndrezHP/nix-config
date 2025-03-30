@@ -24,7 +24,7 @@
     ],
     "custom/launcher": {
       "format": " ",
-      "on-click": "pkill rofi || rofi -show drun",
+      "on-click": "pkill rofi || sh ~/.config/rofi/scripts/launcher.sh",
       "tooltip": false
     },
     "hyprland/mode": {
