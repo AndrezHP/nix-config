@@ -134,6 +134,7 @@
   programs.dconf.enable = true;
 
   security.rtkit.enable = true;
+
   services.libinput.enable = true;
   services.printing.enable = true;
   services.pulseaudio.enable = false;
@@ -181,7 +182,6 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    # Terminal applications
     neovim
     htop
     git

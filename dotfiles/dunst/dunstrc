@@ -176,9 +176,6 @@
 	mouse_middle_click = do_action, close_current
 	mouse_right_click = close_all
 
-[songArtLogger]
-	script = ~/.config/dunst/scripts/songArtLogger.sh
-
 [urgency_low]
 	timeout = 6
 	background = "#0d0f16"
@@ -195,7 +192,6 @@
 	highlight = "#7ba5dd"
 
 [urgency_critical]
-	script = ~/.config/dunst/scripts/playNotificationSound.sh
 	timeout = 6
 	background = "#0d0f16"
 	foreground = "#CDD6F4"

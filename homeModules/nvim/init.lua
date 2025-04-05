@@ -107,9 +107,10 @@ require("lazy").setup({
 	{ "sindrets/diffview.nvim" },
 	{ "nvim-tree/nvim-web-devicons" },
 	{ "rmagatti/auto-session" }, -- Automatic session management
-	{ "nvim-neorg/neorg", version = "*", config = true },
 	{ "nvim-lualine/lualine.nvim", opts = { theme = "catpuccin" }, dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
+	{ "nvim-neorg/neorg", version = "*", config = true },
+	require("plugins.orgmode"),
 	require("plugins.vim-tmux-navigator"),
 	require("plugins.theme"),
 	require("plugins.conform"),
@@ -124,8 +125,6 @@ require("lazy").setup({
 	require("plugins.zen-mode"),
 	require("plugins.nvim-ts-autotag"),
 	require("plugins.ts-comments"),
-	require("plugins.orgmode"),
-
 	-- TODO: add vim Dadbod for database stuff
 
 	require("plugins.cmp"), -- Completion

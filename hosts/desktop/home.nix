@@ -19,9 +19,10 @@
       withBuildTools = true;
     };
     applications = {
-      games.enable = true;
       cliTools.enable = true;
       cyberTools.enable = true;
+      games.enable = true;
+      games.modernEmulation.enable = true;
     };
   };
 

@@ -53,7 +53,9 @@ in {
       # :lang cc
       clang-tools
       # :lang latex & :lang org (latex previews)
-      texlive.combined.scheme-medium
+      # texlive.combined.scheme-medium
+      # texlivePackages.wrapfig
+      (texlive.combined.scheme-full.withPackages (ps: [ ps.wrapfig ps.capt-of ]))
       # :lang beancount
       beancount
       fava

@@ -16,17 +16,16 @@ in
 
   config = {
     home.packages = with pkgs; [
-      ani-cli
-      spicetify-cli 
+      spicetify-cli
       spotify
       mpd # Music Player Daemon
       ncspot # ncurses spotify
 
-      webcord
+      discord
       obsidian
       pavucontrol
       gnome-calendar
-      blueman
+      blueman # Bluetooth manager
       solaar # Manager for Logitech Unifying Receiver
       ncmpcpp # Music player
       ventoy # Create bootable USB drives
@@ -48,6 +47,7 @@ in
       zathura # PDF viewer
       sxiv # Image viewer
 
+      ani-cli
       libreoffice
       gimp # Gnu image manipulation program
       krita # Foss painting program
@@ -72,8 +72,28 @@ in
       lutris-unwrapped
       bottles-unwrapped
       heroic-unwrapped
-      retroarch
-    ] 
+      (retroarch.withCores (cores: with cores; [
+          mame2003-plus # All-around arcade emulation
+          puae # Commodore Amiga
+          dosbox-pure # DOS
+          gambatte # GB/GBC
+          mgba # GBA
+          beetle-vb # Virtual boy
+          melonds # Nintendo DS
+          quicknes # NES
+          snes9x # SNES
+          mupen64plus # N64
+          genesis-plus-gx # Sega Genesis
+          picodrive # Sega MegaDrive/MegaCD/32X emulator
+          beetle-saturn # Sega Saturn
+          flycast # Sega Dreamcast
+          fbalpha2012 # Neo Geo
+          pcsx-rearmed # PSX
+          swanstation # PSX (Port of duckstation)
+          pcsx2 # PS2
+          dolphin # Wii / GameCube
+      ]))
+    ]
     ++ optionals cfg.games.modernEmulation.enable [
       cemu
       suyu

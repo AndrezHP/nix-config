@@ -5,10 +5,7 @@ in
 {
   options.homeModules.theme.enable = mkEnableOption "Enable theming of gtk/qt";
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      nwg-look
-      arc-theme
-    ];
+    home.packages = [ pkgs.arc-theme ];
     dconf.settings."org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
