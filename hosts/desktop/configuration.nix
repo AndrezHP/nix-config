@@ -192,6 +192,7 @@
     wireplumber # PipeWire session/policy manager
     zip
     unzip
+    lm_sensors # Hardware temp sensor
 
     rustup
 
