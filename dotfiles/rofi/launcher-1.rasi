@@ -6,6 +6,7 @@ configuration {
     display-run:                "";
     display-filebrowser:        "";
     display-window:             "";
+    drun-match-fields:          "name";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c} · {t}";
 }

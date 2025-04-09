@@ -10,10 +10,10 @@ case ''${CHOICE} in
     "active monitor")
     hyprshot -m output -m active
     ;;
-    "aelect window")
+    "select window")
     hyprshot -m window
     ;;
-    "aelect region")
+    "select region")
     hyprshot -m region
     ;;
 esac
