@@ -1,10 +1,12 @@
-{pkgs, config, lib, ...}: 
-with lib; let
-  cfg = config.homeModules.theme;
-in
 {
-  options.homeModules.theme.enable = mkEnableOption "Enable theming of gtk/qt";
-  config = mkIf cfg.enable {
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
+  options.homeModules.theme.enable = lib.mkEnableOption "Enable theming of gtk/qt";
+  config = lib.mkIf config.homeModules.theme.enable {
     home.packages = [ pkgs.arc-theme ];
     dconf.settings."org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
@@ -42,5 +44,3 @@ in
     };
   };
 }
-
-

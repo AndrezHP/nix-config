@@ -1,10 +1,12 @@
-{ inputs, config, lib, ... }: 
-with lib; let
-  cfg = config.homeModules.firefox;
-in
 {
-  options.homeModules.firefox.enable = mkEnableOption "Enable firefox with configuration";
-  config = mkIf cfg.enable {
+  inputs,
+  config,
+  lib,
+  ...
+}:
+{
+  options.homeModules.firefox.enable = lib.mkEnableOption "Enable firefox with configuration";
+  config = lib.mkIf config.homeModules.firefox.enable {
     programs.firefox = {
       enable = true;
       policies = {
@@ -24,17 +26,17 @@ in
       profiles.andreas = {
         # bookmarks = [];
         # settings = {};
-        extensions.packages = [
-          inputs.firefox-addons.packages."x86_64-linux".bitwarden
-          inputs.firefox-addons.packages."x86_64-linux".ublock-origin
-          inputs.firefox-addons.packages."x86_64-linux".darkreader
-          inputs.firefox-addons.packages."x86_64-linux".youtube-shorts-block
-          inputs.firefox-addons.packages."x86_64-linux".vimium
-          inputs.firefox-addons.packages."x86_64-linux".sponsorblock
-          inputs.firefox-addons.packages."x86_64-linux".privacy-badger
-          inputs.firefox-addons.packages."x86_64-linux".return-youtube-dislikes
-          inputs.firefox-addons.packages."x86_64-linux".facebook-container
-          inputs.firefox-addons.packages."x86_64-linux".multi-account-containers
+        extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
+          bitwarden
+          ublock-origin
+          darkreader
+          youtube-shorts-block
+          vimium
+          sponsorblock
+          privacy-badger
+          return-youtube-dislikes
+          facebook-container
+          multi-account-containers
         ];
       };
     };
