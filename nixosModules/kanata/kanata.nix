@@ -47,7 +47,6 @@ in
           "/dev/input/by-path/pci-0000:02:00.0-usbv2-0:5:1.0-event-kbd"
           "/dev/input/by-path/pci-0000:02:00.0-usbv2-0:6:1.1-event-kbd"
         ];
-
         config = builtins.readFile ./config.kbd;
       };
     };

@@ -1,10 +1,11 @@
+;; Documentation at https://github.com/jtroo/kanata/blob/main/docs/config.adoc
+
 (defsrc
-    grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-    tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-    caps a    s    d    f    g    h    j    k    l    ;    '    ret
-    lsft z    x    c    v    b    n    m    ,    .    /    rsft
-    lctl lmet lalt           spc            ralt rmet rctl
-    )
+ grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+ tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+ caps a    s    d    f    g    h    j    k    l    ;    '    ret
+ lsft z    x    c    v    b    n    m    ,    .    /    rsft
+ lctl lmet lalt           spc            ralt rmet rctl)
 
 ;; Maps both escape and caps in case they are already swapped by something else
 (defalias tap-hold-1 (tap-hold 200 200 esc lctl))
@@ -12,8 +13,52 @@
 ;; Tap-hold for easier workspace switching
 (defalias tap-hold-2 (tap-hold 200 200 grv lmet))
 
+;; One-shot
+(defalias
+  os-lsft (one-shot 500 lsft)
+  os-lctl (one-shot 500 lctl)
+  os-lmet (one-shot 500 lmet)
+  os-lalt (one-shot 500 lalt)
+  os-ralt (one-shot 500 ralt)
+  os-rmet (one-shot 500 rmet)
+  os-rctl (one-shot 500 rctl)
+  os-rsft (one-shot 500 rsft))
+
+(defalias cw (caps-word 1000))
+
+;; Define layer mapping
 (deflayermap (base-layer)
-    caps @tap-hold-1
-    esc @tap-hold-1
-    grv @tap-hold-2
-)
+             caps @tap-hold-1
+             esc @tap-hold-1
+             grv @tap-hold-2
+             lsft @os-lsft
+             lctl @os-lctl
+             lmet @os-lmet
+             lalt @os-lalt
+             ralt @os-ralt
+             rmet @os-rmet
+             rctl @os-rctl
+             rsft @os-rsft)
+
+;;---------------------------------------------------------------
+;; Stuff for (potential) later use
+;;---------------------------------------------------------------
+#| (Multi line comment) Other things that might be useful
+;; You can use _ for transparent keys that will just default to defsrc
+;; Define another layer you can switch to
+(deflayer other-layer
+          grv  1    2    3    4    _    6    7    8    9    0    -    =    bspc
+          tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+          caps a    s    d    f    g    h    j    k    l    ;    '    ret
+          lsft z    x    c    v    b    n    m    ,    .    /    rsft
+          lctl lmet lalt           spc            ralt rmet rctl)
+
+;; Layer switching
+(defalias
+  switch-base (layer-switch base-layer)
+  switch-other (layer-switch other-layer)
+  hold-switch-other (layer-while-held other-layer))
+
+;; Combos (They might be incompatible with one-shot keys)
+(defchordsv2 (lsft rsft) (caps-word 2000) 300 all-released (base-layer))
+|#
