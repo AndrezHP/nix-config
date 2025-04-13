@@ -48,6 +48,8 @@ in
         zstd # for undo-fu-session/undo-tree compression
 
         ## Module dependencies
+        # :tools direnv
+        direnv
         # :email mu4e
         mu
         isync
@@ -65,6 +67,7 @@ in
         editorconfig-core-c # per-project style config
         # :tools lookup & :lang org +roam
         sqlite
+        wordnet
         # :lang cc
         clang-tools
         # :lang latex & :lang org (latex previews)

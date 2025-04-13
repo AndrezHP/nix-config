@@ -1,8 +1,13 @@
-{pkgs, config, lib, ...}:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.homeModules.applications;
-in 
+in
 {
   options.homeModules.applications = {
     games.enable = mkEnableOption "Enable games";
@@ -15,119 +20,126 @@ in
   };
 
   config = {
-    home.packages = with pkgs; [
-      spicetify-cli
-      spotify
-      mpd # Music Player Daemon
-      ncspot # ncurses spotify
+    home.packages =
+      with pkgs;
+      [
+        spicetify-cli
+        spotify
+        mpd # Music Player Daemon
+        ncspot # ncurses spotify
 
-      discord
-      obsidian
-      pavucontrol
-      gnome-calendar
-      blueman # Bluetooth manager
-      solaar # Manager for Logitech Unifying Receiver
-      ncmpcpp # Music player
-      ventoy # Create bootable USB drives
-      porsmo # Cli Pomodoro
+        oama # OAuth credential manager
+        cyrus-sasl-xoauth2
 
-      qbittorrent
-      signal-desktop
-      keepassxc
-      syncthing # Synchronization between devices
-      obs-studio
+        discord
+        obsidian
+        pavucontrol
+        gnome-calendar
+        blueman # Bluetooth manager
+        solaar # Manager for Logitech Unifying Receiver
+        ncmpcpp # Music player
+        ventoy # Create bootable USB drives
+        porsmo # Cli Pomodoro
 
-      xfce.thunar
-      xfce.thunar-volman
-      lf
-      yazi
+        qbittorrent
+        signal-desktop
+        keepassxc
+        syncthing # Synchronization between devices
+        obs-studio
 
-      brave # Another browser
-      calibre # E-book software
-      zathura # PDF viewer
-      sxiv # Image viewer
+        xfce.thunar
+        xfce.thunar-volman
+        lf
+        yazi
 
-      ani-cli
-      libreoffice
-      gimp # Gnu image manipulation program
-      krita # Foss painting program
+        brave # Another browser
+        calibre # E-book software
+        zathura # PDF viewer
+        sxiv # Image viewer
 
-      # Virtualization 
-      qemu
-      virt-manager
-      wine
+        ani-cli
+        libreoffice
+        gimp # Gnu image manipulation program
+        krita # Foss painting program
 
-      musescore
-      # reaper # Digital audio workstation
-      # kodi-wayland
-      # mattermost # Slack alternative
+        # Virtualization
+        qemu
+        virt-manager
+        wine
 
-      meson # Build something
-    ] 
-    ++ optionals cfg.games.enable [
-      wine
-      steam
-      steam-run
-      runelite
-      lutris-unwrapped
-      bottles-unwrapped
-      heroic-unwrapped
-      (retroarch.withCores (cores: with cores; [
-          mame2003-plus # All-around arcade emulation
-          puae # Commodore Amiga
-          dosbox-pure # DOS
-          gambatte # GB/GBC
-          mgba # GBA
-          beetle-vb # Virtual boy
-          melonds # Nintendo DS
-          quicknes # NES
-          snes9x # SNES
-          mupen64plus # N64
-          genesis-plus-gx # Sega Genesis
-          picodrive # Sega MegaDrive/MegaCD/32X emulator
-          beetle-saturn # Sega Saturn
-          flycast # Sega Dreamcast
-          fbalpha2012 # Neo Geo
-          pcsx-rearmed # PSX
-          swanstation # PSX (Port of duckstation)
-          pcsx2 # PS2
-          dolphin # Wii / GameCube
-      ]))
-    ]
-    ++ optionals cfg.games.modernEmulation.enable [
-      cemu
-      suyu
-      ryujinx
-    ] 
-    ++ optionals cfg.cliTools.enable [
-      # Experimental
-      eza # better ls?
-      zoxide # better file path navigation
-      tealdeer # tldr command
-      jq # like sed, but for JSON
-      lazygit
-      neofetch
-    ] 
-    ++ optionals cfg.cyberTools.enable [
-      wireshark
-      nmap
-      netcat
-      metasploit
-      john
-      yersinia
-      hashcat
-    ]
-    ++ optionals cfg.devTools.enable [
-      jetbrains-toolbox
+        musescore
+        # reaper # Digital audio workstation
+        # kodi-wayland
+        # mattermost # Slack alternative
 
-      # Container alternative to docker
-      podman
-      podman-compose
-      podman-desktop
-      podman-tui
+        meson # Build something
+      ]
+      ++ optionals cfg.games.enable [
+        wine
+        steam
+        steam-run
+        runelite
+        lutris-unwrapped
+        bottles-unwrapped
+        heroic-unwrapped
+        (retroarch.withCores (
+          cores: with cores; [
+            mame2003-plus # All-around arcade emulation
+            puae # Commodore Amiga
+            dosbox-pure # DOS
+            gambatte # GB/GBC
+            mgba # GBA
+            beetle-vb # Virtual boy
+            melonds # Nintendo DS
+            quicknes # NES
+            snes9x # SNES
+            mupen64plus # N64
+            genesis-plus-gx # Sega Genesis
+            picodrive # Sega MegaDrive/MegaCD/32X emulator
+            beetle-saturn # Sega Saturn
+            flycast # Sega Dreamcast
+            fbalpha2012 # Neo Geo
+            pcsx-rearmed # PSX
+            swanstation # PSX (Port of duckstation)
+            pcsx2 # PS2
+            dolphin # Wii / GameCube
+          ]
+        ))
+      ]
+      ++ optionals cfg.games.modernEmulation.enable [
+        cemu
+        suyu
+        ryujinx
+      ]
+      ++ optionals cfg.cliTools.enable [
+        # Experimental
+        eza # better ls?
+        zoxide # better file path navigation
+        tealdeer # tldr command
+        jq # like sed, but for JSON
+        lazygit
+        neofetch
+      ]
+      ++ optionals cfg.cyberTools.enable [
+        wireshark
+        nmap
+        netcat
+        metasploit
+        john
+        yersinia
+        hashcat
+      ]
+      ++ optionals cfg.devTools.enable [
+        jetbrains-toolbox
 
-      # PostgreSQL platform
-      pgadmin4
-    ];
+        # Container alternative to docker
+        podman
+        podman-compose
+        podman-desktop
+        podman-tui
+
+        # PostgreSQL platform
+        pgadmin4
+      ];
   };
 }

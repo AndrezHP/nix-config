@@ -1,14 +1,17 @@
-{config, pkgs, ...}: {
+{ config, pkgs, ... }:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../nixosModules/displayserver.nix
+    ../../nixosModules/kanata/kanata.nix
   ];
 
   nixosModules.displayServer.wayland = {
     enable = true;
     hyprland.enable = true;
   };
+  nixosModules.kanata.enable = true;
 
   # Bootloader.
   boot.loader = {
@@ -26,11 +29,11 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [nvidia-vaapi-driver];
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   # Nvidia driver options
   hardware.nvidia = {
     modesetting.enable = true;
@@ -74,27 +77,30 @@
   };
 
   # Setup desktop extra harddisks and windows partition
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = [ "ntfs" ];
   fileSystems = {
     "/mnt/disk1" = {
       device = "/dev/disk/by-uuid/CA367026367015A3";
       fsType = "ntfs-3g";
-      options = ["nofail"];
+      options = [ "nofail" ];
     };
     "/mnt/disk2" = {
       device = "/dev/disk/by-uuid/5AD4EDF9D4EDD6F3";
       fsType = "ntfs-3g";
-      options = ["nofail"];
+      options = [ "nofail" ];
     };
     "/mnt/windowsPartition" = {
       device = "/dev/disk/by-uuid/5A78427D784257C1";
       fsType = "ntfs-3g";
-      options = ["nofail"];
+      options = [ "nofail" ];
     };
   };
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
   };
   networking.hostName = "nixos"; # Define your hostname.
@@ -152,7 +158,11 @@
     andreas = {
       isNormalUser = true;
       description = "Andreas";
-      extraGroups = ["networkmanager" "wheel" "docker"];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "docker"
+      ];
     };
   };
 
@@ -176,7 +186,7 @@
 
   # Use zsh as default shell (configured with home-manager)
   programs.zsh.enable = true;
-  environment.shells = with pkgs; [zsh];
+  environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
 
   nixpkgs.config.allowUnfree = true;
@@ -205,7 +215,7 @@
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
     networkmanagerapplet
-    
+
     libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
 
@@ -219,7 +229,7 @@
 
   xdg.portal.enable = true;
   xdg.portal.config.common.default = "*";
-  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.packages = with pkgs; [
     noto-fonts

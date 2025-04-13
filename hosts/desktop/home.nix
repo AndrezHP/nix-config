@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: 
+{ config, pkgs, ... }:
 {
   imports = [
     ../../homeModules
@@ -30,7 +30,7 @@
   programs.nushell.enable = true;
 
   nixpkgs = {
-    overlays = [];
+    overlays = [ ];
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
@@ -81,18 +81,19 @@
     hypridle
     hyprshot
     nwg-look
-    (python312.withPackages(p: with p; [
-      numpy
-      pandas
-      scipy
-      matplotlib
-      requests
-      seaborn
-      beautifulsoup4
-    ]))
+    (python312.withPackages (
+      p: with p; [
+        numpy
+        pandas
+        scipy
+        matplotlib
+        requests
+        seaborn
+        beautifulsoup4
+      ]
+    ))
     (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
-    (pkgs.writeShellScriptBin "gamemode"
-      ''
+    (pkgs.writeShellScriptBin "gamemode" ''
       HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
       if [ "$HYPRGAMEMODE" = 1 ] ; then
           hyprctl --batch "\
@@ -106,17 +107,17 @@
           exit
       fi
       hyprctl reload
-      '')
+    '')
   ];
 
   xdg = {
     enable = true;
     mimeApps.defaultApplications = {
-      "application/pdf" = ["zathura.desktop"];
-      "image/*" = ["sxiv.desktop"];
-      "video/png" = ["mpv.desktop"];
-      "video/jpg" = ["mpv.desktop"];
-      "video/*" = ["mpv.desktop"];
+      "application/pdf" = [ "zathura.desktop" ];
+      "image/*" = [ "sxiv.desktop" ];
+      "video/png" = [ "mpv.desktop" ];
+      "video/jpg" = [ "mpv.desktop" ];
+      "video/*" = [ "mpv.desktop" ];
     };
     userDirs = {
       enable = true;
