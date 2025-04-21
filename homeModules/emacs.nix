@@ -8,15 +8,6 @@
 with lib;
 let
   cfg = config.homeModules.emacs;
-  emacs =
-    with pkgs;
-    (emacsPackagesFor (emacs-pgtk)).emacsWithPackages (
-      epkgs: with epkgs; [
-        treesit-grammars.with-all-grammars
-        vterm
-        mu4e
-      ]
-    );
 in
 {
   options.homeModules.emacs = {
@@ -28,12 +19,20 @@ in
       inputs.emacs-overlay.overlays.default
     ];
 
+    nixpkgs.config.permittedInsecurePackages = [ "xpdf-4.05" ];
     home.packages =
       with pkgs;
       [
-        ## Emacs itself
         binutils # native-comp needs 'as', provided by this
-        emacs # HEAD + native-comp
+        xpdf
+        ## Emacs itself
+        ((emacsPackagesFor (emacs-pgtk)).emacsWithPackages (
+          epkgs: with epkgs; [
+            treesit-grammars.with-all-grammars
+            vterm
+            mu4e
+          ]
+        ))
 
         ## Doom dependencies
         git

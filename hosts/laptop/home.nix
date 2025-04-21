@@ -18,7 +18,6 @@
     firefox.enable = true;
     tmux.enable = true;
     theme.enable = true;
-    emacs.enable = true;
     nvimConfig = {
       enable = true;
       setBuildEnv = true;

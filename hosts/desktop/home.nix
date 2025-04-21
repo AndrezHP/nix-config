@@ -23,6 +23,7 @@
       cyberTools.enable = true;
       games.enable = true;
       games.modernEmulation.enable = true;
+      devTools.enable = true;
     };
   };
 

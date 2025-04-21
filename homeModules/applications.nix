@@ -32,7 +32,6 @@ in
         cyrus-sasl-xoauth2
 
         discord
-        obsidian
         pavucontrol
         gnome-calendar
         blueman # Bluetooth manager
@@ -40,6 +39,7 @@ in
         ncmpcpp # Music player
         ventoy # Create bootable USB drives
         porsmo # Cli Pomodoro
+        via
 
         qbittorrent
         signal-desktop
@@ -68,6 +68,7 @@ in
         wine
 
         musescore
+        lilypond-with-fonts # Music in plaintext
         # reaper # Digital audio workstation
         # kodi-wayland
         # mattermost # Slack alternative
@@ -131,6 +132,7 @@ in
       ]
       ++ optionals cfg.devTools.enable [
         jetbrains-toolbox
+        gcc
 
         # Container alternative to docker
         podman
