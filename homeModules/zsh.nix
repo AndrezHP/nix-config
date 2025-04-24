@@ -1,11 +1,24 @@
-{pkgs, lib, config, ...}:
-with lib; let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib;
+let
   cfg = config.homeModules.zsh;
 in
 {
-  options.homeModules.zsh.enable = mkEnableOption "Enable zsh config";
+  options.homeModules.zsh = {
+    enable = mkEnableOption "Enable zsh config";
+    extraAliases = mkOption {
+      type = with types; attrs;
+      description = "Extra shell aliases for zsh";
+      default = { };
+    };
+  };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [direnv];
+    home.packages = with pkgs; [ direnv ];
     programs.zsh = {
       enable = true;
       autosuggestion.enable = true;
@@ -19,25 +32,18 @@ in
         extraConfig = ''
           CASE_SENSITIVE="true"
         '';
-        plugins = ["direnv"];
+        plugins = [ "direnv" ];
       };
-      plugins = [
-          {
-            name = "vi-mode";
-            src = pkgs.zsh-vi-mode;
-            file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
-          }
+      shellAliases = lib.mkMerge [
+        cfg.extraAliases
+        {
+          vim = "nvim";
+          lg = "lazygit";
+          conf = "cd ~/nix-config && nvim";
+          dev-rust = "nix-shell ~/nix-config/rust-shell/shell.nix";
+          lf = mkIf (elem pkgs.yazi config.home.packages) "yazi";
+        }
       ];
-
-      shellAliases = {
-        vim = "nvim";
-        lg = "lazygit";
-        conf = "cd ~/nix-config && nvim";
-        bh = "home-manager switch --flake ~/nix-config/#default";
-        bs = "sudo nixos-rebuild switch --flake ~/nix-config#default";
-        dev-rust = "nix-shell ~/nix-config/rust-shell/shell.nix";
-        lf = lib.mkIf (lib.elem pkgs.yazi config.home.packages ) "yazi";
-      };
     };
   };
 }

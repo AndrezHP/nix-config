@@ -7,7 +7,13 @@
   homeModules = {
     wlogout.enable = true;
     waybar.enable = true;
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      extraAliases = {
+        bh = "home-manager switch --flake ~/nix-config/#default";
+        bs = "sudo nixos-rebuild switch --flake ~/nix-config#default";
+      };
+    };
     firefox.enable = true;
     tmux.enable = true;
     theme.enable = true;
