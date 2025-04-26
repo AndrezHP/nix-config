@@ -1,15 +1,8 @@
-{config, pkgs, ...}: {
+{ config, pkgs, ... }:
+{
   imports = [
-    ../../homeModules/zsh.nix
-    ../../homeModules/firefox.nix
-    ../../homeModules/waybar.nix
-    ../../homeModules/theme.nix
-    ../../homeModules/app_packs.nix
-    ../../homeModules/git.nix
-    ../../homeModules/tmux.nix
-    ../../homeModules/nvim/nvim.nix
+    ../../modules/home
   ];
-
 
   homeModules = {
     wlogout.enable = true;
@@ -30,7 +23,7 @@
   };
 
   nixpkgs = {
-    overlays = [];
+    overlays = [ ];
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
@@ -48,7 +41,7 @@
   xdg.configFile."hypr".source = ../../dotfiles/hypr;
   xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
-  
+
   home.packages = with pkgs; [
     alacritty
   ];

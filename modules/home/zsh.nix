@@ -40,7 +40,7 @@ in
           vim = "nvim";
           lg = "lazygit";
           conf = "cd ~/nix-config && nvim";
-          dev-rust = "nix-shell ~/nix-config/rust-shell/shell.nix";
+          dev-rust = "nix-shell ~/nix-config/shells/rust/shell.nix";
           lf = mkIf (elem pkgs.yazi config.home.packages) "yazi";
         }
       ];

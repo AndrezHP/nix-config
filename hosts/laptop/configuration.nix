@@ -1,11 +1,15 @@
-{ inputs, config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../nixosModules/displayserver.nix
-    ];
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/nixos/displayserver.nix
+  ];
 
   nixosModules.displayServer.wayland = {
     enable = true;
@@ -25,7 +29,7 @@
     driSupport32Bit = true;
   };
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   # Nvidia driver options
   hardware.nvidia = {
     modesetting.enable = true;
@@ -39,14 +43,17 @@
       sync.enable = true;
       nvidiaBusId = "PCI:10:0:0";
       intelBusId = "PCI:0:0:0";
-    }; 
+    };
     #forceFullCompositionPipeline = true;
   };
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
   };
   networking.hostName = "nixos"; # Define your hostname.
@@ -77,7 +84,7 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver = { 
+  services.xserver = {
     enable = true;
     # Configure keymap in X11
     xkb.layout = "us";
@@ -87,7 +94,7 @@
   # Enable the GNOME Desktop Environment.
   #services.xserver.displayManager.gdm.enable = true;
   #services.xserver.desktopManager.gnome.enable = true;
-  
+
   # Enable hyprland (mutually exclusive with gnome)
   programs.hyprland = {
     enable = true;
@@ -132,7 +139,11 @@
     andreas = {
       isNormalUser = true;
       description = "Andreas";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "docker"
+      ];
       packages = with pkgs; [
         firefox
       ];
@@ -176,7 +187,7 @@
 
     rustup
     lf # Terminal file manager
-    
+
     kitty # Hyprland default terminal
 
     # Mounting flash drives and other harddrives

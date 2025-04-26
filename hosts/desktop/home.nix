@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ../../homeModules
+    ../../modules/home
   ];
 
   homeModules = {

@@ -1,10 +1,15 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   imports = [
     # Include the results of the hardware scan.
+    ../../modules/nixos/displayserver.nix
+    ../../modules/nixos/kanata/kanata.nix
     ./hardware-configuration.nix
-    ../../nixosModules/displayserver.nix
-    ../../nixosModules/kanata/kanata.nix
   ];
 
   nixosModules.kanata.enable = true;
@@ -24,6 +29,20 @@
     };
     efi.canTouchEfiVariables = true;
   };
+
+  # For Ollama
+  services.ollama.enable = true;
+  services.ollama.acceleration = "cuda";
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "cuda_cccl"
+      "cuda_cudart"
+      "cuda_nvcc"
+      "libcublas"
+      "nvidia-settings"
+      "nvidia-x11"
+    ];
 
   # Enable OpenGL
   hardware.graphics = {
