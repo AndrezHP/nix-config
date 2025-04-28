@@ -6,9 +6,13 @@ configuration {
     display-run:                " ";
     display-filebrowser:        " ";
     display-window:             " ";
-	drun-display-format:        "{name}";
+    drun-display-format:        "{name}";
     drun-match-fields:          "name";
-	window-format:              "{w} · {c} · {t}";
+    window-format:              "{w} · {c} · {t}";
+    kb-remove-to-eol:           "";
+    kb-accept-entry:            "Return,KP_Enter";
+    kb-row-down:                "Control+j,Control+n";
+    kb-row-up:                  "Control+k,Control+p";
 }
 
 /*****----- Global Properties -----*****/
