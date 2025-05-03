@@ -125,7 +125,7 @@ require("lazy").setup({
 	require("plugins.zen-mode"),
 	require("plugins.nvim-ts-autotag"),
 	require("plugins.ts-comments"),
-	-- TODO: add vim Dadbod for database stuff
+	require("plugins.dadbod"),
 
 	require("plugins.cmp"), -- Completion
 	require("plugins.indent_line"),

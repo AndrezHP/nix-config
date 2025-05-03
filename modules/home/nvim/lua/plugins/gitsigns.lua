@@ -1,9 +1,4 @@
--- Here is a more advanced example where we pass configuration
--- options to `gitsigns.nvim`. This is equivalent to the following lua:
---    require('gitsigns').setup({ ... })
---
--- See `:help gitsigns` to understand what the configuration keys do
-return { -- Adds git related signs to the gutter, as well as utilities for managing changes
+return { -- Adds git related signs to the gutter, See `:help gitsigns`
 	"lewis6991/gitsigns.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	opts = {

@@ -3,8 +3,6 @@ return { -- Useful plugin to show you pending keybinds.
 	event = "VimEnter", -- Sets the loading event to 'VimEnter'
 	config = function() -- This is the function that runs, AFTER loading
 		require("which-key").setup()
-
-		-- Document existing key chains
 		require("which-key").register({
 			{ "<leader>c", group = "[C]ode" },
 			{ "<leader>c_", hidden = true },
