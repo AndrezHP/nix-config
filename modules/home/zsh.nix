@@ -18,7 +18,16 @@ in
     };
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ direnv ];
+    programs.zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      options = [ "--cmd cd" ];
+    };
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     programs.zsh = {
       enable = true;
       autosuggestion.enable = true;
@@ -34,14 +43,20 @@ in
         '';
         plugins = [ "direnv" ];
       };
+      initContent = ''
+        bindkey '^\b' backward-kill-word
+      '';
       shellAliases = lib.mkMerge [
         cfg.extraAliases
         {
+          lf = mkIf (elem pkgs.yazi config.home.packages) "yazi";
+          ls = mkIf (elem pkgs.eza config.home.packages) "eza";
           vim = "nvim";
           lg = "lazygit";
           conf = "cd ~/nix-config && nvim";
           dev-rust = "nix-shell ~/nix-config/shells/rust/shell.nix";
-          lf = mkIf (elem pkgs.yazi config.home.packages) "yazi";
+          la = "ls --color -lha";
+          df = "df -h";
         }
       ];
     };

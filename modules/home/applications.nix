@@ -30,6 +30,7 @@ in
 
         oama # OAuth credential manager
         cyrus-sasl-xoauth2
+        yt-dlp
 
         discord
         pavucontrol
@@ -113,7 +114,7 @@ in
         ryujinx
       ]
       ++ optionals cfg.cliTools.enable [
-        # Experimental
+        ffmpeg
         eza # better ls?
         zoxide # better file path navigation
         tealdeer # tldr command
