@@ -7,6 +7,7 @@
   homeModules = {
     wlogout.enable = true;
     waybar.enable = true;
+    git.enable = true;
     zsh = {
       enable = true;
       extraAliases = {

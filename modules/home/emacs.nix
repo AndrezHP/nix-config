@@ -33,6 +33,7 @@ in
             mu4e
           ]
         ))
+        vips # Image processing for preview in Dirvish
 
         ## Doom dependencies
         git

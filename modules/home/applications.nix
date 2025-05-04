@@ -121,6 +121,7 @@ in
         jq # like sed, but for JSON
         lazygit
         neofetch
+        scc
       ]
       ++ optionals cfg.cyberTools.enable [
         wireshark
@@ -134,14 +135,6 @@ in
       ++ optionals cfg.devTools.enable [
         jetbrains-toolbox
         gcc
-
-        # Container alternative to docker
-        podman
-        podman-compose
-        podman-desktop
-        podman-tui
-
-        # PostgreSQL platform
         pgadmin4
       ];
   };
