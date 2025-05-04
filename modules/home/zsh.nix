@@ -51,7 +51,7 @@ in
       initContent = ''
         bindkey '^\b' backward-kill-word
       '';
-      initExtra = cfg.extraInit;
+      initExtra = cfg.initExtra;
       shellAliases = lib.mkMerge [
         cfg.extraAliases
         {
