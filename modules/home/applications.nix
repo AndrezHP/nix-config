@@ -135,7 +135,6 @@ in
       ++ optionals cfg.devTools.enable [
         jetbrains-toolbox
         gcc
-        pgadmin4
       ];
   };
 }
