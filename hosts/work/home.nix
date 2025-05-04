@@ -11,6 +11,10 @@
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#work";
       };
+      initExtra = ''
+        export SDKMAN_DIR="$HOME/.sdkman"
+        [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/sdkman/bin/sdkman-init.sh"
+      '';
     };
     kitty.enable = true;
     nvimConfig = {

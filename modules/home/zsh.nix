@@ -16,6 +16,11 @@ in
       description = "Extra shell aliases for zsh";
       default = { };
     };
+    initExtra = mkOption {
+      type = with types; string;
+      description = "Extra config at the end of .zshrc";
+      default = "";
+    };
   };
   config = mkIf cfg.enable {
     programs.zoxide = {
@@ -46,6 +51,7 @@ in
       initContent = ''
         bindkey '^\b' backward-kill-word
       '';
+      initExtra = cfg.extraInit;
       shellAliases = lib.mkMerge [
         cfg.extraAliases
         {
