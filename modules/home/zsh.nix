@@ -12,12 +12,12 @@ in
   options.homeModules.zsh = {
     enable = mkEnableOption "Enable zsh config";
     extraAliases = mkOption {
-      type = with types; attrs;
+      type = types.attrs;
       description = "Extra shell aliases for zsh";
       default = { };
     };
     initExtra = mkOption {
-      type = with types; string;
+      type = types.str;
       description = "Extra config at the end of .zshrc";
       default = "";
     };
@@ -48,10 +48,11 @@ in
         '';
         plugins = [ "direnv" ];
       };
-      initContent = ''
-        bindkey '^\b' backward-kill-word
-      '';
-      initExtra = cfg.initExtra;
+      initContent =
+        ''
+          bindkey '^\b' backward-kill-word
+        ''
+        + cfg.initExtra;
       shellAliases = lib.mkMerge [
         cfg.extraAliases
         {
