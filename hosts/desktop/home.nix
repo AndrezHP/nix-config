@@ -36,7 +36,6 @@
 
   programs.home-manager.enable = true;
   programs.nushell.enable = true;
-
   nixpkgs = {
     overlays = [ ];
     config = {
@@ -82,6 +81,7 @@
 
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
+    path-of-building
     sqlite
     alacritty
     kitty

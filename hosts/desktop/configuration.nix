@@ -1,22 +1,20 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 {
   imports = [
     # Include the results of the hardware scan.
-    ../../modules/nixos/displayserver.nix
-    ../../modules/nixos/kanata/kanata.nix
     ./hardware-configuration.nix
+    ../../modules/nixos/desktops
+    ../../modules/nixos/ollama.nix
+    ../../modules/nixos/kanata/kanata.nix
   ];
 
   nixosModules.kanata.enable = true;
-  nixosModules.displayServer.wayland = {
-    enable = true;
-    hyprland.enable = true;
-  };
+  nixosModules.desktops.hyprland.enable = true;
+  nixosModules.ollama.enable = true;
 
   # Bootloader.
   boot.loader = {
@@ -29,20 +27,6 @@
     };
     efi.canTouchEfiVariables = true;
   };
-
-  # For Ollama
-  services.ollama.enable = true;
-  services.ollama.acceleration = "cuda";
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "cuda_cccl"
-      "cuda_cudart"
-      "cuda_nvcc"
-      "libcublas"
-      "nvidia-settings"
-      "nvidia-x11"
-    ];
 
   # Enable OpenGL
   hardware.graphics = {
@@ -68,13 +52,15 @@
     };
   };
 
-  hardware.logitech.wireless.enable = true;
-  hardware.bluetooth.enable = true;
+  # AMD stuff
   hardware.cpu.amd.updateMicrocode = true;
   boot.kernelParams = [
     "amd_pstate=active"
   ];
   powerManagement.cpuFreqGovernor = "performance";
+
+  hardware.logitech.wireless.enable = true;
+  hardware.bluetooth.enable = true;
 
   environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
   environment.sessionVariables = {
@@ -222,8 +208,7 @@
     zip
     unzip
     lm_sensors # Hardware temp sensor
-
-    rustup
+    kitty # Hyprland default terminal
 
     # Mounting flash drives and other harddrives
     usbutils
@@ -234,16 +219,13 @@
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
     networkmanagerapplet
-
-    libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
-
-    kitty # Hyprland default terminal
 
     # For nvidia compatibility
     vulkan-loader
     vulkan-validation-layers
     vulkan-tools
+    libva # Implementation of VA-API (Video acceleration)
   ];
 
   xdg.portal.enable = true;
