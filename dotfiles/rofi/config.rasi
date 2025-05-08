@@ -1,6 +1,6 @@
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,run,filebrowser,window";
+    modi:                       "drun,run,filebrowser,window";
     show-icons:                 false;
     display-drun:               " ";
     display-run:                " ";
@@ -11,8 +11,8 @@ configuration {
     window-format:              "{w} · {c} · {t}";
     kb-remove-to-eol:           "";
     kb-accept-entry:            "Return,KP_Enter";
-    kb-row-down:                "Control+j,Control+n";
-    kb-row-up:                  "Control+k,Control+p";
+    kb-row-down:                "Control+j,Control+n,Down";
+    kb-row-up:                  "Control+k,Control+p,Up";
 }
 
 /*****----- Global Properties -----*****/
