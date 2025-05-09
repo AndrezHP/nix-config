@@ -4,6 +4,13 @@
     ../../modules/home
   ];
 
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
+  };
+
   homeModules = {
     wlogout.enable = true;
     waybar.enable = true;
