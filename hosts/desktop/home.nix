@@ -123,6 +123,7 @@
       fi
       hyprctl reload
     '')
+    go
   ];
 
   xdg = {

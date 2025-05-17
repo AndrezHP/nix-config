@@ -82,6 +82,8 @@
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+  nix.optimise.automatic = true;
+  nix.optimise.dates = [ "weekly" ];
 
   # Setup desktop extra harddisks and windows partition
   boot.supportedFilesystems = [ "ntfs" ];
@@ -172,6 +174,7 @@
       ];
     };
   };
+  users.defaultUserShell = pkgs.zsh;
 
   # Allow running executables
   programs.nix-ld.enable = true;
@@ -191,7 +194,6 @@
   # Use zsh as default shell (configured with home-manager)
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ zsh ];
-  users.defaultUserShell = pkgs.zsh;
 
   nixpkgs.config.allowUnfree = true;
 
