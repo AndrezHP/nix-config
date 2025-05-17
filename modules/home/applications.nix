@@ -38,7 +38,6 @@ in
         blueman # Bluetooth manager
         solaar # Manager for Logitech Unifying Receiver
         ncmpcpp # Music player
-        ventoy # Create bootable USB drives
         porsmo # Cli Pomodoro
         via
 
@@ -100,12 +99,13 @@ in
             swanstation # PSX (Port of duckstation)
             pcsx2 # PS2
             dolphin # Wii / GameCube
+            citra
           ]
         ))
       ]
       ++ optionals cfg.games.modernEmulation.enable [
         cemu
-        suyu
+        # suyu # removed because of DMCA takedown
         ryujinx
       ]
       ++ optionals cfg.cliTools.enable [
