@@ -26,7 +26,7 @@ in
         binutils # native-comp needs 'as', provided by this
         xpdf
         ## Emacs itself
-        ((emacsPackagesFor (emacs-pgtk)).emacsWithPackages (
+        ((emacsPackagesFor (emacs-git-pgtk)).emacsWithPackages (
           epkgs: with epkgs; [
             treesit-grammars.with-all-grammars
             vterm
