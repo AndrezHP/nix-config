@@ -33,6 +33,10 @@ in
       enable = true;
       enableZshIntegration = true;
     };
+    programs.nix-index = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
     programs.zsh = {
       enable = true;
