@@ -26,7 +26,6 @@ in
 {
   imports = [
     ../../modules/home
-    ./cargo-pbc.nix
     # ./nexus.nix
   ];
 
@@ -81,6 +80,7 @@ in
     # rustc
     # cargo
     formatScript
+    (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
 
     ##### Other stuff
     jetbrains-toolbox
