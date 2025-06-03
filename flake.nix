@@ -21,6 +21,10 @@
     };
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -39,19 +43,11 @@
     {
       nixosConfigurations = {
         default = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit outputs;
-            inherit system;
-          };
+          specialArgs = { inherit inputs outputs system; };
           modules = [ ./hosts/desktop/configuration.nix ];
         };
         laptop = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit outputs;
-            inherit system;
-          };
+          specialArgs = { inherit inputs outputs system; };
           modules = [ ./hosts/laptop/configuration.nix ];
         };
       };

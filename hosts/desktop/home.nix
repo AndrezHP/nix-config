@@ -1,8 +1,73 @@
-{ config, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ../../modules/home
+    inputs.zen-browser.homeModules.twilight-official
   ];
+
+  home.packages = with pkgs; [
+    (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate [
+      # "google-java-format" # There are not bundled in nixpkgs
+      # "intellij.prettierJS"
+      "ideavim"
+      "graphql"
+    ])
+    qutebrowser
+    (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
+    path-of-building
+    sqlite
+    alacritty
+    kitty
+    hyprlock
+    hypridle
+    hyprshot
+    nwg-look
+    (python312.withPackages (
+      p: with p; [
+        numpy
+        pandas
+        scipy
+        matplotlib
+        requests
+        seaborn
+        beautifulsoup4
+      ]
+    ))
+    (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
+    (pkgs.writeShellScriptBin "gamemode" ''
+      HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
+      if [ "$HYPRGAMEMODE" = 1 ] ; then
+          hyprctl --batch "\
+              keyword animations:enabled 0;\
+              keyword decoration:shadow:enabled 0;\
+              keyword decoration:blur:enabled 0;\
+              keyword general:gaps_in 0;\
+              keyword general:gaps_out 0;\
+              keyword general:border_size 1;\
+              keyword decoration:rounding 0"
+          exit
+      fi
+      hyprctl reload
+    '')
+    go
+    cemu
+    # suyu # removed because of DMCA takedown
+    ryujinx
+  ];
+
+  programs.zen-browser = {
+    enable = true;
+    policies = {
+      DisableAppUpdate = true;
+      DisableTelemetry = true;
+      # find more options here: https://mozilla.github.io/policy-templates/
+    };
+  };
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
@@ -36,8 +101,6 @@
       cliTools.enable = true;
       cyberTools.enable = true;
       games.enable = true;
-      games.modernEmulation.enable = true;
-      devTools.enable = true;
     };
   };
 
@@ -85,47 +148,6 @@
       ];
     };
   };
-
-  # Add stuff for your user as you see fit:
-  home.packages = with pkgs; [
-    (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
-    path-of-building
-    sqlite
-    alacritty
-    kitty
-    hyprlock
-    hypridle
-    hyprshot
-    nwg-look
-    (python312.withPackages (
-      p: with p; [
-        numpy
-        pandas
-        scipy
-        matplotlib
-        requests
-        seaborn
-        beautifulsoup4
-      ]
-    ))
-    (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
-    (pkgs.writeShellScriptBin "gamemode" ''
-      HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
-      if [ "$HYPRGAMEMODE" = 1 ] ; then
-          hyprctl --batch "\
-              keyword animations:enabled 0;\
-              keyword decoration:shadow:enabled 0;\
-              keyword decoration:blur:enabled 0;\
-              keyword general:gaps_in 0;\
-              keyword general:gaps_out 0;\
-              keyword general:border_size 1;\
-              keyword decoration:rounding 0"
-          exit
-      fi
-      hyprctl reload
-    '')
-    go
-  ];
 
   xdg = {
     enable = true;

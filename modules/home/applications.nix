@@ -10,24 +10,21 @@ let
 in
 {
   options.homeModules.applications = {
-    games.enable = mkEnableOption "Enable games";
-    games.modernEmulation = {
-      enable = mkEnableOption "Enable emulators for modern consoles";
-    };
-    cliTools.enable = mkEnableOption "Enable cli tools";
     cyberTools.enable = mkEnableOption "Enable common cyber security tools";
-    devTools.enable = mkEnableOption "Enable development tools";
+    cliTools.enable = mkEnableOption "Enable cli tools";
+    games.enable = mkEnableOption "Enable games";
+    games.modernEmulation.enable = mkEnableOption "Enable emulators for modern consoles";
   };
 
   config = {
     home.packages =
       with pkgs;
       [
-        spicetify-cli
+        tidal-hifi
         spotify
         mpd # Music Player Daemon
-        ncspot # ncurses spotify
 
+        # These might be useful for setting up oauth for mail
         oama # OAuth credential manager
         cyrus-sasl-xoauth2
         yt-dlp
@@ -126,10 +123,6 @@ in
         john
         yersinia
         hashcat
-      ]
-      ++ optionals cfg.devTools.enable [
-        jetbrains-toolbox
-        gcc
       ];
   };
 }
