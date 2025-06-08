@@ -11,7 +11,7 @@
       enable = true;
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#laptop";
-        bs = "nixos-rebuild switch --flake ~/nix-config/#laptop";
+        bs = "sudo nixos-rebuild switch --flake ~/nix-config/#laptop";
       };
     };
     firefox.enable = true;
