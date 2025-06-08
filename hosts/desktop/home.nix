@@ -86,6 +86,9 @@
         bh = "home-manager switch --flake ~/nix-config/#default";
         bs = "sudo nixos-rebuild switch --flake ~/nix-config#default";
       };
+      initExtra = ''
+        export PATH=$PATH:$(go env GOPATH)/bin
+      '';
     };
     firefox.enable = true;
     tmux.enable = true;
@@ -101,6 +104,7 @@
       cliTools.enable = true;
       cyberTools.enable = true;
       games.enable = true;
+      games.modernEmulation.enable = true;
     };
   };
 

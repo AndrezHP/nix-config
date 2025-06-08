@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   lib,
@@ -102,7 +103,7 @@ in
       ]
       ++ optionals cfg.games.modernEmulation.enable [
         cemu
-        # suyu # removed because of DMCA takedown
+        inputs.oldpkgs.legacyPackages.${system}.yuzu
         ryujinx
       ]
       ++ optionals cfg.cliTools.enable [
