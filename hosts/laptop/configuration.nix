@@ -10,8 +10,10 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
     ../../modules/nixos/desktops
+    ../../modules/homelab/jellyfin.nix
   ];
 
+  homelab.jellyfin.enable = true;
   nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
@@ -129,7 +131,6 @@
     usbutils
     udisks
     udiskie # Removable disk automounter for udisks
-
     efibootmgr # Efi boot manager
 
     dunst # Notification daemon
