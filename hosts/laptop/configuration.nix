@@ -1,51 +1,52 @@
 {
-  inputs,
   config,
   pkgs,
+  modulesPath,
   ...
 }:
 {
   imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/profiles/qemu-guest.nix")
+    ./disko.nix
     ../../modules/nixos/desktops
+    ../../modules/homelab
   ];
 
+  homelab.jellyfin.enable = true;
+  homelab.samba.enable = true;
   nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    fsIdentifier = "uuid";
   };
+
+  services.openssh.enable = true;
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Y2pKiFLlDTQ5nEs4sJFfhG03qIQde2PXVpLtyuKcj andreas@nixos"
+  ];
+
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
   # Enable OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
-  # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
-  # Nvidia driver options
   hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
     nvidiaSettings = true;
+    open = false;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-    prime = {
-      #offload.enable = true;
-      sync.enable = true;
-      nvidiaBusId = "PCI:10:0:0";
-      intelBusId = "PCI:0:0:0";
-    };
-    #forceFullCompositionPipeline = true;
   };
-  hardware.cpu.amd.updateMicrocode = true;
-  powerManagement.cpuFreqGovernor = "performance";
 
   nix.settings = {
     experimental-features = [
@@ -54,65 +55,31 @@
     ];
     auto-optimise-store = true;
   };
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "nixos-laptop";
+  networking.networkmanager.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "da_DK.UTF-8";
-    LC_IDENTIFICATION = "da_DK.UTF-8";
-    LC_MEASUREMENT = "da_DK.UTF-8";
-    LC_MONETARY = "da_DK.UTF-8";
-    LC_NAME = "da_DK.UTF-8";
-    LC_NUMERIC = "da_DK.UTF-8";
-    LC_PAPER = "da_DK.UTF-8";
-    LC_TELEPHONE = "da_DK.UTF-8";
-    LC_TIME = "da_DK.UTF-8";
-  };
 
-  # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    # Configure keymap in X11
     xkb.layout = "us";
     xkb.variant = "";
   };
 
-  # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
-
-  # Enable hyprland (mutually exclusive with gnome)
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-  };
-
   environment.sessionVariables = {
-    # If your cursor becomes invisible
-    WLR_NO_HARDWARE_CURSORS = "1";
-    # Make electron apps use wayland
-    NIXOS_OZONE_WL = "1";
+    WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
+    NIXOS_OZONE_WL = "1"; # Make electron apps use wayland
   };
 
-  # Enable CUPS to print documents.
+  hardware.bluetooth.enable = true;
+  services.libinput.enable = true;
   services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -120,23 +87,13 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
-
-  # Enable bluetooth
-  hardware.bluetooth.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = {
     andreas = {
       isNormalUser = true;
-      description = "Andreas";
+      initialHashedPassword = "$6$xoEF5OVlxv7YpVnA$Ewy6xAOhQ.tFH5coFUJfCWRAA3EHxbgFJ2Xyp2mnaHTzfkSej2yA.Qpw2kxi5tUCKJ.cnQqmoZBaXOVm1nClG0";
       extraGroups = [
         "networkmanager"
         "wheel"
@@ -148,51 +105,33 @@
     };
   };
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # Allow running executables
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged
-    # programs here, NOT in environment.systemPackages
-  ];
+  programs.nix-ld.libraries = with pkgs; [ ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-
-  programs.noisetorch.enable = true;
-
-  # Use zsh as default shell (configured with home-manager)
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # Terminal applications
+    gitMinimal
     neovim
     htop
-    git
-    mpv # Video player
-    fzf # Fuzzy finder
-    lshw # List hardware
-    wireplumber # PipeWire session/policy manager
+    # git
+    mpv
+    fzf
+    lshw
+    wireplumber
     zip
     unzip
-
-    rustup
-    lf # Terminal file manager
-
-    kitty # Hyprland default terminal
+    lf
+    curl
+    kitty
 
     # Mounting flash drives and other harddrives
     usbutils
     udisks
     udiskie # Removable disk automounter for udisks
-
     efibootmgr # Efi boot manager
 
     dunst # Notification daemon
@@ -200,24 +139,14 @@
     networkmanagerapplet
     libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
-
-    # For nvidia compatibility
-    vulkan-loader
-    vulkan-validation-layers
-    vulkan-tools
   ];
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-emoji
-    nerdfonts
-    liberation_ttf
-    inconsolata
+    nerd-fonts.jetbrains-mono
     jetbrains-mono
-    font-awesome
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -228,21 +157,9 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
-
+  system.stateVersion = "23.11";
 }

@@ -20,15 +20,11 @@ in
 
     # Make electron apps use wayland
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    services.xserver = {
-      enable = true;
-      displayManager = {
-        gdm = {
-          enable = true;
-          wayland = true;
-          autoSuspend = false;
-        };
-      };
+    services.xserver.enable = true;
+    services.displayManager = {
+      gdm.enable = true;
+      gdm.wayland = true;
+      gdm.autoSuspend = false;
     };
 
     programs.hyprland = {
