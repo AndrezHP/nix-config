@@ -1,11 +1,12 @@
 {
   config,
   pkgs,
+  modulesPath,
   ...
 }:
 {
   imports = [
-    # Include the results of the hardware scan.
+    # (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
     ./hardware-configuration.nix
     ../../modules/nixos
   ];
@@ -17,17 +18,16 @@
     enable = true;
     user = "andreas";
   };
+  virtualisation.docker.enable = true;
 
   # Bootloader.
-  boot.loader = {
-    grub = {
-      enable = true;
-      device = "nodev";
-      useOSProber = true;
-      efiSupport = true;
-      fsIdentifier = "uuid";
-    };
-    efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = true;
+    device = "nodev";
+    useOSProber = true;
+    efiSupport = true;
+    fsIdentifier = "uuid";
   };
 
   # Enable OpenGL
@@ -66,9 +66,7 @@
 
   environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
   environment.sessionVariables = {
-    # If your cursor becomes invisible
     WLR_NO_HARDWARE_CURSORS = "1";
-    # Some other settings
     GBM_BACKEND = "nvidia-drm";
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -84,27 +82,6 @@
   };
   nix.optimise.automatic = true;
   nix.optimise.dates = [ "weekly" ];
-
-  # Setup desktop extra harddisks and windows partition
-  boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems = {
-    "/mnt/disk1" = {
-      device = "/dev/disk/by-uuid/CA367026367015A3";
-      fsType = "ntfs-3g";
-      options = [ "nofail" ];
-    };
-    "/mnt/disk2" = {
-      device = "/dev/disk/by-uuid/5AD4EDF9D4EDD6F3";
-      fsType = "ntfs-3g";
-      options = [ "nofail" ];
-    };
-    "/mnt/windowsPartition" = {
-      device = "/dev/disk/by-uuid/5A78427D784257C1";
-      fsType = "ntfs-3g";
-      options = [ "nofail" ];
-    };
-  };
-
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -112,44 +89,52 @@
     ];
     auto-optimise-store = true;
   };
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # Setup desktop extra harddisks and windows partition
+  boot.supportedFilesystems = [ "ntfs" ];
+  fileSystems =
+    let
+      options = [
+        "nofail"
+        "rw"
+        "uid=1000"
+        "gid=1000"
+        "umask=022"
+        "x-systemd.device-timeout=10"
+      ];
+    in
+    {
+      "/mnt/disk1" = {
+        device = "/dev/disk/by-uuid/CA367026367015A3";
+        fsType = "ntfs-3g";
+        inherit options;
+      };
+      "/mnt/disk2" = {
+        device = "/dev/disk/by-uuid/5AD4EDF9D4EDD6F3";
+        fsType = "ntfs-3g";
+        inherit options;
+      };
+      "/mnt/windowsPartition" = {
+        device = "/dev/disk/by-uuid/5A78427D784257C1";
+        fsType = "ntfs-3g";
+        inherit options;
+      };
+    };
 
-  # Enable networking
+  networking.hostName = "nixos-desktop";
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "da_DK.UTF-8";
-    LC_IDENTIFICATION = "da_DK.UTF-8";
-    LC_MEASUREMENT = "da_DK.UTF-8";
-    LC_MONETARY = "da_DK.UTF-8";
-    LC_NAME = "da_DK.UTF-8";
-    LC_NUMERIC = "da_DK.UTF-8";
-    LC_PAPER = "da_DK.UTF-8";
-    LC_TELEPHONE = "da_DK.UTF-8";
-    LC_TIME = "da_DK.UTF-8";
-  };
 
-  # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    # Configure keymap in X11
     xkb.layout = "us";
     xkb.variant = "";
   };
   programs.dconf.enable = true;
 
   security.rtkit.enable = true;
-
   services.libinput.enable = true;
   services.printing.enable = true;
   services.pulseaudio.enable = false;
@@ -162,7 +147,6 @@
     wireplumber.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = {
     andreas = {
       isNormalUser = true;
@@ -176,7 +160,7 @@
   };
   users.defaultUserShell = pkgs.zsh;
 
-  # Allow running executables
+  nixpkgs.config.allowUnfree = true;
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [ ];
 
@@ -191,11 +175,8 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
-  # Use zsh as default shell (configured with home-manager)
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ zsh ];
-
-  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     neovim
@@ -216,6 +197,8 @@
     udiskie
     udisks
     efibootmgr
+    ntfs3g
+    fuse3
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
@@ -239,27 +222,16 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.iosevka
-    liberation_ttf
-    inconsolata
     jetbrains-mono
     font-awesome
-    dejavu_fonts
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
   programs.mtr.enable = true; # Network diagnostics
+  services.openssh.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
 
   system.stateVersion = "23.11";
 }

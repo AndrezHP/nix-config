@@ -7,20 +7,28 @@
   homeModules = {
     wlogout.enable = true;
     waybar.enable = true;
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      extraAliases = {
+        bh = "home-manager switch --flake ~/nix-config/#laptop";
+        bs = "sudo nixos-rebuild switch --flake ~/nix-config/#laptop";
+      };
+    };
     firefox.enable = true;
     tmux.enable = true;
     theme.enable = true;
+    kitty.enable = true;
     nvimConfig = {
       enable = true;
       setBuildEnv = true;
       withBuildTools = true;
     };
-    applications = {
-      cliTools.enable = true;
-      cyberTools.enable = true;
-    };
+    applications.cliTools.enable = true;
   };
+
+  home.packages = with pkgs; [
+    alacritty
+  ];
 
   nixpkgs = {
     overlays = [ ];
@@ -41,10 +49,6 @@
   xdg.configFile."hypr".source = ../../dotfiles/hypr;
   xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
-
-  home.packages = with pkgs; [
-    alacritty
-  ];
 
   programs.home-manager.enable = true;
   services.syncthing.enable = true;

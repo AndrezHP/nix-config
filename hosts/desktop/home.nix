@@ -11,6 +11,7 @@
   ];
 
   home.packages = with pkgs; [
+    cifs-utils
     (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate [
       # "google-java-format" # There are not bundled in nixpkgs
       # "intellij.prettierJS"
@@ -54,9 +55,13 @@
       fi
       hyprctl reload
     '')
+    (pkgs.writeShellScriptBin "mountSamba" ''
+      read -p "User name: " USERNAME
+      read -s -p "Password: " PASSWORD
+      sudo mount -t cifs //192.168.1.223/public /mnt/samba_share -o username=$USERNAME,password=$PASSWORD
+    '')
     go
     cemu
-    # suyu # removed because of DMCA takedown
     ryujinx
   ];
 
@@ -86,6 +91,9 @@
         bh = "home-manager switch --flake ~/nix-config/#default";
         bs = "sudo nixos-rebuild switch --flake ~/nix-config#default";
       };
+      initExtra = ''
+        export PATH=$PATH:$(go env GOPATH)/bin
+      '';
     };
     firefox.enable = true;
     tmux.enable = true;
