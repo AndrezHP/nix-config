@@ -10,10 +10,11 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
     ../../modules/nixos/desktops
-    ../../modules/homelab/jellyfin.nix
+    ../../modules/homelab
   ];
 
   homelab.jellyfin.enable = true;
+  homelab.samba.enable = true;
   nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
