@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
+    # (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
     ./hardware-configuration.nix
     ../../modules/nixos
   ];
@@ -18,6 +18,7 @@
     enable = true;
     user = "andreas";
   };
+  virtualisation.docker.enable = true;
 
   # Bootloader.
   boot.loader.efi.canTouchEfiVariables = true;
@@ -109,7 +110,7 @@
     };
   };
 
-  networking.hostName = "nixos";
+  networking.hostName = "nixos-desktop";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Copenhagen";
@@ -204,10 +205,12 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
+    noto-fonts-emoji
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.iosevka
     jetbrains-mono
+    font-awesome
   ];
 
   programs.mtr.enable = true; # Network diagnostics
