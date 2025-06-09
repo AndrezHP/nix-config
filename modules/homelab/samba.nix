@@ -15,21 +15,21 @@ in
           "server string" = "smbnix";
           "netbios name" = "smbnix";
           "security" = "user";
-
-          "hosts allow" = "192.168.0. 127.0.0.1 localhost";
+          "client min protocol" = "SMB2";
+          "client max protocol" = "SMB3";
+          "hosts allow" = "192.168.1. 127.0.0.1 localhost";
           "hosts deny" = "0.0.0.0/0";
           "guest account" = "nobody";
           "map to guest" = "bad user";
         };
+        # sudo mount -t cifs //192.168.1.223/public /mnt/samba_share -o username=<username>, vers=3.0
         "public" = {
           "path" = "/mnt/Shares/Public";
-          "browseable" = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          "force user" = "username";
-          "force group" = "groupname";
+          "writable" = "yes";
+          "guest ok" = "no";
+          "valid users" = "@wheel";
+          "create mask" = "0775";
+          "directory mask" = "0775";
         };
       };
     };
@@ -38,6 +38,7 @@ in
       enable = true;
       openFirewall = true;
     };
+
     networking.firewall.enable = true;
     networking.firewall.allowPing = true;
   };

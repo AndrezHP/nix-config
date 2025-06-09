@@ -11,6 +11,7 @@
   ];
 
   home.packages = with pkgs; [
+    cifs-utils
     (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate [
       # "google-java-format" # There are not bundled in nixpkgs
       # "intellij.prettierJS"
