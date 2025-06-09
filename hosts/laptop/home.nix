@@ -17,6 +17,7 @@
     firefox.enable = true;
     tmux.enable = true;
     theme.enable = true;
+    kitty.enable = true;
     nvimConfig = {
       enable = true;
       setBuildEnv = true;

@@ -103,7 +103,6 @@ in
       ]
       ++ optionals cfg.games.modernEmulation.enable [
         cemu
-        inputs.oldpkgs.legacyPackages.${system}.yuzu
         ryujinx
       ]
       ++ optionals cfg.cliTools.enable [

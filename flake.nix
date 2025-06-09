@@ -2,7 +2,6 @@
   description = "Nixos flake!";
 
   inputs = {
-    oldpkgs.url = "github:nixos/nixpkgs/1bee20d2b571ab1bf5b006e43b87b50b28d598be";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager";

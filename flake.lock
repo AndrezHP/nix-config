@@ -468,22 +468,6 @@
         "type": "github"
       }
     },
-    "oldpkgs": {
-      "locked": {
-        "lastModified": 1724216024,
-        "narHash": "sha256-8CDFuA00v8r4r2adf18uE92Zfr2nMXQzJDq3t8Hvk3U=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1bee20d2b571ab1bf5b006e43b87b50b28d598be",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1bee20d2b571ab1bf5b006e43b87b50b28d598be",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -515,7 +499,6 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nixpkgs": "nixpkgs",
-        "oldpkgs": "oldpkgs",
         "sops-nix": "sops-nix",
         "zen-browser": "zen-browser"
       }
