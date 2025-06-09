@@ -9,7 +9,6 @@ in
     services.samba = {
       enable = true;
       openFirewall = true;
-      securityType = "user";
       settings = {
         global = {
           "workgroup" = "WORKGROUP";
@@ -39,5 +38,7 @@ in
       enable = true;
       openFirewall = true;
     };
+    networking.firewall.enable = true;
+    networking.firewall.allowPing = true;
   };
 }
