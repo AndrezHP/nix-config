@@ -22,7 +22,7 @@ in
           "guest account" = "nobody";
           "map to guest" = "bad user";
         };
-        # sudo mount -t cifs //192.168.1.223/public /mnt/samba_share -o username=<username>, vers=3.0
+        # sudo mount -t cifs //192.168.1.223/public /mnt/samba_share -o username=<username>,password=<password>
         "public" = {
           "path" = "/mnt/Shares/Public";
           "writable" = "yes";

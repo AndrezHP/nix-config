@@ -55,9 +55,13 @@
       fi
       hyprctl reload
     '')
+    (pkgs.writeShellScriptBin "mountSamba" ''
+      read -p "User name: " USERNAME
+      read -s -p "Password: " PASSWORD
+      sudo mount -t cifs //192.168.1.223/public /mnt/samba_share -o username=$USERNAME,password=$PASSWORD
+    '')
     go
     cemu
-    # suyu # removed because of DMCA takedown
     ryujinx
   ];
 
@@ -105,7 +109,6 @@
       cliTools.enable = true;
       cyberTools.enable = true;
       games.enable = true;
-      games.modernEmulation.enable = true;
     };
   };
 

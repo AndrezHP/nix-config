@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   config,
   lib,
@@ -14,7 +13,6 @@ in
     cyberTools.enable = mkEnableOption "Enable common cyber security tools";
     cliTools.enable = mkEnableOption "Enable cli tools";
     games.enable = mkEnableOption "Enable games";
-    games.modernEmulation.enable = mkEnableOption "Enable emulators for modern consoles";
   };
 
   config = {
@@ -100,10 +98,6 @@ in
             citra
           ]
         ))
-      ]
-      ++ optionals cfg.games.modernEmulation.enable [
-        cemu
-        ryujinx
       ]
       ++ optionals cfg.cliTools.enable [
         ffmpeg
