@@ -17,7 +17,7 @@ in
           "security" = "user";
           "client min protocol" = "SMB2";
           "client max protocol" = "SMB3";
-          "hosts allow" = "192.168.1. 127.0.0.1 localhost";
+          "hosts allow" = "192.168.1. 127. localhost";
           "hosts deny" = "0.0.0.0/0";
           "guest account" = "nobody";
           "map to guest" = "bad user";
@@ -27,7 +27,7 @@ in
           "path" = "/mnt/Shares/Public";
           "writable" = "yes";
           "guest ok" = "no";
-          "valid users" = "@wheel";
+          "valid users" = "@wheel andreas";
           "create mask" = "0775";
           "directory mask" = "0775";
         };
