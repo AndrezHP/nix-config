@@ -92,23 +92,34 @@
 
   # Setup desktop extra harddisks and windows partition
   boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems = {
-    "/mnt/disk1" = {
-      device = "/dev/disk/by-uuid/CA367026367015A3";
-      fsType = "ntfs-3g";
-      options = [ "nofail" ];
+  fileSystems =
+    let
+      options = [
+        "nofail"
+        "rw"
+        "uid=1000"
+        "gid=1000"
+        "umask=022"
+        "x-systemd.device-timeout=10"
+      ];
+    in
+    {
+      "/mnt/disk1" = {
+        device = "/dev/disk/by-uuid/CA367026367015A3";
+        fsType = "ntfs-3g";
+        inherit options;
+      };
+      "/mnt/disk2" = {
+        device = "/dev/disk/by-uuid/5AD4EDF9D4EDD6F3";
+        fsType = "ntfs-3g";
+        inherit options;
+      };
+      "/mnt/windowsPartition" = {
+        device = "/dev/disk/by-uuid/5A78427D784257C1";
+        fsType = "ntfs-3g";
+        inherit options;
+      };
     };
-    "/mnt/disk2" = {
-      device = "/dev/disk/by-uuid/5AD4EDF9D4EDD6F3";
-      fsType = "ntfs-3g";
-      options = [ "nofail" ];
-    };
-    "/mnt/windowsPartition" = {
-      device = "/dev/disk/by-uuid/5A78427D784257C1";
-      fsType = "ntfs-3g";
-      options = [ "nofail" ];
-    };
-  };
 
   networking.hostName = "nixos-desktop";
   networking.networkmanager.enable = true;
@@ -186,6 +197,8 @@
     udiskie
     udisks
     efibootmgr
+    ntfs3g
+    fuse3
 
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
