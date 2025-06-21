@@ -49,9 +49,9 @@ in
         yazi
 
         brave # Another browser
-        calibre # E-book software
+        calibre # E-book stuff
         zathura # PDF viewer
-        sxiv # Image viewer
+        qimgv # Image viewer
 
         ani-cli
         libreoffice
