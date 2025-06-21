@@ -15,6 +15,7 @@
 
   homelab.jellyfin.enable = true;
   homelab.samba.enable = true;
+  homelab.immich.enable = true;
   nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
@@ -127,6 +128,7 @@
     lf
     curl
     kitty
+    ripgrep
 
     # Mounting flash drives and other harddrives
     usbutils
