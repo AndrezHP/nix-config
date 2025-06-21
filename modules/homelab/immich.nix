@@ -15,7 +15,6 @@ in
       openFirewall = true;
       host = "0.0.0.0";
       accelerationDevices = null;
-      mediaLocation = "/mnt/Shares/Public/immich";
     };
     users.users.immich.extraGroups = [
       "video"
