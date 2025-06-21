@@ -18,6 +18,13 @@
   homelab.immich.enable = true;
   nixosModules.desktops.hyprland.enable = true;
 
+  networking.interfaces."enp2s0f1".wakeOnLan = {
+    enable = true;
+    policy = [
+      "magic"
+    ];
+  };
+
   # Bootloader.
   boot.loader.grub = {
     enable = true;
