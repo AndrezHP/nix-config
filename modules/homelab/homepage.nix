@@ -1,6 +1,14 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.homepage;
+  categories = [
+    "Media"
+    "Arr"
+    "Services"
+  ];
+  filterOnCategory =
+    services: x:
+    (lib.attrsets.filterAttrs (name: value: value ? homepage && value.category == x) services);
 in
 {
   options.homelab.homepage.enable = lib.mkEnableOption "Enable Homepage";
@@ -27,106 +35,36 @@ in
         ];
         statusStyle = "dot";
       };
-
       services =
-        let
-          categories = [
-            "Media"
-            "Arr"
-            "Services"
-          ];
-          filterServices =
-            x: (lib.attrsets.filterAttrs (name: value: value ? homepage && value.category == x) config.homelab);
-        in
         lib.lists.forEach categories (cat: {
           "${cat}" =
-            lib.lists.forEach (lib.attrsets.mapAttrsToList (name: value: name) (filterServices "${cat}"))
+            lib.lists.forEach
+              (lib.attrsets.mapAttrsToList (name: value: name) (filterOnCategory config.homelab "${cat}"))
               (x: {
                 "${config.homelab.${x}.homepage.name}" = config.homelab.${x}.homepage;
               });
         })
         ++ [
           {
-            Arr = [
-              {
-                Radarr = {
-                  name = "Radarr";
-                };
-              }
-            ];
-          }
-          {
-            Media = [
-              {
-                jellyfin = {
-                  name = "Jellyfin";
-                  icon = "jellyfin.svg";
-                  description = "The Free Software Media System";
-                  href = "http://192.168.1.223:8096";
-                  siteMonitor = "http://localhost:8096";
-                };
-              }
-              {
-                immich = {
-                  name = "Immich";
-                  icon = "immich.svg";
-                  description = "Self-hosted photo and video management solution";
-                  href = "http://192.168.1.223:2283";
-                  siteMonitor = "http://localhost:2283";
-                };
-              }
-            ];
-          }
-          {
             Glances =
               let
-                port = toString config.services.glances.port;
+                mapGlances = name: metric: {
+                  "${name}" = {
+                    widget = {
+                      type = "glances";
+                      url = "http://localhost:${toString config.services.glances.port}";
+                      metric = metric;
+                      chart = false;
+                      version = 4;
+                    };
+                  };
+                };
               in
               [
-                {
-                  Info = {
-                    widget = {
-                      type = "glances";
-                      url = "http://localhost:${port}";
-                      metric = "info";
-                      chart = false;
-                      version = 4;
-                    };
-                  };
-                }
-                {
-                  "CPU Temp" = {
-                    widget = {
-                      type = "glances";
-                      url = "http://localhost:${port}";
-                      metric = "sensor:Package id 0";
-                      chart = false;
-                      version = 4;
-                    };
-                  };
-                }
-                {
-                  Processes = {
-                    widget = {
-                      type = "glances";
-                      url = "http://localhost:${port}";
-                      metric = "process";
-                      chart = false;
-                      version = 4;
-                    };
-                  };
-                }
-                {
-                  Network = {
-                    widget = {
-                      type = "glances";
-                      url = "http://localhost:${port}";
-                      metric = "network:enp2s0f1";
-                      chart = false;
-                      version = 4;
-                    };
-                  };
-                }
+                (mapGlances "Info" "info")
+                (mapGlances "CPU Temp" "sensor:Package id 0")
+                (mapGlances "Processes" "process")
+                (mapGlances "Network" "network:enp2s0f1")
               ];
           }
         ];
