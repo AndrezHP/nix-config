@@ -17,6 +17,7 @@
   homelab.samba.enable = true;
   homelab.immich.enable = true;
   homelab.homepage.enable = true;
+  homelab.uptime-kuma.enable = true;
   networking.interfaces."enp2s0f1".wakeOnLan = {
     enable = true;
     policy = [ "magic" ];

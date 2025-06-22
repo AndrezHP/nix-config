@@ -36,6 +36,15 @@ in
                 name = "Vaultwarden";
               };
             }
+            {
+              Uptime-Kuma = {
+                name = "Uptime Kuma";
+                description = "Service monitoring tool";
+                icon = " uptime-kuma.svg";
+                href = "http://192.168.1.223:3001";
+                siteMonitor = "http://localhost:3001";
+              };
+            }
           ];
         }
         {
