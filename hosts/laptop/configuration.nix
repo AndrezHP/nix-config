@@ -23,6 +23,9 @@
     policy = [ "magic" ];
   };
 
+  # Disable sleep on closing the lid
+  services.logind.lidSwitch = "ignore";
+
   nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.

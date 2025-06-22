@@ -14,7 +14,7 @@ in
       default = {
         name = "Immich";
         icon = "immich.svg";
-        description = "Self-hosted photo and video management solution";
+        description = "Self-hosted photo and video management";
         href = "http://192.168.1.223:2283";
         siteMonitor = "http://localhost:2283";
       };
