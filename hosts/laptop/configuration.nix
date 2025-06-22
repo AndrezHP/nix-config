@@ -18,6 +18,14 @@
   homelab.immich.enable = true;
   homelab.homepage.enable = true;
   homelab.uptime-kuma.enable = true;
+  homelab.microbin.enable = true;
+
+  homelab.radarr.enable = true;
+  homelab.sonarr.enable = true;
+  homelab.prowlarr.enable = true;
+  homelab.lidarr.enable = true;
+  homelab.bazarr.enable = true;
+
   networking.interfaces."enp2s0f1".wakeOnLan = {
     enable = true;
     policy = [ "magic" ];
