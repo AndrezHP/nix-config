@@ -8,7 +8,23 @@ let
   cfg = config.homelab.jellyfin;
 in
 {
-  options.homelab.jellyfin.enable = lib.mkEnableOption "Enable Jellyfin";
+  options.homelab.jellyfin = {
+    enable = lib.mkEnableOption "Enable Jellyfin";
+    category = lib.mkOption {
+      type = lib.types.str;
+      default = "Media";
+    };
+    homepage = lib.mkOption {
+      type = lib.types.attrs;
+      default = {
+        name = "Jellyfin";
+        icon = "jellyfin.svg";
+        description = "The Free Software Media System";
+        href = "http://192.168.1.223:8096";
+        siteMonitor = "http://localhost:8096";
+      };
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     nixpkgs.config.packageOverrides = pkgs: {
