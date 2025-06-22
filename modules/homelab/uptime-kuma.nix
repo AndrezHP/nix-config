@@ -12,9 +12,9 @@ in
     homepage = lib.mkOption {
       type = lib.types.attrs;
       default = {
-        name = "uptime-kuma";
+        name = "Uptime Kuma";
         description = "Service monitoring tool";
-        icon = " uptime-kuma.svg";
+        icon = "uptime-kuma.svg";
         href = "http://192.168.1.223:3001";
         siteMonitor = "http://localhost:3001";
       };
