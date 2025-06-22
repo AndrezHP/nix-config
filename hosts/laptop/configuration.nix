@@ -16,14 +16,13 @@
   homelab.jellyfin.enable = true;
   homelab.samba.enable = true;
   homelab.immich.enable = true;
-  nixosModules.desktops.hyprland.enable = true;
-
+  homelab.homepage.enable = true;
   networking.interfaces."enp2s0f1".wakeOnLan = {
     enable = true;
-    policy = [
-      "magic"
-    ];
+    policy = [ "magic" ];
   };
+
+  nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
   boot.loader.grub = {

@@ -52,6 +52,7 @@ in
         calibre # E-book stuff
         zathura # PDF viewer
         qimgv # Image viewer
+        wakeonlan
 
         ani-cli
         libreoffice
