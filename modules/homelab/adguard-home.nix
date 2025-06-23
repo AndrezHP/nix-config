@@ -30,10 +30,11 @@ in
       settings = {
         http.address = "127.0.0.1:3031";
         dns.upstream_dns = [
-          "tls://dns-unfiltered.adguard.com"
-          "9.9.9.9#dns.quad9.net"
-          "149.112.112.112#dns.quad9.net"
           "https://base.dns.mullvad.net/dns-query"
+          "tls://dns-unfiltered.adguard.com"
+          "https://dns.quad9.net"
+          "9.9.9.9"
+          "149.112.112.112"
         ];
         filtering.protection_enabled = true;
         filtering.filtering_enabled = true;
