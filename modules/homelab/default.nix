@@ -12,5 +12,6 @@
     ./prowlarr.nix
     ./lidarr.nix
     ./bazarr.nix
+    ./adguard-home.nix
   ];
 }

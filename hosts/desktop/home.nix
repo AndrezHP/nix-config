@@ -18,7 +18,6 @@
       "ideavim"
       "graphql"
     ])
-    qutebrowser
     (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
     path-of-building
     sqlite

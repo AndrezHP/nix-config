@@ -19,6 +19,7 @@
   homelab.homepage.enable = true;
   homelab.uptime-kuma.enable = true;
   homelab.microbin.enable = true;
+  homelab.adguard-home.enable = true;
 
   homelab.radarr.enable = true;
   homelab.sonarr.enable = true;
