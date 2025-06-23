@@ -8,7 +8,9 @@ let
   ];
   filterOnCategory =
     services: x:
-    (lib.attrsets.filterAttrs (name: value: value ? homepage && value.category == x) services);
+    (lib.attrsets.filterAttrs (
+      name: value: value ? homepage && value.category == x && value.enable
+    ) services);
 in
 {
   options.homelab.homepage.enable = lib.mkEnableOption "Enable Homepage";
