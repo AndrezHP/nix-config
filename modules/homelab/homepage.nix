@@ -35,7 +35,7 @@ in
           { Arr.style = "column"; }
           { Services.style = "column"; }
           {
-            Glances = {
+            Disabled = {
               style = "row";
               columns = 6;
             };

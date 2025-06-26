@@ -61,6 +61,7 @@
     go
     cemu
     ryujinx
+    baobab # Disk usage analyzer
   ];
 
   programs.zen-browser = {
