@@ -13,5 +13,6 @@
     ./lidarr.nix
     ./bazarr.nix
     ./adguard-home.nix
+    ./vaultwarden.nix
   ];
 }

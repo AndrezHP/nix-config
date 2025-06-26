@@ -13,19 +13,22 @@
     ../../modules/homelab
   ];
 
-  homelab.jellyfin.enable = true;
-  homelab.samba.enable = true;
-  homelab.immich.enable = true;
-  homelab.homepage.enable = true;
-  homelab.uptime-kuma.enable = true;
-  homelab.microbin.enable = true;
-  homelab.adguard-home.enable = false;
+  homelab = {
+    jellyfin.enable = true;
+    samba.enable = true;
+    immich.enable = true;
+    homepage.enable = true;
+    uptime-kuma.enable = true;
+    microbin.enable = true;
+    adguard-home.enable = false;
 
-  homelab.radarr.enable = true;
-  homelab.sonarr.enable = true;
-  homelab.prowlarr.enable = true;
-  homelab.lidarr.enable = true;
-  homelab.bazarr.enable = true;
+    radarr.enable = true;
+    sonarr.enable = true;
+    prowlarr.enable = true;
+    lidarr.enable = true;
+    bazarr.enable = true;
+  };
+
 
   networking.interfaces."enp2s0f1".wakeOnLan = {
     enable = true;
