@@ -14,7 +14,7 @@ in
       default = {
         name = "AdGuard Home";
         icon = "adguard-home.svg";
-        description = "DNS service to block ads and malicious websites";
+        description = "DNS server";
         href = "http://192.168.1.223:3031";
         siteMonitor = "http://localhost:3031";
       };
@@ -31,10 +31,7 @@ in
         http.address = "127.0.0.1:3031";
         dns.upstream_dns = [
           "https://base.dns.mullvad.net/dns-query"
-          "tls://dns-unfiltered.adguard.com"
-          "https://dns.quad9.net"
-          "9.9.9.9"
-          "149.112.112.112"
+          "8.8.8.8"
         ];
         filtering.protection_enabled = true;
         filtering.filtering_enabled = true;
@@ -45,8 +42,7 @@ in
               url = url;
             })
             [
-              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
-              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
+              "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"
               "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/nsfw.txt"
             ];
       };

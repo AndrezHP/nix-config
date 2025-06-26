@@ -19,7 +19,7 @@
   homelab.homepage.enable = true;
   homelab.uptime-kuma.enable = true;
   homelab.microbin.enable = true;
-  homelab.adguard-home.enable = true;
+  homelab.adguard-home.enable = false;
 
   homelab.radarr.enable = true;
   homelab.sonarr.enable = true;
@@ -170,17 +170,11 @@
     jetbrains-mono
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
 
   system.stateVersion = "23.11";
 }
