@@ -34,6 +34,12 @@ in
           { Media.style = "column"; }
           { Arr.style = "column"; }
           { Services.style = "column"; }
+          {
+            Glances = {
+              style = "row";
+              columns = 6;
+            };
+          }
         ];
         statusStyle = "dot";
       };
@@ -68,6 +74,19 @@ in
                 (mapGlances "Processes" "process")
                 (mapGlances "Network" "network:enp2s0f1")
               ];
+          }
+          {
+            Disabled =
+              let
+                disabledServices = (
+                  lib.attrsets.mapAttrsToList (name: value: name) (
+                    (lib.attrsets.filterAttrs (name: value: value ? homepage && value.enable == false) config.homelab)
+                  )
+                );
+              in
+              (lib.lists.forEach disabledServices (x: {
+                "${config.homelab.${x}.homepage.name}" = config.homelab.${x}.homepage;
+              }));
           }
         ];
     };
