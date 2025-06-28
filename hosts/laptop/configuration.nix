@@ -21,6 +21,7 @@
     uptime-kuma.enable = true;
     microbin.enable = true;
     adguard-home.enable = false;
+    vaultwarden.enable = false;
 
     radarr.enable = true;
     sonarr.enable = true;
@@ -28,6 +29,17 @@
     lidarr.enable = true;
     bazarr.enable = true;
   };
+
+  services.caddy = {
+    enable = true;
+    virtualHosts."http://home.zetmuse.xyz".extraConfig = ''
+      reverse_proxy http://127.0.0.1:8082
+    '';
+  };
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
 
   networking.interfaces."enp2s0f1".wakeOnLan = {
