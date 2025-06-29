@@ -18,7 +18,7 @@ in
         description = "Self-hosted pastebin";
         icon = "microbin.png";
         href = url;
-        siteMonitor = url;
+        siteMonitor = "http://127.0.0.1:${toString port}";
       };
     };
   };
@@ -26,13 +26,13 @@ in
     services.microbin = {
       enable = true;
       settings = {
-        MICROBIN_BIND = "0.0.0.0";
+        MICROBIN_BIND = "127.0.0.1";
         MICROBIN_PORT = port;
         MICROBIN_DISABLE_TELEMETRY = true;
       };
     };
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
 }

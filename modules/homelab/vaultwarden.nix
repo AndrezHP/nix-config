@@ -18,7 +18,7 @@ in
         icon = "vaultwarden.svg";
         description = "Password manager";
         href = url;
-        siteMonitor = url;
+        siteMonitor = "http://127.0.0.1:${toString port}";
       };
     };
   };
@@ -27,7 +27,7 @@ in
       enable = true;
       backupDir = "/var/backup/vaultwarden";
       config = {
-        DOMAIN = "https://192.168.1.223:${port}";
+        DOMAIN = "https://192.168.1.223:${toString port}";
         SIGNUPS_ALLOWED = true;
         ROCKET_ADDRESS = "0.0.0.0";
         ROCKET_PORT = port;
@@ -37,7 +37,7 @@ in
       };
     };
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
 }

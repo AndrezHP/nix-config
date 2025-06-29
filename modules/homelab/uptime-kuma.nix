@@ -18,7 +18,7 @@ in
         description = "Service monitoring tool";
         icon = "uptime-kuma.svg";
         href = url;
-        siteMonitor = url;
+        siteMonitor = "http://127.0.0.1:${toString port}";
       };
     };
   };
@@ -28,7 +28,7 @@ in
       "HOST=0.0.0.0"
     ];
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
 }
