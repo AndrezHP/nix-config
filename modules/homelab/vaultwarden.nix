@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.vaultwarden;
+  url = "http://vault.${config.baseDomain}";
+  port = 8222;
 in
 {
   options.homelab.vaultwarden = {
@@ -15,25 +17,27 @@ in
         name = "Vaultwarden";
         icon = "vaultwarden.svg";
         description = "Password manager";
-        href = "http://192.168.1.223:8222";
-        siteMonitor = "http://localhost:8222";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 8222 ];
     services.vaultwarden = {
       enable = true;
       backupDir = "/var/backup/vaultwarden";
       config = {
-        DOMAIN = "https://192.168.1.223:8222";
+        DOMAIN = "https://192.168.1.223:${port}";
         SIGNUPS_ALLOWED = true;
         ROCKET_ADDRESS = "0.0.0.0";
-        ROCKEt_PORT = 8222;
+        ROCKET_PORT = port;
         EXTENDED_LOGGING = true;
         LOG_LEVEL = "warn";
         IP_HEADER = "CF-Connecting-IP";
       };
     };
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

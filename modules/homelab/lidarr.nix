@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.lidarr;
+  url = "http://lid.${config.baseDomain}";
+  port = 8686;
 in
 {
   options.homelab.lidarr = {
@@ -15,15 +17,15 @@ in
         name = "Lidarr";
         icon = "lidarr.svg";
         description = "Shh";
-        href = "http://192.168.1.223:8686";
-        siteMonitor = "http://localhost:8686";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    services.lidarr = {
-      enable = true;
-      openFirewall = true;
-    };
+    services.lidarr.enable = true;
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

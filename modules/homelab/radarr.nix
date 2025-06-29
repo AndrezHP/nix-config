@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.radarr;
+  url = "http://rad.${config.baseDomain}";
+  port = 7878;
 in
 {
   options.homelab.radarr = {
@@ -15,15 +17,15 @@ in
         name = "Radarr";
         icon = "radarr.svg";
         description = "Shh";
-        href = "http://192.168.1.223:7878";
-        siteMonitor = "http://localhost:7878";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    services.radarr = {
-      enable = true;
-      openFirewall = true;
-    };
+    services.radarr.enable = true;
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

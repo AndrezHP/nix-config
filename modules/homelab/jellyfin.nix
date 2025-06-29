@@ -6,6 +6,8 @@
 }:
 let
   cfg = config.homelab.jellyfin;
+  url = "http://jellyfin.${config.baseDomain}";
+  port = 8096;
 in
 {
   options.homelab.jellyfin = {
@@ -20,8 +22,8 @@ in
         name = "Jellyfin";
         icon = "jellyfin.svg";
         description = "The Free Software Media System";
-        href = "http://192.168.1.223:8096";
-        siteMonitor = "http://localhost:8096";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
@@ -30,7 +32,6 @@ in
     nixpkgs.config.packageOverrides = pkgs: {
       vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
     };
-
     hardware.graphics = {
       enable = true;
       extraPackages = with pkgs; [
@@ -43,11 +44,12 @@ in
         intel-media-sdk # QSV up to 11th gen
       ];
     };
-
     services.jellyfin = {
       enable = true;
-      openFirewall = true;
       user = "andreas";
     };
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }
