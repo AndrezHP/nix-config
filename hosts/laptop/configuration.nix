@@ -14,6 +14,7 @@
   ];
 
   homelab = {
+    baseDomain = "zetmuse.xyz";
     jellyfin.enable = true;
     samba.enable = true;
     immich.enable = true;
@@ -21,7 +22,7 @@
     uptime-kuma.enable = true;
     microbin.enable = true;
     adguard-home.enable = false;
-    vaultwarden.enable = false;
+    vaultwarden.enable = true;
 
     radarr.enable = true;
     sonarr.enable = true;

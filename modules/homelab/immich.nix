@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.immich;
+  url = "http://immich.${config.baseDomain}";
+  port = 2283;
 in
 {
   options.homelab.immich = {
@@ -15,15 +17,14 @@ in
         name = "Immich";
         icon = "immich.svg";
         description = "Self-hosted photo and video management";
-        href = "http://192.168.1.223:2283";
-        siteMonitor = "http://localhost:2283";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
     services.immich = {
       enable = true;
-      openFirewall = true;
       host = "0.0.0.0";
       accelerationDevices = null;
     };
@@ -31,5 +32,8 @@ in
       "video"
       "render"
     ];
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

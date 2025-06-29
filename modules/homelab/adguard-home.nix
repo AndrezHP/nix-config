@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.adguard-home;
+  url = "http://adguard.${config.baseDomain}";
+  port = 3031;
 in
 {
   options.homelab.adguard-home = {
@@ -15,20 +17,21 @@ in
         name = "AdGuard Home";
         icon = "adguard-home.svg";
         description = "DNS server";
-        href = "http://192.168.1.223:3031";
-        siteMonitor = "http://localhost:3031";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 3031 ];
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
     networking.firewall.allowedUDPPorts = [ 53 ];
     services.adguardhome = {
       enable = true;
-      openFirewall = true;
-      port = 3031;
+      inherit port;
       settings = {
-        http.address = "127.0.0.1:3031";
+        http.address = "127.0.0.1:${port}";
         dns.upstream_dns = [
           "https://base.dns.mullvad.net/dns-query"
           "8.8.8.8"

@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.homepage;
+  port = 8082;
+  url = "http://${config.baseDomain}";
   categories = [
     "Media"
     "Arr"
@@ -15,13 +17,15 @@ in
 {
   options.homelab.homepage.enable = lib.mkEnableOption "Enable Homepage";
   config = lib.mkIf cfg.enable {
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
     services.glances.enable = true;
     systemd.services.homepage-dashboard.serviceConfig.Environment = [
       "HOMEPAGE_ALLOWED_HOSTS=*"
     ];
     services.homepage-dashboard = {
       enable = true;
-      openFirewall = true;
       settings = {
         layout = [
           {

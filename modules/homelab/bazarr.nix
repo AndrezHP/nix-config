@@ -1,6 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.bazarr;
+  url = "http://baz.${config.baseDomain}";
   port = toString config.services.bazarr.listenPort;
 in
 {
@@ -16,15 +17,15 @@ in
         name = "Bazarr";
         icon = "bazarr.svg";
         description = "Shh";
-        href = "http://192.168.1.223:${port}";
-        siteMonitor = "http://localhost:${port}";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    services.bazarr = {
-      enable = true;
-      openFirewall = true;
-    };
+    services.bazarr.enable = true;
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

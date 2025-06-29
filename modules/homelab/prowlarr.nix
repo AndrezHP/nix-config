@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.prowlarr;
+  url = "http://prowl.${config.baseDomain}";
+  port = 9696;
 in
 {
   options.homelab.prowlarr = {
@@ -15,15 +17,15 @@ in
         name = "Prowlarr";
         icon = "prowlarr.svg";
         description = "Shh";
-        href = "http://192.168.1.223:9696";
-        siteMonitor = "http://localhost:9696";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    services.prowlarr = {
-      enable = true;
-      openFirewall = true;
-    };
+    services.prowlarr.enable = true;
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

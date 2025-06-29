@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.sonarr;
+  url = "http://son.${config.baseDomain}";
+  port = 8989;
 in
 {
   options.homelab.sonarr = {
@@ -15,15 +17,15 @@ in
         name = "Sonarr";
         icon = "sonarr.svg";
         description = "Shh";
-        href = "http://192.168.1.223:8989";
-        siteMonitor = "http://localhost:8989";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    services.sonarr = {
-      enable = true;
-      openFirewall = true;
-    };
+    services.sonarr.enable = true;
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

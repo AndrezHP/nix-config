@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.microbin;
+  url = "http://bin.${config.baseDomain}";
+  port = 8080;
 in
 {
   options.homelab.microbin = {
@@ -15,8 +17,8 @@ in
         name = "Microbin";
         description = "Self-hosted pastebin";
         icon = "microbin.png";
-        href = "http://192.168.1.223:8080";
-        siteMonitor = "http://localhost:8080";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
@@ -25,10 +27,12 @@ in
       enable = true;
       settings = {
         MICROBIN_BIND = "0.0.0.0";
-        MICROBIN_PORT = 8080;
+        MICROBIN_PORT = port;
         MICROBIN_DISABLE_TELEMETRY = true;
       };
     };
-    networking.firewall.allowedTCPPorts = [ 8080 ];
+    services.caddy.virtualHosts."${url}".extraConfig = ''
+      reverse_proxy http://127.0.0.1:${port}
+    '';
   };
 }

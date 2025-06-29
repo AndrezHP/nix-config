@@ -1,5 +1,10 @@
-{ ... }:
+{ lib, ... }:
 {
+  options.baseDomain = lib.mkOption {
+    default = "";
+    type = lib.types.str;
+    description = "Base domain to be used for subdomains in reverse proxy";
+  };
   imports = [
     ./samba.nix
     ./jellyfin.nix
