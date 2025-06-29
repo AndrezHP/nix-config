@@ -18,7 +18,7 @@ in
   options.homelab.homepage.enable = lib.mkEnableOption "Enable Homepage";
   config = lib.mkIf cfg.enable {
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
     services.glances.enable = true;
     systemd.services.homepage-dashboard.serviceConfig.Environment = [

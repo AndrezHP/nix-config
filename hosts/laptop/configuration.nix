@@ -13,8 +13,8 @@
     ../../modules/homelab
   ];
 
+  baseDomain = "zetmuse.xyz";
   homelab = {
-    baseDomain = "zetmuse.xyz";
     jellyfin.enable = true;
     samba.enable = true;
     immich.enable = true;

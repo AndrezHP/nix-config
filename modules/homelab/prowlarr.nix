@@ -25,7 +25,7 @@ in
   config = lib.mkIf cfg.enable {
     services.prowlarr.enable = true;
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
 }
