@@ -18,20 +18,20 @@ in
         icon = "adguard-home.svg";
         description = "DNS server";
         href = url;
-        siteMonitor = url;
+        siteMonitor = "http://127.0.0.1:${toString port}";
       };
     };
   };
   config = lib.mkIf cfg.enable {
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
     networking.firewall.allowedUDPPorts = [ 53 ];
     services.adguardhome = {
       enable = true;
       inherit port;
       settings = {
-        http.address = "127.0.0.1:${port}";
+        http.address = "127.0.0.1:${toString port}";
         dns.upstream_dns = [
           "https://base.dns.mullvad.net/dns-query"
           "8.8.8.8"

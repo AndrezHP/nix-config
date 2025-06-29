@@ -23,7 +23,7 @@ in
         icon = "jellyfin.svg";
         description = "The Free Software Media System";
         href = url;
-        siteMonitor = url;
+        siteMonitor = "http://127.0.0.1:${toString port}";
       };
     };
   };
@@ -49,7 +49,7 @@ in
       user = "andreas";
     };
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
 }

@@ -18,7 +18,7 @@ in
         icon = "immich.svg";
         description = "Self-hosted photo and video management";
         href = url;
-        siteMonitor = url;
+        siteMonitor = "http://127.0.0.1:${toString port}";
       };
     };
   };
@@ -33,7 +33,7 @@ in
       "render"
     ];
     services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${port}
+      reverse_proxy http://127.0.0.1:${toString port}
     '';
   };
 }
