@@ -14,6 +14,11 @@
   ];
 
   baseDomain = "zetmuse.xyz";
+  services.caddy.enable = true;
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   homelab = {
     jellyfin.enable = true;
     samba.enable = true;
@@ -30,18 +35,6 @@
     lidarr.enable = true;
     bazarr.enable = true;
   };
-
-  services.caddy = {
-    enable = true;
-    virtualHosts."http://home.zetmuse.xyz".extraConfig = ''
-      reverse_proxy http://127.0.0.1:8082
-    '';
-  };
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
-
 
   networking.interfaces."enp2s0f1".wakeOnLan = {
     enable = true;
@@ -134,6 +127,7 @@
         "networkmanager"
         "wheel"
         "docker"
+        "podman"
       ];
       packages = with pkgs; [
         firefox
