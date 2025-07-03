@@ -29,6 +29,7 @@
     adguard-home.enable = false;
     vaultwarden.enable = true;
     audiobookshelf.enable = true;
+    jellyseerr.enable = true;
 
     radarr.enable = true;
     sonarr.enable = true;
