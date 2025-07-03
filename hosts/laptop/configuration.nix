@@ -28,6 +28,7 @@
     microbin.enable = true;
     adguard-home.enable = false;
     vaultwarden.enable = true;
+    audiobookshelf.enable = true;
 
     radarr.enable = true;
     sonarr.enable = true;

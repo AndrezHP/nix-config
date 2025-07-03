@@ -1,12 +1,12 @@
 { config, lib, ... }:
 let
-  cfg = config.homelab.immich;
-  url = "http://immich.${config.baseDomain}";
-  port = 2283;
+  cfg = config.homelab.audiobookshelf;
+  url = "http://audiobook.${config.baseDomain}";
+  port = 8010;
 in
 {
-  options.homelab.immich = {
-    enable = lib.mkEnableOption "Enable Immich";
+  options.homelab.audiobookshelf = {
+    enable = lib.mkEnableOption "Enable Audiobookshelf";
     category = lib.mkOption {
       type = lib.types.str;
       default = "Media";
@@ -14,8 +14,8 @@ in
     homepage = lib.mkOption {
       type = lib.types.attrs;
       default = {
-        name = "Immich";
-        icon = "immich.svg";
+        name = "Audiobookshelf";
+        icon = "audiobookshelf.svg";
         description = "Self-hosted photo and video management";
         href = url;
         siteMonitor = "http://127.0.0.1:${toString port}";
@@ -23,14 +23,10 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    services.immich = {
+    services.audiobookshelf = {
       enable = true;
-      accelerationDevices = null;
+      inherit port;
     };
-    users.users.immich.extraGroups = [
-      "video"
-      "render"
-    ];
     services.caddy.virtualHosts."${url}".extraConfig = ''
       reverse_proxy http://127.0.0.1:${toString port}
     '';

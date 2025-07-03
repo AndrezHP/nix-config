@@ -19,5 +19,6 @@
     ./bazarr.nix
     ./adguard-home.nix
     ./vaultwarden.nix
+    ./audiobookshelf.nix
   ];
 }
