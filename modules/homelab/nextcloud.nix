@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.homelab.next;
+  cfg = config.homelab.nextcloud;
   port = 8083;
 in
 {
