@@ -16,7 +16,7 @@ in
       default = {
         name = "Audiobookshelf";
         icon = "audiobookshelf.svg";
-        description = "Self-hosted photo and video management";
+        description = "Self-hosted audio books";
         href = url;
         siteMonitor = "http://127.0.0.1:${toString port}";
       };
