@@ -21,5 +21,6 @@
     ./vaultwarden.nix
     ./audiobookshelf.nix
     ./jellyseerr.nix
+    ./nextcloud.nix
   ];
 }
