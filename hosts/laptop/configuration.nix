@@ -47,7 +47,7 @@
   # Disable sleep on closing the lid
   services.logind.lidSwitch = "ignore";
 
-  nixosModules.desktops.hyprland.enable = true;
+  # nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
   boot.loader.grub = {
@@ -62,9 +62,9 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Y2pKiFLlDTQ5nEs4sJFfhG03qIQde2PXVpLtyuKcj andreas@nixos"
   ];
 
-  services.devmon.enable = true;
-  services.gvfs.enable = true;
-  services.udisks2.enable = true;
+  # services.devmon.enable = true;
+  # services.gvfs.enable = true;
+  # services.udisks2.enable = true;
 
   # Enable OpenGL
   hardware.graphics = {
@@ -103,14 +103,14 @@
     xkb.variant = "";
   };
 
-  environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
-    NIXOS_OZONE_WL = "1"; # Make electron apps use wayland
-  };
+  # environment.sessionVariables = {
+  #   WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
+  #   NIXOS_OZONE_WL = "1"; # Make electron apps use wayland
+  # };
 
-  hardware.bluetooth.enable = true;
-  services.libinput.enable = true;
-  services.printing.enable = true;
+  # hardware.bluetooth.enable = true;
+  # services.libinput.enable = true;
+  # services.printing.enable = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -132,9 +132,9 @@
         "docker"
         "podman"
       ];
-      packages = with pkgs; [
-        firefox
-      ];
+      # packages = with pkgs; [
+      #   firefox
+      # ];
     };
   };
 
@@ -147,10 +147,9 @@
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
-    gitMinimal
     neovim
     htop
-    # git
+    git
     mpv
     fzf
     lshw
@@ -159,7 +158,6 @@
     unzip
     lf
     curl
-    kitty
     ripgrep
 
     # Mounting flash drives and other harddrives
@@ -168,15 +166,15 @@
     udiskie # Removable disk automounter for udisks
     efibootmgr # Efi boot manager
 
-    dunst # Notification daemon
-    libnotify # Notification daemon depends on this
+    # dunst # Notification daemon
+    # libnotify # Notification daemon depends on this
     networkmanagerapplet
     libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
   ];
 
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  # xdg.portal.enable = true;
+  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
