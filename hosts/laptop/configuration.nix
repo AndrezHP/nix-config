@@ -30,7 +30,7 @@
     vaultwarden.enable = true;
     audiobookshelf.enable = true;
     jellyseerr.enable = true;
-    nextcloud.enable = false;
+    nextcloud.enable = true;
 
     radarr.enable = true;
     sonarr.enable = true;

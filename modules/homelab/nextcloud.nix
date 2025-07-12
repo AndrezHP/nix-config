@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.homelab.nextcloud;
+  url = "https://cloud.${config.baseDomain}";
   port = 8083;
 in
 {
@@ -21,20 +22,22 @@ in
         name = "Nextcloud";
         icon = "nextcloud.svg";
         description = "Self-hosted cloud things";
-        href = "http://cloud.${config.baseDomain}";
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        href = url;
+        siteMonitor = url;
       };
     };
   };
 
   config = lib.mkIf cfg.enable {
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+    '';
+    };
     services.nginx = {
       enable = true;
-      recommendedTlsSettings = true;
-      recommendedOptimisation = true;
-      virtualHosts."cloud.${config.baseDomain}" = {
-        forceSSL = true;
-        enableACME = true;
+      virtualHosts."${config.services.nextcloud.hostName}" = {
         listen = [
           {
             addr = "127.0.0.1";
@@ -62,19 +65,17 @@ in
 
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud30;
+      package = pkgs.nextcloud31;
       hostName = "nextcloud";
       configureRedis = true;
       maxUploadSize = "20G";
+      database.createLocally = true;
 
-      # https = true;
-      # autoUpdateApps.enable = true;
-      # database.createLocally = true;
-
-      # extraApps = with config.services.nextcloud.package.packages.apps; {
-      #   inherit calendar contacts mail;
-      #   inherit notes onlyoffice tasks;
-      # };
+      autoUpdateApps.enable = true;
+      extraApps = with config.services.nextcloud.package.packages.apps; {
+        inherit calendar contacts mail;
+        inherit notes onlyoffice tasks;
+      };
 
       settings = {
         overwriteprotocol = "https";
@@ -97,9 +98,10 @@ in
         dbuser = "nextcloud";
         dbhost = "/run/postgresql";
         dbname = "nextcloud";
-        adminuser = "andreas";
-        # adminpassFile = cfg.adminpassFile; # TODO use sops
+        adminuser = "admin";
+        adminpassFile = "/etc/nextcloud-admin-pass";
       };
     };
+    environment.etc."nextcloud-admin-pass".text = "somethingsecure12345";
   };
 }
