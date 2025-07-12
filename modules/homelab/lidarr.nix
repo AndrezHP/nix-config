@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.lidarr;
-  url = "http://lid.${config.baseDomain}";
+  url = "https://lid.${config.baseDomain}";
   port = 8686;
 in
 {
@@ -18,14 +18,17 @@ in
         icon = "lidarr.svg";
         description = "Shh";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
     services.lidarr.enable = true;
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
-    '';
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+      '';
+    };
   };
 }

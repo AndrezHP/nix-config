@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.adguard-home;
-  url = "http://adguard.${config.baseDomain}";
+  url = "https://adguard.${config.baseDomain}";
   port = 3031;
 in
 {
@@ -18,14 +18,17 @@ in
         icon = "adguard-home.svg";
         description = "DNS server";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
     '';
+    };
     networking.firewall.allowedUDPPorts = [ 53 ];
     services.adguardhome = {
       enable = true;

@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.jellyseerr;
-  url = "http://seerr.${config.baseDomain}";
+  url = "https://seerr.${config.baseDomain}";
   port = 5055;
 in
 {
@@ -18,7 +18,7 @@ in
         icon = "jellyseerr.svg";
         description = "Shh";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
@@ -27,8 +27,11 @@ in
       enable = true;
       inherit port;
     };
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
-    '';
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+      '';
+    };
   };
 }

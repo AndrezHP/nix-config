@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.vaultwarden;
-  url = "http://vault.${config.baseDomain}";
+  url = "https://vault.${config.baseDomain}";
   port = 8222;
 in
 {
@@ -18,7 +18,7 @@ in
         icon = "vaultwarden.svg";
         description = "Password manager";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
@@ -36,8 +36,11 @@ in
         IP_HEADER = "CF-Connecting-IP";
       };
     };
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
-    '';
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+      '';
+    };
   };
 }

@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, pkgs, config, ... }:
 {
   imports = [
     ./samba.nix
@@ -25,19 +25,40 @@
     description = "Base domain to be used for subdomains in reverse proxy";
   };
 
-  # config = {
-  #   security.acme = {
-  #     acceptTerms = true;
-  #     defaults.email = "andreas1990klo@hotmail.com";
-  #     certs.${config.baseDomain} = {
-  #       reloadServices = [ "caddy.service" ];
-  #       domain = "${config.baseDomain}";
-  #       extraDomainNames = [ "*.${config.baseDomain}" ];
-  #       dnsProvider = "namecheap";
-  #       dnsResolver = "1.1.1.1:53";
-  #       dnsPropagationCheck = true;
-  #       group = config.services.caddy.group;
-  #     };
-  #   };
-  # };
+  config = {
+    security.acme = {
+      acceptTerms = true;
+      defaults.email = "andreas1990klo@hotmail.com";
+      certs.${config.baseDomain} = {
+        reloadServices = [ "caddy.service" ];
+        domain = "${config.baseDomain}";
+        extraDomainNames = [ "*.${config.baseDomain}" ];
+        dnsProvider = "cloudflare";
+        dnsResolver = "1.1.1.1:53";
+        dnsPropagationCheck = true;
+        environmentFile = "${pkgs.writeText "cloudflare-credentials" ''
+        ''}";
+        group = config.services.caddy.group;
+      };
+    };
+
+    services.caddy = {
+      enable = true;
+      globalConfig = ''
+        auto_https off
+      '';
+      virtualHosts = {
+        "http://${config.baseDomain}" = {
+          extraConfig = ''
+            redir https://{host}{uri}
+          '';
+        };
+        "http://*.${config.baseDomain}" = {
+          extraConfig = ''
+            redir https://{host}{uri}
+          '';
+        };
+      };
+    };
+  };
 }

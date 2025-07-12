@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.audiobookshelf;
-  url = "http://audiobook.${config.baseDomain}";
+  url = "https://audiobook.${config.baseDomain}";
   port = 8010;
 in
 {
@@ -18,7 +18,7 @@ in
         icon = "audiobookshelf.svg";
         description = "Self-hosted audio books";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
@@ -27,8 +27,11 @@ in
       enable = true;
       inherit port;
     };
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
     '';
+    };
   };
 }

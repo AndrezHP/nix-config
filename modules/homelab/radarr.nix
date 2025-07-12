@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.radarr;
-  url = "http://rad.${config.baseDomain}";
+  url = "https://rad.${config.baseDomain}";
   port = 7878;
 in
 {
@@ -18,14 +18,17 @@ in
         icon = "radarr.svg";
         description = "Shh";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
     services.radarr.enable = true;
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
-    '';
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+      '';
+    };
   };
 }
