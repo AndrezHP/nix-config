@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.uptime-kuma;
-  url = "http://uptime.${config.baseDomain}";
+  url = "https://uptime.${config.baseDomain}";
   port = 3001;
 in
 {
@@ -18,14 +18,17 @@ in
         description = "Service monitoring tool";
         icon = "uptime-kuma.svg";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
     services.uptime-kuma.enable = true;
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
-    '';
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+      '';
+    };
   };
 }

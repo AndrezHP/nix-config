@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.microbin;
-  url = "http://bin.${config.baseDomain}";
+  url = "https://bin.${config.baseDomain}";
   port = 8080;
 in
 {
@@ -18,7 +18,7 @@ in
         description = "Self-hosted pastebin";
         icon = "microbin.png";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
@@ -31,8 +31,11 @@ in
         MICROBIN_DISABLE_TELEMETRY = true;
       };
     };
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
-    '';
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+      '';
+    };
   };
 }

@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.immich;
-  url = "http://immich.${config.baseDomain}";
+  url = "https://immich.${config.baseDomain}";
   port = 2283;
 in
 {
@@ -18,22 +18,24 @@ in
         icon = "immich.svg";
         description = "Self-hosted photo and video management";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
     services.immich = {
       enable = true;
-      host = "0.0.0.0";
       accelerationDevices = null;
     };
     users.users.immich.extraGroups = [
       "video"
       "render"
     ];
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://${config.services.immich.host}:${toString port}
     '';
+    };
   };
 }

@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.homelab.jellyfin;
-  url = "http://jellyfin.${config.baseDomain}";
+  url = "https://jellyfin.${config.baseDomain}";
   port = 8096;
 in
 {
@@ -23,7 +23,7 @@ in
         icon = "jellyfin.svg";
         description = "The Free Software Media System";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
@@ -49,9 +49,10 @@ in
       user = "andreas";
     };
     services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
       extraConfig = ''
         reverse_proxy http://127.0.0.1:${toString port}
-      '';
+    '';
     };
   };
 }

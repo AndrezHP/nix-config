@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.sonarr;
-  url = "http://son.${config.baseDomain}";
+  url = "https://son.${config.baseDomain}";
   port = 8989;
 in
 {
@@ -18,14 +18,17 @@ in
         icon = "sonarr.svg";
         description = "Shh";
         href = url;
-        siteMonitor = "http://127.0.0.1:${toString port}";
+        siteMonitor = url;
       };
     };
   };
   config = lib.mkIf cfg.enable {
     services.sonarr.enable = true;
-    services.caddy.virtualHosts."${url}".extraConfig = ''
-      reverse_proxy http://127.0.0.1:${toString port}
-    '';
+    services.caddy.virtualHosts."${url}" = {
+      useACMEHost = config.baseDomain;
+      extraConfig = ''
+        reverse_proxy http://127.0.0.1:${toString port}
+      '';
+    };
   };
 }
