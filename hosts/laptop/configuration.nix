@@ -9,7 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
-    ../../modules/nixos/desktops
+    # ../../modules/nixos/desktos
     ../../modules/homelab
   ];
 
@@ -69,8 +69,8 @@
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+    # enable32Bit = true;
+    # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -97,11 +97,11 @@
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_DK.UTF-8";
 
-  services.xserver = {
-    enable = true;
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
+  # services.xserver = {
+  #   enable = true;
+  #   xkb.layout = "us";
+  #   xkb.variant = "";
+  # };
 
   # environment.sessionVariables = {
   #   WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
