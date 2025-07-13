@@ -22,6 +22,8 @@
     ./audiobookshelf.nix
     ./jellyseerr.nix
     ./nextcloud.nix
+    ./sabnzbd.nix
+    ./deluge.nix
   ];
 
   options.baseDomain = lib.mkOption {

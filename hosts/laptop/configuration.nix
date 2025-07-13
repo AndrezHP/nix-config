@@ -52,6 +52,8 @@
     prowlarr.enable = true;
     lidarr.enable = true;
     bazarr.enable = true;
+    sabnzbd.enable = true;
+    deluge.enable = true;
   };
 
   networking.interfaces."enp2s0f1".wakeOnLan = {
