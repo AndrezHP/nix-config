@@ -24,6 +24,7 @@
     secrets = {
       email = { };
       cloudflare-api-key = { };
+      nextcloud-admin-pwd = { };
     };
   };
 

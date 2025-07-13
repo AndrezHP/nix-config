@@ -38,8 +38,8 @@ in
             };
           }
           { Media.style = "column"; }
-          { Arr.style = "column"; }
           { Services.style = "column"; }
+          { Arr.style = "column"; }
           {
             Disabled = {
               style = "row";

@@ -33,7 +33,7 @@ in
       useACMEHost = config.baseDomain;
       extraConfig = ''
         reverse_proxy http://127.0.0.1:${toString port}
-    '';
+      '';
     };
     services.nginx = {
       enable = true;
@@ -99,9 +99,8 @@ in
         dbhost = "/run/postgresql";
         dbname = "nextcloud";
         adminuser = "admin";
-        adminpassFile = "/etc/nextcloud-admin-pass";
+        adminpassFile = config.sops.secrets.cloudflare-api-key.path;
       };
     };
-    environment.etc."nextcloud-admin-pass".text = "somethingsecure12345";
   };
 }
