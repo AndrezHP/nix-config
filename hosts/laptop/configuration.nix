@@ -22,7 +22,8 @@
       generateKey = true;
     };
     secrets = {
-      cloudflare.format = "json";
+      email = { };
+      cloudflare-api-key = { };
     };
   };
 
