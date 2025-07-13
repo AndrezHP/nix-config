@@ -13,9 +13,18 @@
     ../../modules/homelab
   ];
 
-  sops.defaultSopsFile = ../../secrets/secrets.json;
-  sops.defaultsSopsFormat = "json";
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.json;
+    defaultSopsFormat = "json";
+    age = {
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
+    secrets = {
+      cloudflare.format = "json";
+    };
+  };
 
   baseDomain = "zetmuse.xyz";
   services.caddy.enable = true;
