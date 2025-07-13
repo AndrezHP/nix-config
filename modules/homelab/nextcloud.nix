@@ -99,7 +99,7 @@ in
         dbhost = "/run/postgresql";
         dbname = "nextcloud";
         adminuser = "admin";
-        adminpassFile = config.sops.secrets.cloudflare-api-key.path;
+        adminpassFile = config.sops.secrets.nextcloudAdminPassword.path;
       };
     };
   };
