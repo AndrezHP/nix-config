@@ -42,8 +42,8 @@
         dnsResolver = "1.1.1.1:53";
         dnsPropagationCheck = true;
         environmentFile = "${pkgs.writeText "cloudflare-credentials" ''
-          CLOUDFLARE_EMAIL=${config.sops.secrets.cloudflare.email.path}
-          CLOUDFLARE_API_KEY=${config.sops.secrets.cloudflare.api-key.path}
+          CLOUDFLARE_EMAIL=${config.sops.secrets.email.path}
+          CLOUDFLARE_API_KEY=${config.sops.secrets.cloudflare-api-key.path}
         ''}";
         group = config.services.caddy.group;
       };
