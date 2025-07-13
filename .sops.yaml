@@ -1,0 +1,23 @@
+### Easiast way to add new machines:
+# $ nix-shell -p ssh-to-age --run 'ssh-keyscan example.com | ssh-to-age'
+# or
+# $ nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+# then add the output to this file
+#
+# and add the age key on the target machine
+# nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/sops_ed25519 > ~/.config/sops/age/keys.txt"
+#
+### Adding secrets:
+# Run:
+# nix-shell -p sops --run "sops secrets/example.json"
+# and add your secrets to the json file and save
+
+keys:
+  - &admin_andreas age1pgvdpdej7svrd04xx7sr0vhsx9gkneu8lppp9u45eennw5ylwqhsu2w02v
+  - &laptop age1n0jwsg8ccv9kqjc48ecfqqr4g5efks0f0cuxmpxyk4gpxxewme0sstacsk
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *admin_andreas
+      - *laptop

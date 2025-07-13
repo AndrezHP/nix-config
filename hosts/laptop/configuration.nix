@@ -13,6 +13,10 @@
     ../../modules/homelab
   ];
 
+  sops.defaultSopsFile = ../../secrets/secrets.json;
+  sops.defaultsSopsFormat = "json";
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   baseDomain = "zetmuse.xyz";
   services.caddy.enable = true;
   networking.firewall.allowedTCPPorts = [
@@ -159,6 +163,7 @@
     lf
     curl
     ripgrep
+    sops
 
     # Mounting flash drives and other harddrives
     usbutils
