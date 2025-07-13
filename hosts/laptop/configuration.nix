@@ -24,7 +24,8 @@
     secrets = {
       email = { };
       cloudflare-api-key = { };
-      nextcloud-admin-pwd = { };
+      nextcloudAdminPassword = { };
+      initialHashedPassword = { };
     };
   };
 
@@ -142,7 +143,7 @@
   users.users = {
     andreas = {
       isNormalUser = true;
-      initialHashedPassword = "$6$xoEF5OVlxv7YpVnA$Ewy6xAOhQ.tFH5coFUJfCWRAA3EHxbgFJ2Xyp2mnaHTzfkSej2yA.Qpw2kxi5tUCKJ.cnQqmoZBaXOVm1nClG0";
+      initialHashedPassword = config.sops.secrets.initialHashedPassword.path;
       extraGroups = [
         "networkmanager"
         "wheel"
