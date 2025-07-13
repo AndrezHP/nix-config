@@ -33,6 +33,7 @@
       home-manager,
       hyprland,
       disko,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -44,7 +45,10 @@
       nixosConfigurations = {
         default = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs system; };
-          modules = [ ./hosts/desktop/configuration.nix ];
+          modules = [
+            ./hosts/desktop/configuration.nix
+            sops-nix.nixosModules.sops
+          ];
         };
         laptop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs system; };
@@ -52,6 +56,7 @@
             disko.nixosModules.disko
             ./hosts/laptop/hardware-configuration.nix
             ./hosts/laptop/configuration.nix
+            sops-nix.nixosModules.sops
           ];
         };
         # nix run nixpkgs#nixos-generators -- --format iso --flake ~/nix-config#initIso -o nixos-init.iso

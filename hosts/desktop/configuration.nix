@@ -191,6 +191,7 @@
     unzip
     lm_sensors # Hardware temp sensor
     kitty # Hyprland default terminal
+    sops
 
     # Mounting flash drives and other harddrives
     usbutils
