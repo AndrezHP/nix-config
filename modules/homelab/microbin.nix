@@ -2,7 +2,7 @@
 let
   cfg = config.homelab.microbin;
   url = "https://bin.${config.baseDomain}";
-  port = 8080;
+  port = 8092;
 in
 {
   options.homelab.microbin = {

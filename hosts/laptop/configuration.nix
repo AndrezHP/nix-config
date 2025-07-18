@@ -26,6 +26,7 @@
       cloudflare-api-key = { };
       nextcloudAdminPassword = { };
       initialHashedPassword = { };
+      gluetunEnv = { };
     };
   };
 
@@ -178,6 +179,8 @@
     curl
     ripgrep
     sops
+
+    nmap
 
     # Mounting flash drives and other harddrives
     usbutils
