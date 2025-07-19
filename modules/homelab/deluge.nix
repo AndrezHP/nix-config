@@ -4,7 +4,7 @@ let
   url = "https://deluge.${config.baseDomain}";
   port = 8112;
 in
-  {
+{
   options.homelab.deluge = {
     enable = lib.mkEnableOption "Enable Deluge";
     category = lib.mkOption {
@@ -41,21 +41,21 @@ in
           "8112:8112"
           "6881:6881"
         ];
-        extraOptions = [ 
-          "--pull=newer" 
+        extraOptions = [
+          "--pull=newer"
           "--network=container:gluetun"
         ];
-        volumes = [ 
-          "/var/deluge/config:/config" 
-          "/var/deluge/downloads:/downloads" 
+        volumes = [
+          "/var/deluge/config:/config"
+          "/var/deluge/downloads:/var/deluge/downloads"
         ];
         environmentFiles = [
           config.sops.secrets.gluetunEnv.path
         ];
         environment = {
-          PUID="1000";
-          PGID="1000";
-          TZ="Etc/UTC";
+          PUID = "1000";
+          PGID = "1000";
+          TZ = "Etc/UTC";
         };
       };
 
@@ -70,8 +70,8 @@ in
         ];
         devices = [ "/dev/net/tun:/dev/net/tun" ];
         autoStart = true;
-        extraOptions = [ 
-          "--pull=newer" 
+        extraOptions = [
+          "--pull=newer"
           "--cap-add=NET_ADMIN"
         ];
         volumes = [ "/var:/gluetun" ];
@@ -82,7 +82,7 @@ in
           DEV_MODE = "false";
           VPN_SERVICE_PROVIDER = "mullvad";
           VPN_TYPE = "wireguard";
-          SERVER_CITIES="Amsterdam";
+          SERVER_CITIES = "Amsterdam";
         };
       };
     };
