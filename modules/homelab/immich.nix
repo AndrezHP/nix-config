@@ -26,6 +26,8 @@ in
     services.immich = {
       enable = true;
       accelerationDevices = null;
+      user = config.homelab.user;
+      group = config.homelab.user;
     };
     users.users.immich.extraGroups = [
       "video"
@@ -35,7 +37,7 @@ in
       useACMEHost = config.baseDomain;
       extraConfig = ''
         reverse_proxy http://${config.services.immich.host}:${toString port}
-    '';
+      '';
     };
   };
 }
