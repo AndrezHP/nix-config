@@ -17,7 +17,6 @@
     ./prowlarr.nix
     ./lidarr.nix
     ./bazarr.nix
-    ./adguard-home.nix
     ./vaultwarden.nix
     ./audiobookshelf.nix
     ./jellyseerr.nix
