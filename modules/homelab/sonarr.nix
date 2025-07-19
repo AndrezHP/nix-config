@@ -23,7 +23,11 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    services.sonarr.enable = true;
+    services.sonarr = {
+      enable = true;
+      user = config.homelab.user;
+      group = config.homelab.user;
+    };
     services.caddy.virtualHosts."${url}" = {
       useACMEHost = config.baseDomain;
       extraConfig = ''

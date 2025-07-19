@@ -25,10 +25,24 @@
     ./deluge.nix
   ];
 
-  options.baseDomain = lib.mkOption {
-    default = "";
-    type = lib.types.str;
-    description = "Base domain to be used for subdomains in reverse proxy";
+  options = {
+    baseDomain = lib.mkOption {
+      default = "";
+      type = lib.types.str;
+      description = "Base domain to be used for subdomains in reverse proxy";
+    };
+    homelab = {
+      user = lib.mkOption {
+        default = "share";
+        type = lib.types.str;
+        description = "User to run the homelab services as";
+      };
+      group = lib.mkOption {
+        default = "share";
+        type = lib.types.str;
+        description = "Group to run the homelab services as";
+      };
+    };
   };
 
   config = {

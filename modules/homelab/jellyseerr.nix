@@ -25,6 +25,8 @@ in
   config = lib.mkIf cfg.enable {
     services.jellyseerr = {
       enable = true;
+      user = config.homelab.user;
+      group = config.homelab.user;
       inherit port;
     };
     services.caddy.virtualHosts."${url}" = {

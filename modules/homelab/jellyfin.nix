@@ -46,13 +46,14 @@ in
     };
     services.jellyfin = {
       enable = true;
-      user = "andreas";
+      user = config.homelab.user;
+      group = config.homelab.user;
     };
     services.caddy.virtualHosts."${url}" = {
       useACMEHost = config.baseDomain;
       extraConfig = ''
         reverse_proxy http://127.0.0.1:${toString port}
-    '';
+      '';
     };
   };
 }
