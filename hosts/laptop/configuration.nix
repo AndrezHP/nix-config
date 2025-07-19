@@ -43,7 +43,6 @@
     homepage.enable = true;
     uptime-kuma.enable = true;
     microbin.enable = true;
-    adguard-home.enable = false;
     vaultwarden.enable = true;
     audiobookshelf.enable = true;
     jellyseerr.enable = true;
