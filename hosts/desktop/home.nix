@@ -40,8 +40,8 @@
     ))
     (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
     (pkgs.writeShellScriptBin "gamemode" ''
-      HYPRGAMEMODE=$(hyprctl getoption shadow:enabled | awk 'NR==1{print $2}')
-      if [ "$HYPRGAMEMODE" = 1 ] ; then
+      ROUNDING=$(hyprctl getoption decoration:rounding | awk 'NR==1{print $2}')
+      if [ "$ROUNDING" -gt 0 ] ; then
           hyprctl --batch "\
               keyword decoration:shadow:enabled 0;\
               keyword decoration:blur:enabled 0;\
