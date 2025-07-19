@@ -62,7 +62,8 @@
     ryujinx
     baobab # Disk usage analyzer
     (pkgs.writeShellScriptBin "takeScreenshot" ''
-      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -
+      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - |\
+      ${pkgs.swappy}/bin/swappy -f - -o ~/Media/Screenshots/$(date | awk '{print $1}').png
     '')
   ];
 
