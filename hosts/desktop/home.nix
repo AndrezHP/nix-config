@@ -25,7 +25,6 @@
     kitty
     hyprlock
     hypridle
-    hyprshot
     nwg-look
     (python312.withPackages (
       p: with p; [
@@ -62,6 +61,9 @@
     cemu
     ryujinx
     baobab # Disk usage analyzer
+    (pkgs.writeShellScriptBin "takeScreenshot" ''
+      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -
+    '')
   ];
 
   programs.zen-browser = {
