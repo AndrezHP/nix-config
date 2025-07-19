@@ -26,8 +26,6 @@ in
     services.immich = {
       enable = true;
       accelerationDevices = null;
-      user = config.homelab.user;
-      group = config.homelab.user;
     };
     users.users.immich.extraGroups = [
       "video"

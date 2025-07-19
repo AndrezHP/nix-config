@@ -46,6 +46,17 @@
   };
 
   config = {
+    users = {
+      groups.${config.homelab.group} = {
+        gid = 993;
+      };
+      users.${config.homelab.user} = {
+        uid = 994;
+        isSystemUser = true;
+        group = config.homelab.group;
+      };
+    };
+
     security.acme = {
       acceptTerms = true;
       defaults.email = "andreas1990klo@hotmail.com";
