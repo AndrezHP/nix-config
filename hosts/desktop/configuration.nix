@@ -19,6 +19,7 @@
     user = "andreas";
   };
   virtualisation.docker.enable = true;
+  services.tailscale.enable = true;
 
   # Bootloader.
   boot.loader.efi.canTouchEfiVariables = true;
