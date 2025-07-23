@@ -30,6 +30,7 @@
     };
   };
 
+  services.tailscale.enable = true;
   baseDomain = "zetmuse.xyz";
   services.caddy.enable = true;
   networking.firewall.allowedTCPPorts = [
