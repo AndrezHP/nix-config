@@ -30,9 +30,18 @@
     };
   };
 
-  services.tailscale.enable = true;
+  services.tailscale = { 
+    enable = true;
+    useRoutingFeatures = "both";
+    extraUpFlags = [
+      "--advertise-exit-node"
+      "--advertise-routes=192.168.1.0/24"
+    ];
+  };
+
   baseDomain = "zetmuse.xyz";
   services.caddy.enable = true;
+  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -40,7 +49,7 @@
   homelab = {
     jellyfin.enable = true;
     samba.enable = true;
-    immich.enable = true;
+    immich.enable = false;
     homepage.enable = true;
     uptime-kuma.enable = true;
     microbin.enable = true;
@@ -164,6 +173,23 @@
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
+
+  systemd.services.udp-gro-forwarding = {
+    description = "Improve UPD throughput using transport layer offloads";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = ''
+        ${pkgs.bash}/bin/bash -c '
+          NETDEV=$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")
+          ${pkgs.ethtool}/bin/ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
+        '
+      '';
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     neovim
