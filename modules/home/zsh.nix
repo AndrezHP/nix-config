@@ -24,6 +24,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      fzf
+      bat
+    ];
+
     programs.zoxide = {
       enable = true;
       enableZshIntegration = true;
@@ -57,6 +62,7 @@ in
       initContent =
         ''
           bindkey '^\b' backward-kill-word
+          source <(fzf --zsh)
         ''
         + cfg.initExtra;
       shellAliases = lib.mkMerge [
@@ -67,9 +73,12 @@ in
           vim = "nvim";
           lg = "lazygit";
           conf = "cd ~/nix-config && nvim";
-          dev-rust = "nix-shell ~/nix-config/shells/rust/shell.nix";
           la = "ls --color -lha";
           df = "df -h";
+          inv = "nvim $(fzf -m --preview='bat --color=always {}')";
+          sta = "systemctl list-units --type service | awk '{print $1}' | fzf | xargs -r -n1 systemctl status";
+          res = "systemctl list-units --type service | awk '{print $1}' | fzf | xargs -r -n1 systemctl restart";
+          jour = "systemctl list-units --type service | awk '{print $1}' | fzf | xargs -r -n1 systemctl status";
         }
       ];
     };
