@@ -90,8 +90,8 @@
     zsh = {
       enable = true;
       extraAliases = {
-        bh = "home-manager switch --flake ~/nix-config/#default";
-        bs = "sudo nixos-rebuild switch --flake ~/nix-config#default";
+        bh = "home-manager switch --flake ~/nix-config/#desktop";
+        bs = "sudo nixos-rebuild switch --flake ~/nix-config#desktop";
       };
       initExtra = ''
         export PATH=$PATH:$(go env GOPATH)/bin

@@ -9,8 +9,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
-    ./hardware-configuration.nix
-    # ../../modules/nixos/desktop
     ../../modules/homelab
   ];
 
@@ -51,7 +49,7 @@
   homelab = {
     jellyfin.enable = true;
     samba.enable = true;
-    immich.enable = false;
+    immich.enable = true;
     homepage.enable = true;
     uptime-kuma.enable = true;
     microbin.enable = true;
@@ -74,11 +72,6 @@
     policy = [ "magic" ];
   };
 
-  # Disable sleep on closing the lid
-  services.logind.lidSwitch = "ignore";
-
-  # nixosModules.desktops.hyprland.enable = true;
-
   # Bootloader.
   boot.loader.grub = {
     enable = true;
@@ -92,85 +85,31 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Y2pKiFLlDTQ5nEs4sJFfhG03qIQde2PXVpLtyuKcj andreas@nixos"
   ];
 
-  # services.devmon.enable = true;
-  # services.gvfs.enable = true;
-  # services.udisks2.enable = true;
-
   # Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-    # enable32Bit = true;
-    # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
-  };
-
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    nvidiaSettings = true;
-    open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
+  hardware.graphics.enable = true;
   nix.settings = {
+    auto-optimise-store = true;
     experimental-features = [
       "nix-command"
       "flakes"
     ];
-    auto-optimise-store = true;
   };
-  networking.hostName = "nixos-laptop";
+
+  networking.hostName = "nixos-server";
   networking.networkmanager.enable = true;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_DK.UTF-8";
 
-  # services.xserver = {
-  #   enable = true;
-  #   xkb.layout = "us";
-  #   xkb.variant = "";
-  # };
-
-  # environment.sessionVariables = {
-  #   WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
-  #   NIXOS_OZONE_WL = "1"; # Make electron apps use wayland
-  # };
-
-  # hardware.bluetooth.enable = true;
-  # services.libinput.enable = true;
-  # services.printing.enable = true;
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+  users.users.andreas = {
+    isNormalUser = true;
+    initialHashedPassword = config.sops.secrets.initialHashedPassword.path;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "podman"
+    ];
   };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = {
-    andreas = {
-      isNormalUser = true;
-      initialHashedPassword = config.sops.secrets.initialHashedPassword.path;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-        "docker"
-        "podman"
-      ];
-      # packages = with pkgs; [
-      #   firefox
-      # ];
-    };
-  };
-
-  nixpkgs.config.allowUnfree = true;
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [ ];
 
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
@@ -193,22 +132,24 @@
     };
   };
 
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     neovim
     htop
     git
-    mpv
     fzf
     lshw
-    wireplumber
     zip
     unzip
-    lf
-    curl
+    yazi
     ripgrep
     sops
-
     nmap
+
+    eza # better ls?
+    zoxide # better file path navigation
+    lazygit
+    neofetch
 
     # Mounting flash drives and other harddrives
     usbutils
@@ -216,26 +157,11 @@
     udiskie # Removable disk automounter for udisks
     efibootmgr # Efi boot manager
 
-    # dunst # Notification daemon
-    # libnotify # Notification daemon depends on this
     networkmanagerapplet
     libva # Implementation of VA-API (Video acceleration)
-    xdg-desktop-portal-gtk
   ];
 
-  # xdg.portal.enable = true;
-  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    jetbrains-mono
-  ];
-
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  fonts.packages = with pkgs; [ jetbrains-mono ];
 
   system.stateVersion = "23.11";
 }

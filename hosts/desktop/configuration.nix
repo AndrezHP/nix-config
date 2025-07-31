@@ -19,7 +19,10 @@
     user = "andreas";
   };
   virtualisation.docker.enable = true;
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
+  };
 
   # Bootloader.
   boot.loader.efi.canTouchEfiVariables = true;

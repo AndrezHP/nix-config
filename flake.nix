@@ -36,14 +36,16 @@
       sops-nix,
       ...
     }@inputs:
+    with builtins;
     let
       inherit (self) outputs;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      hosts = filter (name: pathExists ./hosts/${name}/home.nix) (attrNames (readDir ./hosts));
     in
     {
       nixosConfigurations = {
-        default = nixpkgs.lib.nixosSystem {
+        desktop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs system; };
           modules = [
             ./hosts/desktop/configuration.nix
@@ -54,54 +56,55 @@
           specialArgs = { inherit inputs outputs system; };
           modules = [
             disko.nixosModules.disko
-            ./hosts/laptop/hardware-configuration.nix
             ./hosts/laptop/configuration.nix
             sops-nix.nixosModules.sops
           ];
         };
-        # nix run nixpkgs#nixos-generators -- --format iso --flake ~/nix-config#initIso -o nixos-init.iso
-        initIso = nixpkgs.lib.nixosSystem {
-          inherit system;
+        server = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs system; };
           modules = [
-            (
-              { pkgs, modulesPath, ... }:
-              {
-                imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
-                services.openssh.enable = true;
-                users.users.root.openssh.authorizedKeys.keys = [
-                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Y2pKiFLlDTQ5nEs4sJFfhG03qIQde2PXVpLtyuKcj andreas@nixos"
-                ];
-                nix.settings.experimental-features = [
-                  "nix-command"
-                  "flakes"
-                ];
-                environment.systemPackages = with pkgs; [
-                  neovim
-                  gitMinimal
-                  curl
-                ];
-              }
-            )
+            disko.nixosModules.disko
+            ./hosts/server/configuration.nix
+            sops-nix.nixosModules.sops
           ];
         };
       };
 
-      homeConfigurations = {
-        default = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/desktop/home.nix ];
-        };
-        laptop = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/laptop/home.nix ];
-        };
-        work = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/work/home.nix ];
-        };
+      homeConfigurations = listToAttrs (
+        map (name: {
+          inherit name;
+          value = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = { inherit inputs outputs; };
+            modules = [ ./hosts/${name}/home.nix ];
+          };
+        }) hosts
+      );
+
+      # nix run nixpkgs#nixos-generators -- --format iso --flake ~/nix-config#initIso -o nixos-init.iso
+      nixosConfigurations.initIso = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          (
+            { pkgs, modulesPath, ... }:
+            {
+              imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
+              services.openssh.enable = true;
+              users.users.root.openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Y2pKiFLlDTQ5nEs4sJFfhG03qIQde2PXVpLtyuKcj andreas@nixos"
+              ];
+              nix.settings.experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
+              environment.systemPackages = with pkgs; [
+                neovim
+                gitMinimal
+                curl
+              ];
+            }
+          )
+        ];
       };
     };
 }
