@@ -9,7 +9,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
-    # ../../modules/nixos/desktos
+    ./hardware-configuration.nix
+    # ../../modules/nixos/desktop
     ../../modules/homelab
   ];
 
@@ -30,7 +31,7 @@
     };
   };
 
-  services.tailscale = { 
+  services.tailscale = {
     enable = true;
     useRoutingFeatures = "both";
     extraUpFlags = [
