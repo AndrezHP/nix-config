@@ -16,7 +16,7 @@ keys:
   - &admin_andreas age1pgvdpdej7svrd04xx7sr0vhsx9gkneu8lppp9u45eennw5ylwqhsu2w02v
   - &desktop age12e76u6d5pfxpl098ch2d076dpz8a9qwkxckjdk2uhgd9u0c0jc8sqpu4rm
   - &laptop age1n0jwsg8ccv9kqjc48ecfqqr4g5efks0f0cuxmpxyk4gpxxewme0sstacsk
-  - &server age1q63swkv607wwld768p2z7l2uje8639f3m8l35aa7tc8sevln55ys3m5kty
+  - &server age1tt5gtrg9e7qne44ph9t3z00d0u25q9lz4lrsd54g2e7tfd32rd8s6hlnlh
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
