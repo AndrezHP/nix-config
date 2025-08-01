@@ -27,9 +27,9 @@ in
       enable = true;
       backupDir = "/var/backup/vaultwarden";
       config = {
-        DOMAIN = "https://192.168.1.223:${toString port}";
+        DOMAIN = url;
         SIGNUPS_ALLOWED = true;
-        ROCKET_ADDRESS = "0.0.0.0";
+        ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = port;
         EXTENDED_LOGGING = true;
         LOG_LEVEL = "warn";
