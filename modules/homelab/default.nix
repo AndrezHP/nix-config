@@ -68,7 +68,7 @@
         dnsResolver = "1.1.1.1:53";
         dnsPropagationCheck = true;
         environmentFile = "${pkgs.writeText "cloudflare-credentials" ''
-          CLOUDFLARE_API_TOKEN=${config.sops.secrets.cloudflare-api-token.path}
+          CLOUDFLARE_DNS_API_TOKEN=${config.sops.secrets.cloudflare-api-token.path}
         ''}";
         group = config.services.caddy.group;
       };
