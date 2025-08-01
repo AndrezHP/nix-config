@@ -66,6 +66,7 @@
             disko.nixosModules.disko
             ./hosts/server/configuration.nix
             sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
           ];
         };
       };
