@@ -11,6 +11,18 @@
     ../../modules/nixos
   ];
 
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.json;
+    defaultSopsFormat = "json";
+    age = {
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = true;
+    };
+    secrets.sambaCredentials = { };
+  };
+  environment.etc."smb-credentials".source = config.sops.secrets.sambaCredentials.path;
+
   nixosModules.kanata.enable = true;
   nixosModules.desktops.hyprland.enable = true;
   nixosModules.ollama.enable = true;
