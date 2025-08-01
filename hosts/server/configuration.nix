@@ -11,10 +11,7 @@
     ./disko.nix
     ./hardware-configuration.nix
     ../../modules/homelab
-    ../../modules/nixos
   ];
-
-  nixosModules.kanata.enable = true;
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.json;
