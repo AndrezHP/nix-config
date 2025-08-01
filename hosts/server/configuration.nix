@@ -9,6 +9,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
+    ./hardware-configuration.nix
     ../../modules/homelab
   ];
 
@@ -24,7 +25,6 @@
       email = { };
       cloudflare-api-key = { };
       nextcloudAdminPassword = { };
-      initialHashedPassword = { };
       gluetunEnv = { };
     };
   };
@@ -102,7 +102,6 @@
 
   users.users.andreas = {
     isNormalUser = true;
-    initialHashedPassword = config.sops.secrets.initialHashedPassword.path;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -145,10 +144,12 @@
     ripgrep
     sops
     nmap
+    kitty
 
     eza # better ls?
     zoxide # better file path navigation
     lazygit
+    tealdeer
     neofetch
 
     # Mounting flash drives and other harddrives
@@ -163,5 +164,9 @@
 
   fonts.packages = with pkgs; [ jetbrains-mono ];
 
-  system.stateVersion = "23.11";
+  # home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.andreas = import ./home.nix;
+
+  system.stateVersion = "25.05";
 }

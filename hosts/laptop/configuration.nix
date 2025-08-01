@@ -26,7 +26,6 @@
       email = { };
       cloudflare-api-key = { };
       nextcloudAdminPassword = { };
-      initialHashedPassword = { };
       gluetunEnv = { };
     };
   };
@@ -152,20 +151,17 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = {
-    andreas = {
-      isNormalUser = true;
-      initialHashedPassword = config.sops.secrets.initialHashedPassword.path;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-        "docker"
-        "podman"
-      ];
-      # packages = with pkgs; [
-      #   firefox
-      # ];
-    };
+  users.users.andreas = {
+    isNormalUser = true;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "podman"
+    ];
+    # packages = with pkgs; [
+    #   firefox
+    # ];
   };
 
   nixpkgs.config.allowUnfree = true;
