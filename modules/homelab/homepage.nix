@@ -14,7 +14,15 @@ let
     ) services);
 in
 {
-  options.homelab.homepage.enable = lib.mkEnableOption "Enable Homepage";
+  options.homelab = {
+    homepage.enable = lib.mkEnableOption "Enable Homepage";
+    networkInterface = lib.mkOption {
+      type = lib.types.str;
+      description = "Network interfaces";
+      default = "";
+    };
+  };
+
   config = lib.mkIf cfg.enable {
     services.caddy.virtualHosts."${config.baseDomain}" = {
       useACMEHost = config.baseDomain;
@@ -78,7 +86,9 @@ in
                 (mapGlances "Info" "info")
                 (mapGlances "CPU Temp" "sensor:Package id 0")
                 (mapGlances "Processes" "process")
-                (mapGlances "Network" "network:enp2s0f1")
+                lib.mkIf
+                (config.homelab.networkInterface != "")
+                (mapGlances "Network" config.homelab.networkInterface)
               ];
           }
           {
