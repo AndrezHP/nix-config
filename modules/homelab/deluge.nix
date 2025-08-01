@@ -30,6 +30,12 @@ in
       '';
     };
 
+    # Create directories for deluge volumes
+    systemd.tmpfiles.rules = [
+      "d /var/deluge/config andreas users -"
+      "d /var/deluge/downloads andreas users -"
+    ];
+
     virtualisation.podman.enable = true;
     virtualisation.oci-containers.containers = {
       ###### Deluge ######
