@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.homelab.homepage;
   port = 8082;
@@ -24,6 +29,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    boot.kernelModules = [ "coretemp" ];
+    environment.systemPackages = with pkgs; [ lm_sensors ];
     services.caddy.virtualHosts."${config.baseDomain}" = {
       useACMEHost = config.baseDomain;
       extraConfig = ''
@@ -84,11 +91,11 @@ in
               in
               [
                 (mapGlances "Info" "info")
-                (mapGlances "CPU Temp" "sensor:Package id 0")
+                (mapGlances "CPU Temp" "sensor:Tctl")
                 (mapGlances "Processes" "process")
-                lib.mkIf
-                (config.homelab.networkInterface != "")
-                (mapGlances "Network" config.homelab.networkInterface)
+                (lib.mkIf (config.homelab.networkInterface != "") (
+                  mapGlances "Network" ("network:" + config.homelab.networkInterface)
+                ))
               ];
           }
           {
