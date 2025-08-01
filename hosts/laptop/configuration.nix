@@ -23,8 +23,7 @@
       generateKey = true;
     };
     secrets = {
-      email = { };
-      cloudflare-api-key = { };
+      cloudflare-api-token = { };
       nextcloudAdminPassword = { };
       gluetunEnv = { };
     };
