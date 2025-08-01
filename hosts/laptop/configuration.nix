@@ -47,6 +47,7 @@
     443
   ];
   homelab = {
+    networkInterface = "enp2s0f1";
     jellyfin.enable = true;
     samba.enable = true;
     immich.enable = false;
