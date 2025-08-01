@@ -67,7 +67,7 @@
     deluge.enable = true;
   };
 
-  networking.interfaces."enp2s0f1".wakeOnLan = {
+  networking.interfaces."enp3s0".wakeOnLan = {
     enable = true;
     policy = [ "magic" ];
   };
