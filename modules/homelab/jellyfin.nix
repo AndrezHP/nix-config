@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.homelab.jellyfin;
+  hl = config.homelab;
   url = "https://jellyfin.${config.baseDomain}";
   port = 8096;
 in
@@ -29,6 +30,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    systemd.tmpfiles.rules = [
+      "d /mnt/Share/Movies 0755 ${hl.user} ${hl.group} -"
+    ];
     nixpkgs.config.packageOverrides = pkgs: {
       vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
     };
