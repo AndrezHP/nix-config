@@ -17,6 +17,7 @@ in
       smb_password=$(cat "${config.sops.secrets.sambaPassword.path}")
       echo -e "$smb_password\n$smb_password\n" | ${lib.getExe' pkgs.samba "smbpasswd"} -a -s andreas
     '';
+
     services.samba = {
       enable = true;
       openFirewall = true;
@@ -26,21 +27,22 @@ in
           "server string" = "smbnix";
           "netbios name" = "smbnix";
           "security" = "user";
-          "client min protocol" = "SMB2";
-          "client max protocol" = "SMB3";
-          "hosts allow" = "192.168.1.0/24 127.0.0.1 localhost";
+          "hosts allow" = "192.168.1.0/24 192.168.8.0/24 127.0.0.1 localhost";
           "hosts deny" = "0.0.0.0/0";
           "guest account" = "nobody";
           "map to guest" = "bad user";
         };
-        # sudo mount -t cifs //192.168.1.223/public /mnt/samba_share -o username=<username>,password=<password>
+        # sudo mount -t cifs //<ip>/share /mnt/samba_share -o username=<username>,password=<password>
+        # Remember to set: smbpasswd -a <user>
         "share" = {
           "path" = "/mnt/share";
-          "writable" = "yes";
+          "browseable" = "yes";
+          "read only" = "no";
+          "writeable" = "yes";
           "guest ok" = "no";
-          "valid users" = "andreas";
           "create mask" = "0775";
           "directory mask" = "0775";
+          "valid users" = "andreas";
         };
       };
     };
