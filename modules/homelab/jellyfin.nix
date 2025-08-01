@@ -30,9 +30,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.tmpfiles.rules = [
-      "d /mnt/Share/Movies 0755 ${hl.user} ${hl.group} -"
-    ];
+    systemd.tmpfiles.rules = [ "d /mnt/share/Movies 0755 ${hl.user} ${hl.group} -" ];
     nixpkgs.config.packageOverrides = pkgs: {
       vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
     };

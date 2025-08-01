@@ -25,6 +25,7 @@
       cloudflare-api-token = { };
       nextcloudAdminPassword = { };
       gluetunEnv = { };
+      sambaPassword = { };
     };
   };
 
