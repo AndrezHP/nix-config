@@ -32,8 +32,8 @@ in
 
     # Create directories for deluge volumes
     systemd.tmpfiles.rules = [
-      "d /var/deluge/config andreas users -"
-      "d /var/deluge/downloads andreas users -"
+      "d /var/deluge/config 0755 andreas users -"
+      "d /var/deluge/downloads 0755 andreas users -"
     ];
 
     virtualisation.podman.enable = true;
