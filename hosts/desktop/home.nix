@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  scripts = import ../../pkgs/scripts.nix { inherit pkgs; };
+in
 {
   imports = [
     ../../modules/home
@@ -11,21 +14,9 @@
   ];
 
   home.packages = with pkgs; [
-    cifs-utils
-    (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate [
-      # "google-java-format" # There are not bundled in nixpkgs
-      # "intellij.prettierJS"
-      "ideavim"
-      "graphql"
-    ])
     (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
-    path-of-building
-    sqlite
-    alacritty
-    kitty
-    hyprlock
-    hypridle
-    nwg-look
+    (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate [ "ideavim" ])
+    (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
     (python312.withPackages (
       p: with p; [
         numpy
@@ -37,34 +28,24 @@
         beautifulsoup4
       ]
     ))
-    (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
-    (pkgs.writeShellScriptBin "gamemode" ''
-      ROUNDING=$(hyprctl getoption decoration:rounding | awk 'NR==1{print $2}')
-      if [ "$ROUNDING" -gt 0 ] ; then
-          hyprctl --batch "\
-              keyword decoration:shadow:enabled 0;\
-              keyword decoration:blur:enabled 0;\
-              keyword general:gaps_in 0;\
-              keyword general:gaps_out 0;\
-              keyword general:border_size 1;\
-              keyword decoration:rounding 0"
-          exit
-      fi
-      hyprctl reload
-    '')
-    (pkgs.writeShellScriptBin "mountSamba" ''
-      read -p "User name: " USERNAME
-      read -s -p "Password: " PASSWORD
-      sudo mount -t cifs //192.168.1.224/share /mnt/samba_share -o username=$USERNAME,password=$PASSWORD,gid=1000,uid=$USERNAME
-    '')
+    cifs-utils # Used for mounting smb shares
+    path-of-building
+    sqlite
+    alacritty
+    kitty
+    hyprlock
+    hypridle
+    nwg-look
     go
     cemu
     ryujinx
     baobab # Disk usage analyzer
-    (pkgs.writeShellScriptBin "takeScreenshot" ''
-      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - |\
-      ${pkgs.swappy}/bin/swappy -f - -o ~/Media/Screenshots/$(date | awk '{print $1}').png
-    '')
+    handbrake
+    scripts.gamemode
+    scripts.mountSamba
+    scripts.takeScreenshot
+    vlc
+    makemkv
   ];
 
   programs.zen-browser = {
