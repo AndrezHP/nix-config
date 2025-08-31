@@ -24,6 +24,8 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    automatic-ripping-machine.url = "github:AndrezHP/automatic-ripping-machine/main?dir=nixos";
   };
 
   outputs =
@@ -34,6 +36,7 @@
       hyprland,
       disko,
       sops-nix,
+      automatic-ripping-machine,
       ...
     }@inputs:
     with builtins;
@@ -50,6 +53,7 @@
           modules = [
             ./hosts/desktop/configuration.nix
             sops-nix.nixosModules.sops
+            automatic-ripping-machine.nixosModules.default
           ];
         };
         laptop = nixpkgs.lib.nixosSystem {
