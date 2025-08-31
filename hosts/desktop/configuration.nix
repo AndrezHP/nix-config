@@ -1,12 +1,13 @@
 {
   config,
   pkgs,
-  modulesPath,
   ...
 }:
+let
+  mediaGroup = "media";
+in
 {
   imports = [
-    # (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
     ./hardware-configuration.nix
     ../../modules/nixos
   ];
@@ -23,6 +24,10 @@
   };
   environment.etc."smb-credentials".source = config.sops.secrets.sambaCredentials.path;
 
+  nixosModules.arm = {
+    enable = true;
+    group = mediaGroup;
+  };
   nixosModules.kanata.enable = true;
   nixosModules.desktops.hyprland.enable = true;
   nixosModules.ollama.enable = true;
@@ -171,6 +176,7 @@
         "networkmanager"
         "wheel"
         "docker"
+        mediaGroup
       ];
     };
   };

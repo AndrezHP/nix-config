@@ -25,4 +25,12 @@
     ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - |\
     ${pkgs.swappy}/bin/swappy -f - -o ~/Media/Screenshots/$(date | awk '{print $1}').png
   '';
+
+  nixSearch = pkgs.writeShellScriptBin "ns" ''
+    if [ ! -d ~/repos/nixpkgs ]; then
+      echo "Cloning nixpkgs to be able to search, this may take a while..."
+      git clone https://github.com/NixOS/nixpkgs.git
+    fi
+    find ~/repos/nixpkgs/pkgs -type f | grep '\.nix' | fzf --with-nth=-2.. --delimiter="/"
+  '';
 }
