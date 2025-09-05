@@ -10,6 +10,7 @@ let
 in
 {
   options.homeModules.applications = {
+    enable = mkEnableOption "Enable base packages";
     cyberTools.enable = mkEnableOption "Enable common cyber security tools";
     cliTools.enable = mkEnableOption "Enable cli tools";
     games.enable = mkEnableOption "Enable games";
@@ -18,7 +19,7 @@ in
   config = {
     home.packages =
       with pkgs;
-      [
+      optionals cfg.enable [
         tidal-hifi
         spotify
         mpd # Music Player Daemon
@@ -35,7 +36,7 @@ in
         solaar # Manager for Logitech Unifying Receiver
         ncmpcpp # Music player
         porsmo # Cli Pomodoro
-        via
+        via # QMK layout editor
 
         qbittorrent
         signal-desktop

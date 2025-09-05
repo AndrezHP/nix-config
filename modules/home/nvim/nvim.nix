@@ -1,5 +1,11 @@
-{ config, lib, pkgs, ... }:
-with lib; let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+let
   cfg = config.homeModules.nvimConfig;
 in
 {
@@ -23,7 +29,9 @@ in
   };
   config =
     let
-      build-dependent-pkgs = with pkgs; [
+      build-dependent-pkgs =
+        with pkgs;
+        [
           acl
           attr
           bzip2
@@ -74,56 +82,62 @@ in
         "NIX_LD_LIBRARY_PATH=${config.home.profileDirectory}/lib/nvim-depends/lib"
         "PKG_CONFIG_PATH=${config.home.profileDirectory}/lib/nvim-depends/pkgconfig"
       ];
-  in 
-  mkIf cfg.enable {
-    xdg.configFile = {
-      "nvim/init.lua".source = ./init.lua;
-      "nvim/lua".source = ./lua;
-    };
-    home.packages = with pkgs; [
-      ripgrep
-      black
-      stylua
-      prettierd
-      rust-analyzer
-      nil
-      typescript-language-server
-    ] ++ (with pkgs.vimPlugins; [
-      vim-nix # File type and syntax highlighting.
-    ]) ++ optionals cfg.setBuildEnv [
-      nvim-depends-include
-      nvim-depends-library
-      nvim-depends-pkgconfig
-      patchelf
-    ];
-    home.extraOutputsToInstall = optional cfg.setBuildEnv "nvim-depends";
-    home.shellAliases.nvim = optionalString cfg.setBuildEnv (concatStringsSep " " buildEnv) + " nvim";
-
-    programs.neovim = {
-      enable = true;
-      withNodeJs = true;
-      withPython3 = true;
-      extraPackages = with pkgs;
+    in
+    mkIf cfg.enable {
+      xdg.configFile = {
+        "nvim/init.lua".source = ./init.lua;
+        "nvim/lua".source = ./lua;
+      };
+      home.packages =
+        with pkgs;
         [
-          # Dependent packages used by plugins
-          doq
-          luarocks
+          ripgrep
+          black
+          stylua
+          prettierd
+          rust-analyzer
+          nil
+          typescript-language-server
         ]
-        ++ optionals cfg.withBuildTools [
-          cargo
-          clang
-          cmake
-          gcc
-          gnumake
-          go
-          ninja
-          pkg-config
-          yarn
+        ++ (with pkgs.vimPlugins; [
+          vim-nix # File type and syntax highlighting.
+        ])
+        ++ optionals cfg.setBuildEnv [
+          nvim-depends-include
+          nvim-depends-library
+          nvim-depends-pkgconfig
+          patchelf
         ];
+      home.extraOutputsToInstall = optional cfg.setBuildEnv "nvim-depends";
+      home.shellAliases.nvim = optionalString cfg.setBuildEnv (concatStringsSep " " buildEnv) + " nvim";
 
-      extraLuaPackages = ls: with ls; [
-        luarocks
-      ];
+      programs.neovim = {
+        enable = true;
+        withNodeJs = true;
+        withPython3 = true;
+        extraPackages =
+          with pkgs;
+          [
+            # Dependent packages used by plugins
+            doq
+            luarocks
+          ]
+          ++ optionals cfg.withBuildTools [
+            cargo
+            clang
+            cmake
+            gcc
+            gnumake
+            go
+            ninja
+            pkg-config
+            yarn
+          ];
+
+        extraLuaPackages =
+          ls: with ls; [
+            luarocks
+          ];
+      };
     };
-  };
 }

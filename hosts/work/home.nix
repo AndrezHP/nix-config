@@ -20,6 +20,7 @@ let
       fi
     ''
   );
+  scripts = import ../../pkgs/scripts.nix { inherit pkgs; };
 in
 {
   imports = [
@@ -37,12 +38,11 @@ in
 
   home.packages = with pkgs; [
     ##### Things for work development
-    # (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate [
-    #   "google-java-format"
-    #   "intellij.prettierJS"
-    #   "ideavim"
-    #   "graphql"
-    # ])
+    (pkgs.makeDesktopItem {
+      name = "android-studio";
+      desktopName = "Android Studio";
+      exec = "android-studio";
+    })
     gcc
     libgcc
     openjdk17-bootstrap # OpenJDK
@@ -51,21 +51,27 @@ in
     maven # Instead of getting it from sdkman
     jq # like sed, but for JSON
     git
-    # rustup
     rustc
     cargo
+    # rustup
+    openssl
     formatScript
     (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
 
     ##### Other stuff
     jetbrains-toolbox
     spotify
+    tidal-hifi
     discord
     libreoffice
     gimp # Gnu image manipulation program
     brave # Another browser
     tealdeer # tldr command
     kanata # Keyboard remapping
+
+    yazi
+    signal-desktop
+    porsmo
 
     pavucontrol
     blueman # Bluetooth manager
@@ -76,6 +82,10 @@ in
     neofetch
     ffmpeg
     zathura # PDF viewer
+    fzf
+    lazydocker
+    lazygit
+    scripts.nixSearch
   ];
 
   xdg.configFile."kitty/kitty.conf".source = ../../modules/home/kitty/kitty.conf;
@@ -91,9 +101,10 @@ in
       enable = true;
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#work";
-        pbc = "cargo-pbc pbc";
       };
       initExtra = ''
+        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+        export PATH=$JAVA_HOME/bin:$PATH
         export GITLAB_PRIVATE_TOKEN=$(cat ~/.glpt)
         export PATH="/home/andreas/.rd/bin:$PATH"
         export PATH="/home/andreas/.emacs.d/bin:$PATH"
