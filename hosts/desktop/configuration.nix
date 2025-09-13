@@ -131,7 +131,7 @@ in
         inherit options;
       };
       "/mnt/disk2" = {
-        device = "/dev/disk/by-uuid/5AD4EDF9D4EDD6F3";
+        device = "/dev/disk/by-uuid/5822CF301EF6AC78";
         fsType = "ntfs-3g";
         inherit options;
       };
