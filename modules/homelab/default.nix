@@ -8,6 +8,7 @@
   imports = [
     ./samba.nix
     ./jellyfin.nix
+    ./navidrome.nix
     ./immich.nix
     ./homepage.nix
     ./uptime-kuma.nix
