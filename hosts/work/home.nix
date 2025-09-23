@@ -3,20 +3,18 @@ let
   formatScript = (
     pkgs.writeShellScriptBin "cf" ''
       # Format and then check linting or checkstyle
+      if [ -d "gradle" ]; then
+         ./gradlew spotlessApply
+      fi
+
+      find . -type f -name pom.xml -execdir sh -c 'mvn spotless:apply; mvn checkstyle:check' \;
+
       if [ -f package.json ]; then
         npx prettier --print-width 100 --tab-width 2 --quote-props as-needed --trailing-comma es5 --bracket-same-line --prose-wrap preserve -w src
         if grep -q relay package.json; then
           npm run relay
         fi
         npx eslint src --max-warnings 0
-      fi
-
-      if [ -f pom.xml ]; then
-        mvn spotless:apply
-        mvn checkstyle:check
-      fi
-      if [ -f ./java/pom.xml ]; then
-        (cd java && mvn spotless:apply ; mvn checkstyle:check)
       fi
     ''
   );
