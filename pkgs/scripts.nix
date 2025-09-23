@@ -31,6 +31,6 @@
       echo "Cloning nixpkgs to be able to search, this may take a while..."
       git clone https://github.com/NixOS/nixpkgs.git
     fi
-    find ~/repos/nixpkgs/pkgs -type f | grep '\.nix' | fzf --with-nth=-2.. --delimiter="/"
+    find ~/repos/nixpkgs/pkgs -type f | grep '\.nix' | nvim $(fzf --with-nth=-2.. --delimiter="/" --preview="bat --color=always {}")
   '';
 }

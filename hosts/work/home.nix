@@ -20,6 +20,15 @@ let
       fi
     ''
   );
+  jrun = (
+    pkgs.writeShellScriptBin "jrun" ''
+      mvn dependency:build-classpath -Dmdep.includeScope=runtime -Dmdep.outputFile=deps.txt
+      DEPS=$(cat deps.txt)
+      rm deps.txt
+      CONFIGURATOR=$(head -n1 $(find ./src/main/java/ -name 'Configurator.java') | tr -d ';' | cut -d ' ' -f2 | awk '{print $1".Configurator"}');
+      java -cp "./target/classes:$DEPS" com.secata.tools.rest.RestRunner $CONFIGURATOR
+    ''
+  );
   scripts = import ../../pkgs/scripts.nix { inherit pkgs; };
 in
 {
@@ -51,11 +60,12 @@ in
     maven # Instead of getting it from sdkman
     jq # like sed, but for JSON
     git
-    rustc
-    cargo
+    # rustc
+    # cargo
     # rustup
     openssl
     formatScript
+    jrun
     (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
 
     ##### Other stuff
@@ -92,6 +102,7 @@ in
   xdg.configFile."kitty/theme.conf".source = ../../modules/home/kitty/theme.conf;
   homeModules = {
     emacs.enable = true;
+    tmux.enable = true;
     nvimConfig = {
       enable = true;
       setBuildEnv = true;
@@ -101,14 +112,14 @@ in
       enable = true;
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#work";
+        sport = "sudo ss -tulwn | fzf";
       };
       initExtra = ''
-        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
-        export PATH=$JAVA_HOME/bin:$PATH
         export GITLAB_PRIVATE_TOKEN=$(cat ~/.glpt)
         export PATH="/home/andreas/.rd/bin:$PATH"
         export PATH="/home/andreas/.emacs.d/bin:$PATH"
         export PATH="/home/andreas/bin:$PATH"
+        export PATH="$HOME/.cargo/bin:$PATH"
         if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
             PATH="$HOME/.local/bin:$HOME/bin:$PATH"
         fi
