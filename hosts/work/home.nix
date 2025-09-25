@@ -9,6 +9,8 @@ let
 
       find . -type f -name pom.xml -execdir sh -c 'mvn spotless:apply; mvn checkstyle:check' \;
 
+      find . -type f -name Cargo.toml -execdir sh -c 'cargo fmt --all' \;
+
       if [ -f package.json ]; then
         npx prettier --print-width 100 --tab-width 2 --quote-props as-needed --trailing-comma es5 --bracket-same-line --prose-wrap preserve -w src
         if grep -q relay package.json; then
@@ -111,6 +113,7 @@ in
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#work";
         sport = "sudo ss -tulwn | fzf";
+        opr = "find . -name project-reports.html | fzf | xargs firefox";
       };
       initExtra = ''
         export GITLAB_PRIVATE_TOKEN=$(cat ~/.glpt)
