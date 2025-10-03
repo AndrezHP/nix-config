@@ -1,9 +1,21 @@
 {
   config,
+  lib,
   pkgs,
   modulesPath,
   ...
 }:
+let
+  dataFolders = [
+    "/mnt/media"
+    "/mnt/media/movies"
+    "/mnt/media/show"
+    "/mnt/media/photos"
+    "/mnt/media/music"
+    "/mnt/media/etc"
+    "/mnt/backup"
+  ];
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -12,6 +24,10 @@
     ./hardware-configuration.nix
     ../../modules/homelab
   ];
+
+  systemd.tmpfiles.rules = lib.lists.forEach (
+    folder: "d ${folder} 0755 ${config.homelab.user} ${config.homelab.group} -"
+  ) dataFolders;
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.json;
@@ -49,7 +65,17 @@
   homelab = {
     networkInterface = "enp3s0";
     jellyfin.enable = true;
-    samba.enable = true;
+    samba = {
+      enable = true;
+      shares = {
+        Media = {
+          path = "/mnt/media";
+        };
+        Backup = {
+          path = "/mnt/backup";
+        };
+      };
+    };
     immich.enable = true;
     homepage.enable = true;
     uptime-kuma.enable = true;
@@ -73,9 +99,9 @@
     policy = [ "magic" ];
   };
 
-  ### Config for ZFS with 
+  ### Config for ZFS with
   # zpool create -O atime=off -O compression=on -O mountpoint=none -O xattr=sa -O acltype=posixacl -o ashift=12 vol0 raidz1 /dev/sda /dev/sdb /dev/sdc /dev/sdd
-  # Encryption option with: -O encryption=on -O keyformat=passphrase -O keylocation=prompt 
+  # Encryption option with: -O encryption=on -O keyformat=passphrase -O keylocation=prompt
   networking.hostId = "deadcafe";
   boot = {
     supportedFilesystems = [ "zfs" ];
@@ -85,7 +111,7 @@
     autoScrub = {
       enable = true;
       interval = "monthly";
-      pools = [ "vol0 "];
+      pools = [ "vol0" ];
     };
     autoSnapshot.enable = true;
   };
@@ -173,7 +199,7 @@
     sops
     nmap
     kitty
-    zfs #
+    zfs
 
     eza # better ls?
     zoxide # better file path navigation
