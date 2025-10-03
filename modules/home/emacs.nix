@@ -71,8 +71,6 @@ in
         # :lang cc
         clang-tools
         # :lang latex & :lang org (latex previews)
-        # texlive.combined.scheme-medium
-        # texlivePackages.wrapfig
         (texlive.combined.scheme-full.withPackages (
           ps: with ps; [
             wrapfig

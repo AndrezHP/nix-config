@@ -10,7 +10,7 @@ let
 in
 {
   options.homeModules.applications = {
-    enable = mkEnableOption "Enable base packages";
+    basics.enable = mkEnableOption "Enable base packages";
     cyberTools.enable = mkEnableOption "Enable common cyber security tools";
     cliTools.enable = mkEnableOption "Enable cli tools";
     games.enable = mkEnableOption "Enable games";
@@ -19,19 +19,17 @@ in
   config = {
     home.packages =
       with pkgs;
-      optionals cfg.enable [
+      optionals cfg.basics.enable [
         tidal-hifi
         spotify
-        mpd # Music Player Daemon
+        yt-dlp
 
         # These might be useful for setting up oauth for mail
         oama # OAuth credential manager
         cyrus-sasl-xoauth2
-        yt-dlp
 
-        discord
-        pavucontrol
-        gnome-calendar
+        discord # Chinese spyware
+        pavucontrol # Volume
         blueman # Bluetooth manager
         solaar # Manager for Logitech Unifying Receiver
         ncmpcpp # Music player
@@ -40,23 +38,22 @@ in
 
         qbittorrent
         signal-desktop
-        keepassxc
+        keepassxc # Local password manager
         syncthing # Synchronization between devices
-        obs-studio
+        obs-studio # Recording
 
         xfce.thunar
         xfce.thunar-volman
-        lf
         yazi
 
         brave # Another browser
         calibre # E-book stuff
         zathura # PDF viewer
         qimgv # Image viewer
-        wakeonlan
+        wakeonlan # Does what it says
 
         ani-cli
-        libreoffice
+        libreoffice # MacroFreedom
         gimp # Gnu image manipulation program
         krita # Foss painting program
 

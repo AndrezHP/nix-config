@@ -37,15 +37,22 @@ in
     hypridle
     nwg-look
     go
-    cemu
-    ryujinx
+    cemu # Wii U Emulation
+    ryubing # Switch Emulation
     baobab # Disk usage analyzer
-    handbrake
     scripts.gamemode
     scripts.mountSamba
     scripts.takeScreenshot
+    scripts.nixSearch
+    handbrake
     vlc
     makemkv
+    mkvtoolnix # Matroska tools for Linux/Unix
+    feishin # Client for self hosted music streaming
+    odin
+    ols
+    tree-sitter
+    gcc
   ];
 
   programs.zen-browser = {
@@ -89,6 +96,7 @@ in
       withBuildTools = true;
     };
     applications = {
+      basics.enable = true;
       cliTools.enable = true;
       cyberTools.enable = true;
       games.enable = true;
@@ -142,12 +150,6 @@ in
 
   xdg = {
     enable = true;
-    mimeApps.defaultApplications = {
-      "application/pdf" = [ "zathura.desktop" ];
-      "video/png" = [ "mpv.desktop" ];
-      "video/jpg" = [ "mpv.desktop" ];
-      "video/*" = [ "mpv.desktop" ];
-    };
     userDirs = {
       enable = true;
       music = "${config.home.homeDirectory}/Media/Music";
