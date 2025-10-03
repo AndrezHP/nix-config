@@ -43,7 +43,6 @@ window#waybar {
 #custom-powermenu,
 #mpd { padding: 0 10px; }
 
-#clock:hover,
 #battery:hover,
 #cpu:hover,
 #memory:hover,
