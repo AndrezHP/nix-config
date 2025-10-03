@@ -76,7 +76,7 @@
     },
     "memory": {
         "format": " {}%",
-	     "tooltip": true
+        "tooltip": true
     },
     "hyprland/language": {
        "format": " {}",
@@ -100,7 +100,6 @@
     },
     "clock": {
         "format": "{:%H:%M | %e %B} ",
-        "on-click": "gnome-calendar",
         "tooltip": false
     },
     "custom/powermenu": {
