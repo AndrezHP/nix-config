@@ -27,9 +27,12 @@
   '';
 
   nixSearch = pkgs.writeShellScriptBin "ns" ''
+    if [ ! -d ~/repos ]; then
+       mkdir ~/repos
+    fi
     if [ ! -d ~/repos/nixpkgs ]; then
       echo "Cloning nixpkgs to be able to search, this may take a while..."
-      git clone https://github.com/NixOS/nixpkgs.git
+      git clone https://github.com/NixOS/nixpkgs.git ~/repos/nixpkgs
     fi
     find ~/repos/nixpkgs/pkgs -type f | grep '\.nix' | fzf --with-nth=-2.. --delimiter="/"
   '';

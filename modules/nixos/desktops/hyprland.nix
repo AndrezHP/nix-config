@@ -13,7 +13,7 @@ in
     environment.systemPackages = with pkgs; [
       waybar # Wayland bar
       wl-clipboard # Wayland clipboard functionality
-      rofi-wayland # Menu
+      rofi # Menu
       hyprpaper
       hyprpicker
     ];

@@ -120,8 +120,6 @@ in
         "rw"
         "uid=1000"
         "gid=1000"
-        "umask=022"
-        "x-systemd.device-timeout=10"
       ];
     in
     {
