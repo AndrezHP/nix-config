@@ -7,13 +7,11 @@
 }:
 let
   dataFolders = [
-    "/mnt/media"
     "/mnt/media/movies"
     "/mnt/media/show"
     "/mnt/media/photos"
     "/mnt/media/music"
     "/mnt/media/etc"
-    "/mnt/backup"
   ];
 in
 {
@@ -25,9 +23,9 @@ in
     ../../modules/homelab
   ];
 
-  systemd.tmpfiles.rules = lib.lists.forEach (
+  systemd.tmpfiles.rules = lib.lists.forEach dataFolders (
     folder: "d ${folder} 0755 ${config.homelab.user} ${config.homelab.group} -"
-  ) dataFolders;
+  );
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.json;

@@ -11,8 +11,9 @@ in
 {
   options.homelab.samba = {
     enable = lib.mkEnableOption "Enable Samba";
-    shares = lib.mkOption "Specify samba shares" {
+    shares = lib.mkOption {
       type = lib.types.attrs;
+      description = "Specify samba shares";
       default = {
         Share = {
           path = "/mnt/share";
