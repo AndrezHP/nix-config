@@ -17,6 +17,10 @@ in
       type = lib.types.str;
       default = "Media";
     };
+    mediaDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/mnt/share";
+    };
     homepage = lib.mkOption {
       type = lib.types.attrs;
       default = {
@@ -30,7 +34,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.tmpfiles.rules = [ "d /mnt/share/Movies 0755 ${hl.user} ${hl.group} -" ];
+    systemd.tmpfiles.rules = [
+      "d ${cfg.mediaDir}/movies 0755 ${hl.user} ${hl.group} -"
+      "d ${cfg.mediaDir}/shows 0755 ${hl.user} ${hl.group} -"
+    ];
     nixpkgs.config.packageOverrides = pkgs: {
       vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
     };

@@ -12,9 +12,9 @@ in
 {
   options.homelab.navidrome = {
     enable = lib.mkEnableOption "Enable Navidrome";
-    musicFolder = lib.mkOption {
+    mediaDir = lib.mkOption {
       type = lib.types.str;
-      default = "/mnt/share/Music";
+      default = "/mnt/share";
     };
     category = lib.mkOption {
       type = lib.types.str;
@@ -33,7 +33,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.tmpfiles.rules = [ "d ${cfg.musicFolder} 0775 ${hl.user} ${hl.group} -" ];
+    systemd.tmpfiles.rules = [ "d ${cfg.musicFolder}/music 0775 ${hl.user} ${hl.group} -" ];
     services.navidrome = {
       enable = true;
       user = hl.user;

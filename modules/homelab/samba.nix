@@ -39,7 +39,6 @@ in
     services.samba =
       let
         common = {
-          "path" = "/mnt/share";
           "browseable" = "yes";
           "writeable" = "yes";
           "read only" = "no";

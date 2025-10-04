@@ -5,15 +5,6 @@
   modulesPath,
   ...
 }:
-let
-  dataFolders = [
-    "/mnt/media/movies"
-    "/mnt/media/show"
-    "/mnt/media/photos"
-    "/mnt/media/music"
-    "/mnt/media/etc"
-  ];
-in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -23,9 +14,13 @@ in
     ../../modules/homelab
   ];
 
-  systemd.tmpfiles.rules = lib.lists.forEach dataFolders (
-    folder: "d ${folder} 0755 ${config.homelab.user} ${config.homelab.group} -"
-  );
+  systemd.tmpfiles.rules = lib.lists.forEach [
+    "/mnt/media/movies"
+    "/mnt/media/show"
+    "/mnt/media/photos"
+    "/mnt/media/music"
+    "/mnt/media/etc"
+  ] (path: "d ${path} 0755 ${config.homelab.user} ${config.homelab.group} -");
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.json;
@@ -62,7 +57,14 @@ in
   ];
   homelab = {
     networkInterface = "enp3s0";
-    jellyfin.enable = true;
+    jellyfin = {
+      enable = true;
+      mediaDir = "/mnt/media";
+    };
+    navidrome = {
+      enable = true;
+      mediaDir = "/mnt/media";
+    };
     samba = {
       enable = true;
       shares = {
