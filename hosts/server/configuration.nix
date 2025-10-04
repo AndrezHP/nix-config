@@ -16,7 +16,7 @@
 
   systemd.tmpfiles.rules = lib.lists.forEach [
     "/mnt/media/movies"
-    "/mnt/media/show"
+    "/mnt/media/shows"
     "/mnt/media/photos"
     "/mnt/media/music"
     "/mnt/media/etc"
