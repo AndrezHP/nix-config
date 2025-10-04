@@ -33,13 +33,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.tmpfiles.rules = [ "d ${cfg.musicFolder}/music 0775 ${hl.user} ${hl.group} -" ];
+    systemd.tmpfiles.rules = [ "d ${cfg.mediaDir}/music 0775 ${hl.user} ${hl.group} -" ];
     services.navidrome = {
       enable = true;
       user = hl.user;
       group = hl.group;
       settings = {
-        MusicFolder = cfg.musicFolder;
+        MusicFolder = "${cfg.mediaDir}/music";
       };
     };
     services.caddy.virtualHosts."${url}" = {
