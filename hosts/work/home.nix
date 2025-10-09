@@ -113,10 +113,12 @@ in
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#work";
         sport = "sudo ss -tulwn | fzf";
-        opr = "find . -name project-reports.html | fzf | xargs firefox";
+        opr = "find . -name project-reports.html | fzf | xargs --no-run-if-empty firefox";
       };
       initExtra = ''
         export GITLAB_PRIVATE_TOKEN=$(cat ~/.glpt)
+        export ANDROID_HOME=$HOME/Android/Sdk
+        export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
         export PATH="/home/andreas/.rd/bin:$PATH"
         export PATH="/home/andreas/.emacs.d/bin:$PATH"
         export PATH="/home/andreas/bin:$PATH"
