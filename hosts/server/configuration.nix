@@ -14,6 +14,7 @@
     ../../modules/homelab
   ];
 
+  virtualisation.docker.enable = true;
   systemd.tmpfiles.rules = lib.lists.forEach [
     "/mnt/media/movies"
     "/mnt/media/shows"
@@ -216,6 +217,8 @@
 
     networkmanagerapplet
     libva # Implementation of VA-API (Video acceleration)
+    wget
+    docker
   ];
 
   fonts.packages = with pkgs; [ jetbrains-mono ];
