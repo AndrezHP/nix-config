@@ -3,6 +3,7 @@ let
   cfg = config.homelab.immich;
   url = "https://immich.${config.baseDomain}";
   port = 2283;
+  hl = config.homelab;
 in
 {
   options.homelab.immich = {
@@ -10,6 +11,10 @@ in
     category = lib.mkOption {
       type = lib.types.str;
       default = "Media";
+    };
+    mediaDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/mnt/share";
     };
     homepage = lib.mkOption {
       type = lib.types.attrs;
@@ -22,15 +27,9 @@ in
       };
     };
   };
+
   config = lib.mkIf cfg.enable {
-    services.immich = {
-      enable = true;
-      accelerationDevices = null;
-    };
-    users.users.immich.extraGroups = [
-      "video"
-      "render"
-    ];
+    systemd.tmpfiles.rules = [ "d ${cfg.mediaDir}/immich 0775 immich ${hl.group} -" ];
     services.caddy.virtualHosts."${url}" = {
       useACMEHost = config.baseDomain;
       extraConfig = ''
