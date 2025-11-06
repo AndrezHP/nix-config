@@ -34,10 +34,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.tmpfiles.rules = [
-      "d ${cfg.mediaDir}/movies 0755 ${hl.user} ${hl.group} -"
-      "d ${cfg.mediaDir}/shows 0755 ${hl.user} ${hl.group} -"
-    ];
+    systemd.tmpfiles.rules = [ 
+      "d ${cfg.mediaDir}/movies 0775 ${hl.user} ${hl.group} -"
+      "d ${cfg.mediaDir}/shows 0775 ${hl.user} ${hl.group} -" ];
     nixpkgs.config.packageOverrides = pkgs: {
       vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
     };
