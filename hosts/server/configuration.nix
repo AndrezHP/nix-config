@@ -20,7 +20,7 @@
     "/mnt/media/photos"
     "/mnt/media/music"
     "/mnt/media/etc"
-  ] (path: "d ${path} 0755 ${config.homelab.user} ${config.homelab.group} -");
+  ] (path: "d ${path} 0775 ${config.homelab.user} ${config.homelab.group} -");
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.json;
@@ -161,6 +161,7 @@
       "wheel"
       "docker"
       "podman"
+      "share"
     ];
   };
 

@@ -39,13 +39,11 @@ in
     services.samba =
       let
         common = {
-          "browseable" = "yes";
           "writeable" = "yes";
-          "read only" = "no";
           "guest ok" = "no";
           "create mask" = "0775";
           "directory mask" = "0775";
-          "valid users" = "${hl.user}, @${hl.group}, andreas";
+          "valid users" = "${hl.user}, @${hl.group}, @wheel, andreas";
         };
       in
       {
@@ -57,6 +55,8 @@ in
             "server string" = "smbnix";
             "netbios name" = "smbnix";
             "security" = "user";
+            "client min protocol" = "SMB2";
+            "client max protocol" = "SMB3";
             "hosts allow" = "192.168.1.0/24 192.168.8.0/24 127.0.0.1 localhost";
             "hosts deny" = "0.0.0.0/0";
             "guest account" = "nobody";
