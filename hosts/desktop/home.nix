@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   pkgs,
   ...
 }:
@@ -8,10 +7,7 @@ let
   scripts = import ../../pkgs/scripts.nix { inherit pkgs; };
 in
 {
-  imports = [
-    ../../modules/home
-    inputs.zen-browser.homeModules.twilight-official
-  ];
+  imports = [ ../../modules/home ];
 
   home.packages = with pkgs; [
     (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
@@ -54,15 +50,6 @@ in
     tree-sitter
     gcc
   ];
-
-  programs.zen-browser = {
-    enable = true;
-    policies = {
-      DisableAppUpdate = true;
-      DisableTelemetry = true;
-      # find more options here: https://mozilla.github.io/policy-templates/
-    };
-  };
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
