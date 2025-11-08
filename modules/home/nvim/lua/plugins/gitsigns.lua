@@ -16,22 +16,22 @@ return { -- Adds git related signs to the gutter, See `:help gitsigns`
 			end
 
 			-- Navigation
-			map("n", "]h", gs.next_hunk, "Next Hunk")
-			map("n", "[h", gs.prev_hunk, "Prev Hunk")
+			map("n", "]g", gs.next_hunk, "Next Hunk")
+			map("n", "[g", gs.prev_hunk, "Prev Hunk")
 
 			-- Actions
-			map("n", "<leader>hs", gs.stage_hunk, "Stage hunk")
-			map("n", "<leader>hr", gs.reset_hunk, "Reset hunk")
+			map("n", "<leader>gs", gs.stage_hunk, "Stage hunk")
+			map("n", "<leader>gr", gs.reset_hunk, "Reset hunk")
 
-			map("v", "<leader>hs", function()
+			map("v", "<leader>gs", function()
 				gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 			end, "Stage hunk")
-			map("v", "<leader>hr", function()
+			map("v", "<leader>gr", function()
 				gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 			end, "Reset hunk")
 
-			map("n", "<leader>hS", gs.stage_buffer, "Stage buffer")
-			map("n", "<leader>hR", gs.reset_buffer, "Reset buffer")
+			map("n", "<leader>gS", gs.stage_buffer, "Stage buffer")
+			map("n", "<leader>gR", gs.reset_buffer, "Reset buffer")
 		end,
 	},
 }
