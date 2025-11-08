@@ -19,12 +19,10 @@ in
       inputs.emacs-overlay.overlays.default
     ];
 
-    nixpkgs.config.permittedInsecurePackages = [ "xpdf-4.05" ];
     home.packages =
       with pkgs;
       [
         binutils # native-comp needs 'as', provided by this
-        xpdf
         ## Emacs itself
         ((emacsPackagesFor (emacs-git-pgtk)).emacsWithPackages (
           epkgs: with epkgs; [
