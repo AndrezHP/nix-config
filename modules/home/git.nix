@@ -8,9 +8,19 @@ in
     programs.git = {
       enable = true;
       settings = {
+        user = {
+          name = "AndrezHP";
+          email = "usermail@mail.com";
+        };
+        alias = {
+          ch = "checkout";
+          br = "branch";
+          st = "status";
+          cm = "commit";
+        };
         init.defaultBranch = "main";
-        user.name = "AndrezHP";
-        user.email = "usermail@mail.com";
+        push.autoSetupRemote = true;
+        pull.rebase = true;
       };
     };
   };

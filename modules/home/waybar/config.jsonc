@@ -71,7 +71,7 @@
     },
     "cpu": {
         "format": " {usage}%",
-        "on-click": "kitty htop",
+        "on-click": "kitty btop",
         "tooltip": true
     },
     "memory": {
