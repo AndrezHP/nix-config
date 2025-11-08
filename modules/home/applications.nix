@@ -105,6 +105,7 @@ in
         tealdeer # tldr command
         jq # like sed, but for JSON
         lazygit
+        lazydocker
         neofetch
         scc
       ]

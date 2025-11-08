@@ -2,6 +2,7 @@
 {
   imports = [
     ./applications.nix
+    ./btop/btop.nix
     ./git.nix
     ./nvim/nvim.nix
     ./waybar/waybar.nix
