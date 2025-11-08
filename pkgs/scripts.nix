@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   gamemode = pkgs.writeShellScriptBin "gamemode" ''
-    ROUNDING=$(hyprctl getoption decoration:rounding | awk 'NR==1{print $2}')
-    if [ "$ROUNDING" -gt 0 ] ; then
+    GAP=$(hyprctl getoption general:gaps_in | awk 'NR==1{print $3}')
+    if [[ "$GAP" -gt 0 ]] ; then
         hyprctl --batch "\
             keyword decoration:shadow:enabled 0;\
             keyword decoration:blur:enabled 0;\
