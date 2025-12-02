@@ -49,6 +49,9 @@ in
     ols
     tree-sitter
     gcc
+    reaper
+    alsa-lib
+    jack2
   ];
 
   dconf.settings = {

@@ -219,6 +219,8 @@
     libva # Implementation of VA-API (Video acceleration)
     wget
     docker
+    lazydocker
+    powertop
   ];
 
   fonts.packages = with pkgs; [ jetbrains-mono ];
