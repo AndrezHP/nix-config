@@ -19,6 +19,7 @@ in
       inputs.emacs-overlay.overlays.default
     ];
 
+    nixpkgs.config.allowUnfree = true;
     home.packages =
       with pkgs;
       [

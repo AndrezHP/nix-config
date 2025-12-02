@@ -31,7 +31,7 @@ in
       enable = true;
       xwayland.enable = true;
       # withUWSM = true; # if you want to have several wayland compositors
-      package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+      package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
     };
   };
 }

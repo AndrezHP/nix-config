@@ -59,7 +59,6 @@ in
 
         musescore
         lilypond-with-fonts # Music in plaintext
-        # reaper # Digital audio workstation
         # kodi-wayland
         # mattermost # Slack alternative
 
