@@ -95,7 +95,7 @@ in
           black
           stylua
           prettierd
-          rust-analyzer
+          # rust-analyzer
           nil
           typescript-language-server
         ]
@@ -123,7 +123,7 @@ in
             luarocks
           ]
           ++ optionals cfg.withBuildTools [
-            cargo
+            # cargo
             clang
             cmake
             gcc

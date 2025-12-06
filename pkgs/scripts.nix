@@ -36,4 +36,7 @@
     fi
     find ~/repos/nixpkgs/pkgs -type f | grep '\.nix' | nvim $(fzf --with-nth=-2.. --delimiter="/" --preview="bat --color=always {}")
   '';
+  qrCopy = pkgs.writeShellScriptBin "qrCopy" ''
+    spectacle -bm -o ~/Downloads/QR.png & zbarimg -q --raw ~/Downloads/QR.png | wl-copy
+  '';
 }

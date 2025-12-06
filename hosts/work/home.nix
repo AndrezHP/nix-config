@@ -54,7 +54,7 @@ in
     })
     gcc
     libgcc
-    openjdk17-bootstrap # OpenJDK
+    javaPackages.compiler.temurin-bin.jdk-21
     fnm # Fast Node version manager
     watchman # Required for relay
     maven # Instead of getting it from sdkman
@@ -66,12 +66,10 @@ in
     openssl
     formatScript
     jrun
-    (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
+    # (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
 
     ##### Other stuff
     jetbrains-toolbox
-    spotify
-    tidal-hifi
     discord
     libreoffice
     gimp # Gnu image manipulation program
@@ -96,6 +94,9 @@ in
     lazydocker
     lazygit
     scripts.nixSearch
+    zbar
+    btop
+    opencode
   ];
 
   xdg.configFile."kitty/kitty.conf".source = ../../modules/home/kitty/kitty.conf;
@@ -139,6 +140,7 @@ in
     homeDirectory = "/home/andreas";
     sessionVariables = {
       EDITOR = "nvim";
+      JAVA_HOME = "${pkgs.javaPackages.compiler.temurin-bin.jdk-21}";
     };
   };
 
