@@ -14,21 +14,6 @@
     ../../modules/homelab
   ];
 
-  sops = {
-    defaultSopsFile = ../../secrets/secrets.json;
-    defaultSopsFormat = "json";
-    age = {
-      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      keyFile = "/var/lib/sops-nix/key.txt";
-      generateKey = true;
-    };
-    secrets = {
-      cloudflare-api-token = { };
-      nextcloudAdminPassword = { };
-      gluetunEnv = { };
-    };
-  };
-
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "both";
@@ -39,44 +24,15 @@
     ];
   };
 
-  baseDomain = "zetmuse.xyz";
-  services.caddy.enable = true;
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
-  homelab = {
-    networkInterface = "enp2s0f1";
-    jellyfin.enable = true;
-    samba.enable = true;
-    immich.enable = false;
-    homepage.enable = true;
-    uptime-kuma.enable = true;
-    microbin.enable = true;
-    vaultwarden.enable = true;
-    audiobookshelf.enable = true;
-    jellyseerr.enable = true;
-    nextcloud.enable = true;
-
-    radarr.enable = true;
-    sonarr.enable = true;
-    prowlarr.enable = true;
-    lidarr.enable = true;
-    bazarr.enable = true;
-    sabnzbd.enable = true;
-    deluge.enable = true;
-  };
-
-  networking.interfaces."enp2s0f1".wakeOnLan = {
-    enable = true;
-    policy = [ "magic" ];
-  };
+  # networking.interfaces."enp2s0f1".wakeOnLan = {
+  #   enable = true;
+  #   policy = [ "magic" ];
+  # };
 
   # Disable sleep on closing the lid
-  services.logind.lidSwitch = "ignore";
+  # services.logind.lidSwitch = "ignore";
 
-  # nixosModules.desktops.hyprland.enable = true;
+  nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
   boot.loader.grub = {
@@ -91,15 +47,15 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Y2pKiFLlDTQ5nEs4sJFfhG03qIQde2PXVpLtyuKcj andreas@nixos"
   ];
 
-  # services.devmon.enable = true;
-  # services.gvfs.enable = true;
-  # services.udisks2.enable = true;
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
-    # enable32Bit = true;
-    # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+    enable32Bit = true;
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -119,27 +75,23 @@
   networking.hostName = "nixos-laptop";
   networking.networkmanager.enable = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_DK.UTF-8";
 
-  # services.xserver = {
-  #   enable = true;
-  #   xkb.layout = "us";
-  #   xkb.variant = "";
-  # };
+  services.xserver = {
+    enable = true;
+    xkb.layout = "us";
+    xkb.variant = "";
+  };
 
-  # environment.sessionVariables = {
-  #   WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
-  #   NIXOS_OZONE_WL = "1"; # Make electron apps use wayland
-  # };
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1"; # If your cursor becomes invisible
+    NIXOS_OZONE_WL = "1"; # Make electron apps use wayland
+  };
 
-  # hardware.bluetooth.enable = true;
-  # services.libinput.enable = true;
-  # services.printing.enable = true;
+  hardware.bluetooth.enable = true;
+  services.libinput.enable = true;
+  services.printing.enable = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -159,9 +111,9 @@
       "docker"
       "podman"
     ];
-    # packages = with pkgs; [
-    #   firefox
-    # ];
+    packages = with pkgs; [
+      firefox
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -171,23 +123,6 @@
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
-
-  systemd.services.udp-gro-forwarding = {
-    description = "Improve UPD throughput using transport layer offloads";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = ''
-        ${pkgs.bash}/bin/bash -c '
-          NETDEV=$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")
-          ${pkgs.ethtool}/bin/ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
-        '
-      '';
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     neovim
@@ -202,9 +137,7 @@
     lf
     curl
     ripgrep
-    sops
-
-    nmap
+    # sops
 
     # Mounting flash drives and other harddrives
     usbutils
@@ -212,26 +145,20 @@
     udiskie # Removable disk automounter for udisks
     efibootmgr # Efi boot manager
 
-    # dunst # Notification daemon
-    # libnotify # Notification daemon depends on this
+    dunst # Notification daemon
+    libnotify # Notification daemon depends on this
     networkmanagerapplet
     libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
   ];
 
-  # xdg.portal.enable = true;
-  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     jetbrains-mono
   ];
-
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   system.stateVersion = "23.11";
 }
