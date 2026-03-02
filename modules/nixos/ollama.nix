@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -9,8 +10,10 @@ in
 {
   options.nixosModules.ollama.enable = lib.mkEnableOption "Enable Ollama";
   config = lib.mkIf cfg.enable {
-    services.ollama.enable = true;
-    services.ollama.acceleration = "cuda";
+    services.ollama = {
+      package = pkgs.ollama-cuda;
+      enable = true;
+    };
     nixpkgs.config.allowUnfreePredicate =
       pkg:
       builtins.elem (lib.getName pkg) [

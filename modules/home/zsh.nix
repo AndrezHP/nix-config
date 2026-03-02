@@ -45,6 +45,7 @@ in
 
     programs.zsh = {
       enable = true;
+      dotDir = config.home.homeDirectory;
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;

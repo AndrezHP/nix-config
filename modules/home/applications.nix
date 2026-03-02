@@ -42,12 +42,12 @@ in
         syncthing # Synchronization between devices
         obs-studio # Recording
 
-        xfce.thunar
-        xfce.thunar-volman
+        thunar
+        thunar-volman
         yazi
 
         brave # Another browser
-        calibre # E-book stuff
+        # calibre # E-book stuff # Fix after build is fixed
         zathura # PDF viewer
         qimgv # Image viewer
         wakeonlan # Does what it says
@@ -114,7 +114,7 @@ in
         netcat
         metasploit
         john
-        yersinia
+        # yersinia # TODO: update package for gcc version bump
         hashcat
       ];
   };

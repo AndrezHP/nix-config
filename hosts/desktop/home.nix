@@ -11,7 +11,7 @@ in
 
   home.packages = with pkgs; [
     (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
-    (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate [ "ideavim" ])
+    jetbrains.idea
     (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
     (python312.withPackages (
       p: with p; [
@@ -25,7 +25,7 @@ in
       ]
     ))
     cifs-utils # Used for mounting smb shares
-    path-of-building
+    rusty-path-of-building
     sqlite
     alacritty
     kitty
@@ -46,12 +46,22 @@ in
     mkvtoolnix # Matroska tools for Linux/Unix
     feishin # Client for self hosted music streaming
     odin
-    ols
+    # ols # TODO: there was a breaking change in Odin
     tree-sitter
     gcc
     reaper
     alsa-lib
     jack2
+    vscodium
+    jetbrains-toolbox
+    rlwrap
+    pv
+    opencode
+    clojure
+    clojure-lsp
+    clj-kondo
+    cljfmt
+    jre25_minimal
   ];
 
   dconf.settings = {
