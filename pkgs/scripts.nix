@@ -39,4 +39,44 @@
   qrCopy = pkgs.writeShellScriptBin "qrCopy" ''
     spectacle -bm -o ~/Downloads/QR.png & zbarimg -q --raw ~/Downloads/QR.png | wl-copy
   '';
+  nixClean = pkgs.writeShellScriptBin "nix-clean" ''
+    set -euo pipefail
+
+    KEEP=3
+    OPTIMIZE=false
+    for arg in "$@"; do
+    case "$arg" in
+        --optimize) OPTIMIZE=true ;;
+        *) echo "Unknown argument: $arg" >&2; exit 1 ;;
+    esac
+    done
+
+    if [[ $EUID -ne 0 ]]; then
+    echo "Error: this script must be run with sudo for system generation cleanup." >&2
+    exit 1
+    fi
+
+    echo "=== Nix Cleanup ==="
+
+    echo "[1/4] Cleaning system generations (keeping last $KEEP)..."
+    sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +$KEEP
+
+    echo "[2/4] Cleaning user generations (keeping last $KEEP)..."
+    nix-env --delete-generations +$KEEP
+
+    echo "[3/4] Cleaning home-manager generations (keeping last $KEEP)..."
+    if [ -e /nix/var/nix/profiles/per-user/$USER/home-manager ]; then
+    nix-env --profile /nix/var/nix/profiles/per-user/$USER/home-manager --delete-generations +$KEEP
+    fi
+
+    echo "[4/4] Running garbage collection..."
+    sudo nix-collect-garbage -d
+
+    if [[ "$OPTIMIZE" == true ]]; then
+    echo "[+] Optimising nix store (hard-linking duplicate files)..."
+    nix store optimise
+    fi
+
+    echo "=== Done ==="
+  '';
 }
