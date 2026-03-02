@@ -32,7 +32,10 @@
   # Disable sleep on closing the lid
   # services.logind.lidSwitch = "ignore";
 
-  nixosModules.desktops.hyprland.enable = true;
+  nixosModules = {
+    desktops.hyprland.enable = true;
+    kanata.enable = true;
+  };
 
   # Bootloader.
   boot.loader.grub = {
