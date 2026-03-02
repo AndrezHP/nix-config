@@ -81,7 +81,7 @@ in
         fava
         # :lang nix
         age
-        nixfmt-rfc-style # Nix formatter
+        nixfmt # Nix formatter
       ]
       ++ [
         pkgs.nerd-fonts.jetbrains-mono

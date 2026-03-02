@@ -18,7 +18,7 @@
   mountSamba = pkgs.writeShellScriptBin "mountSamba" ''
     read -p "User name: " USERNAME
     read -s -p "Password: " PASSWORD
-    sudo mount -t cifs //192.168.8.223/share /mnt/samba_share -o username=$USERNAME,password=$PASSWORD,gid=1000,uid=$USERNAME
+    sudo mount -t cifs //192.168.8.223/public /mnt/samba_share -o username=$USERNAME,password=$PASSWORD,gid=1000,uid=$USERNAME
   '';
 
   takeScreenshot = pkgs.writeShellScriptBin "takeScreenshot" ''

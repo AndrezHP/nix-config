@@ -231,6 +231,8 @@ in
     vulkan-validation-layers
     vulkan-tools
     libva # Implementation of VA-API (Video acceleration)
+    quickemu
+    quickgui
   ];
 
   xdg.portal.enable = true;
@@ -239,7 +241,7 @@ in
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.iosevka
