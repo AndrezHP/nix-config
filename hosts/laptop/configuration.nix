@@ -10,8 +10,8 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ./disko.nix
     ./hardware-configuration.nix
-    # ../../modules/nixos/desktop
-    ../../modules/homelab
+    ../../modules/nixos
+    # ../../modules/homelab
   ];
 
   services.tailscale = {
