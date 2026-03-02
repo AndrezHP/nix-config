@@ -40,6 +40,7 @@ in
     scripts.mountSamba
     scripts.takeScreenshot
     scripts.nixSearch
+    scripts.nixClean
     handbrake
     vlc
     makemkv
@@ -62,6 +63,7 @@ in
     clj-kondo
     cljfmt
     jre25_minimal
+    gdu
   ];
 
   dconf.settings = {
