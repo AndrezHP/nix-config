@@ -74,6 +74,11 @@
       "flakes"
     ];
     auto-optimise-store = true;
+    trusted-users = [
+      "root"
+      "andreas"
+      "@wheel"
+    ];
   };
   networking.hostName = "nixos-laptop";
   networking.networkmanager.enable = true;
