@@ -3,6 +3,7 @@
   lib,
   pkgs,
   modulesPath,
+  inputs,
   ...
 }:
 {
@@ -12,8 +13,24 @@
     ./disko.nix
     ./hardware-configuration.nix
     ../../modules/homelab
+    # inputs.autoaspm.nixosModules.default
   ];
-
+  #
+  # services.autoaspm.enable = true;
+  # boot.kernelParams = [ "amd_pstate=guided" ];
+  # powerManagement = {
+  #   enable = true;
+  #   cpuFreqGovernor = "ondemand";
+  # };
+  #
+  # systemd.services.hd-idle = {
+  #   description = "HDD spin down daemon";
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a /dev/sda -i 3600 -a /dev/sdb -i 3600 -a /dev/sdc -i 3600 -a /dev/sdd -i 3600 &";
+  #   };
+  # };
+  #
   virtualisation.docker.enable = true;
   systemd.tmpfiles.rules = lib.lists.forEach [
     "/mnt/media/movies"
@@ -49,7 +66,7 @@
     ];
   };
 
-  baseDomain = "test.zetmuse.xyz";
+  baseDomain = "zetmuse.xyz";
   services.caddy.enable = true;
   networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
   networking.firewall.allowedTCPPorts = [
@@ -85,13 +102,15 @@
     audiobookshelf.enable = true;
     jellyseerr.enable = true;
     nextcloud.enable = true;
+    # gitea.enable = true;
+    # forgejo.enable = true;
 
     radarr.enable = true;
     sonarr.enable = true;
     prowlarr.enable = true;
     lidarr.enable = true;
     bazarr.enable = true;
-    sabnzbd.enable = true;
+    # sabnzbd.enable = true;
     deluge.enable = true;
   };
 
@@ -190,7 +209,7 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     neovim
-    htop
+    btop
     git
     fzf # what all the fuzz is about
     lshw
@@ -207,7 +226,7 @@
     zoxide # better file path navigation
     lazygit # when magit can't reach your destination
     tealdeer # ain't nobody got time for reading man
-    neofetch # pseudo-flex
+    fastfetch # pseudo-flex
 
     # Mounting flash drives and other harddrives
     usbutils
@@ -221,6 +240,10 @@
     docker
     lazydocker
     powertop
+    pciutils
+    hdparm
+    hd-idle
+    hddtemp
   ];
 
   fonts.packages = with pkgs; [ jetbrains-mono ];

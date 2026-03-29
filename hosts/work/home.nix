@@ -87,7 +87,7 @@ in
 
     eza # better ls?
     zoxide # better file path navigation
-    neofetch
+    fastfetch
     ffmpeg
     zathura # PDF viewer
     fzf
