@@ -23,6 +23,7 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     automatic-ripping-machine.url = "github:AndrezHP/automatic-ripping-machine/main?dir=nixos";
+    autoaspm.url = "github:notthebee/AutoASPM/0c73e0ed98e7bb3f6854bab9505e79a7f61654bd/?shallow=true";
   };
 
   outputs =

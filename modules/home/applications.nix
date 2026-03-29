@@ -105,7 +105,7 @@ in
         jq # like sed, but for JSON
         lazygit
         lazydocker
-        neofetch
+        fastfetch
         scc
       ]
       ++ optionals cfg.cyberTools.enable [
