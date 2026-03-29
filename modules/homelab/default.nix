@@ -73,6 +73,9 @@
         environmentFile = "${pkgs.writeText "cloudflare-credentials" ''
           CLOUDFLARE_DNS_API_TOKEN=${config.sops.secrets.cloudflare-api-token.path}
         ''}";
+        # credentialFiles = {
+        #   "CF_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare-api-token.path;
+        # };
         group = config.services.caddy.group;
       };
     };
