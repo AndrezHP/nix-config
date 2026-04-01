@@ -70,6 +70,7 @@ in
         {
           lf = mkIf (elem pkgs.yazi config.home.packages) "yazi";
           ls = mkIf (elem pkgs.eza config.home.packages) "eza";
+          htop = mkIf (elem pkgs.btop config.home.packages) "btop";
           fzk = "ps aux | grep $USER | fzf --multi | awk '{print $2;}' | xargs kill";
           vim = "nvim";
           lg = "lazygit";

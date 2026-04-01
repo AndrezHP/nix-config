@@ -26,6 +26,13 @@
     applications.cliTools.enable = true;
   };
 
+  homeModules.hyprlandConfig = {
+    enable = true;
+    additionalConfig = ''
+      monitor=eDP-1, 1920x1080, 0x0, 1
+    '';
+  };
+
   home.packages = with pkgs; [
     alacritty
   ];

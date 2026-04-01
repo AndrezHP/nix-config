@@ -14,5 +14,6 @@
     ./emacs.nix
     ./theme.nix
     ./kitty/kitty.nix
+    ./hyprland.nix
   ];
 }
