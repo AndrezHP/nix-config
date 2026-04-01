@@ -83,7 +83,6 @@ in
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#desktop";
         bs = "sudo nixos-rebuild switch --flake ~/nix-config#desktop";
-        htop = "btop";
       };
       initExtra = ''
         export PATH=$PATH:$(go env GOPATH)/bin
@@ -107,6 +106,25 @@ in
     };
   };
 
+  homeModules.hyprlandConfig = {
+    enable = true;
+    additionalConfig = ''
+      monitor=DP-1, 1920x1080@60, 0x0, 1
+      workspace=DP-1,1
+      monitor=HDMI-A-1, 2560x1440@144, 1920x0, 1
+      workspace=HDMI-A-1,2
+
+      # Workspace binding
+      workspace=1, monitor:HDMI-A-1
+      workspace=2, monitor:HDMI-A-1
+      workspace=3, monitor:DP-1
+      workspace=4, monitor:DP-1
+      workspace=6, monitor:HDMI-A-1
+      workspace=8, monitor:HDMI-A-1
+      workspace=9, monitor:HDMI-A-1
+    '';
+  };
+
   programs.home-manager.enable = true;
   programs.nushell.enable = true;
   nixpkgs = {
@@ -126,7 +144,6 @@ in
   };
 
   # Import dotfile configs
-  xdg.configFile."hypr".source = ../../dotfiles/hypr;
   xdg.configFile."dunst".source = ../../dotfiles/dunst;
   xdg.configFile."rofi".source = ../../dotfiles/rofi;
 
