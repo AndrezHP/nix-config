@@ -114,7 +114,6 @@ in
         netcat
         metasploit
         john
-        # yersinia # TODO: update package for gcc version bump
         hashcat
       ];
   };

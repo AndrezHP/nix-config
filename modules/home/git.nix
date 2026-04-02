@@ -22,6 +22,7 @@ in
         push.autoSetupRemote = true;
         pull.rebase = true;
       };
+      signing.format = "openpgp";
     };
   };
 }
