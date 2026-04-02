@@ -1,5 +1,6 @@
 { lib, config, ... }:
-with lib; let
+with lib;
+let
   cfg = config.homeModules.waybar;
 in
 {
@@ -9,7 +10,7 @@ in
       enable = true;
       systemd = {
         enable = true;
-        target = "graphical-session.target";
+        targets = [ "graphical-session.target" ];
       };
       style = ./style.css;
       settings = lib.importJSON ./config.jsonc;

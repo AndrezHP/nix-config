@@ -47,7 +47,7 @@ in
     mkvtoolnix # Matroska tools for Linux/Unix
     feishin # Client for self hosted music streaming
     odin
-    # ols # TODO: there was a breaking change in Odin
+    ols
     tree-sitter
     gcc
     reaper
@@ -173,6 +173,7 @@ in
     enable = true;
     userDirs = {
       enable = true;
+      setSessionVariables = true;
       music = "${config.home.homeDirectory}/Media/Music";
       videos = "${config.home.homeDirectory}/Media/Videos";
       pictures = "${config.home.homeDirectory}/Media/Pictures";
