@@ -13,24 +13,24 @@
     ./disko.nix
     ./hardware-configuration.nix
     ../../modules/homelab
-    # inputs.autoaspm.nixosModules.default
+    inputs.autoaspm.nixosModules.default
   ];
-  #
-  # services.autoaspm.enable = true;
-  # boot.kernelParams = [ "amd_pstate=guided" ];
-  # powerManagement = {
-  #   enable = true;
-  #   cpuFreqGovernor = "ondemand";
-  # };
-  #
-  # systemd.services.hd-idle = {
-  #   description = "HDD spin down daemon";
-  #   wantedBy = [ "multi-user.target" ];
-  #   serviceConfig = {
-  #     ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a /dev/sda -i 3600 -a /dev/sdb -i 3600 -a /dev/sdc -i 3600 -a /dev/sdd -i 3600 &";
-  #   };
-  # };
-  #
+
+  services.autoaspm.enable = true;
+  boot.kernelParams = [ "amd_pstate=guided" ];
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "ondemand";
+  };
+
+  systemd.services.hd-idle = {
+    description = "HDD spin down daemon";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a /dev/sda -i 3600 -a /dev/sdb -i 3600 -a /dev/sdc -i 3600 -a /dev/sdd -i 3600 &";
+    };
+  };
+
   virtualisation.docker.enable = true;
   systemd.tmpfiles.rules = lib.lists.forEach [
     "/mnt/media/movies"
