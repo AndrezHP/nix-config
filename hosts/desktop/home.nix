@@ -86,6 +86,9 @@ in
       };
       initExtra = ''
         export PATH=$PATH:$(go env GOPATH)/bin
+        export PATH="/home/andreas/.emacs.d/bin:$PATH"
+        export ANDROID_HOME=$HOME/Android/Sdk
+        export LADSPA_PATH=/usr/lib/ladspa:
       '';
     };
     firefox.enable = true;
