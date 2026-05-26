@@ -30,7 +30,7 @@ in
   };
   nixosModules.kanata.enable = true;
   nixosModules.desktops.hyprland.enable = true;
-  nixosModules.ollama.enable = true;
+  nixosModules.ollama.enable = false;
   nixosModules.virtualization = {
     enable = true;
     user = "andreas";
@@ -187,6 +187,7 @@ in
   programs.noisetorch.enable = true;
   programs.steam = {
     enable = true;
+    extraPackages = [ pkgs.hidapi ];
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
@@ -233,6 +234,7 @@ in
     libva # Implementation of VA-API (Video acceleration)
     quickemu
     quickgui
+    ladspaPlugins
   ];
 
   xdg.portal.enable = true;

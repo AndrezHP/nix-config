@@ -22,9 +22,9 @@ in
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     services.xserver.enable = true;
     services.displayManager = {
-      gdm.enable = true;
-      gdm.wayland = true;
-      gdm.autoSuspend = false;
+      plasma-login-manager.enable = true;
+      # gdm.enable = true;
+      # gdm.autoSuspend = false;
     };
 
     programs.hyprland = {

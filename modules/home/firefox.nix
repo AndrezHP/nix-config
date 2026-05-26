@@ -9,6 +9,7 @@
   config = lib.mkIf config.homeModules.firefox.enable {
     programs.firefox = {
       enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
