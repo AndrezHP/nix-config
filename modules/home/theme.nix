@@ -7,13 +7,13 @@
 {
   options.homeModules.theme.enable = lib.mkEnableOption "Enable theming of gtk/qt";
   config = lib.mkIf config.homeModules.theme.enable {
-    home.packages = [ pkgs.arc-theme ];
+    home.packages = [ pkgs.catppuccin-gtk ];
     home.sessionVariables.GTK_THEME = "Arc-Dark";
     gtk = {
       enable = true;
       theme = {
-        name = "Arc-Dark";
-        package = pkgs.arc-theme;
+        name = "Adwaita-dark";
+        package = pkgs.gnome-themes-extra;
       };
       cursorTheme = {
         name = "Bibata-Modern-Ice";

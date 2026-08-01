@@ -70,12 +70,12 @@ in
         # :lang cc
         clang-tools
         # :lang latex & :lang org (latex previews)
-        (texlive.combined.scheme-full.withPackages (
-          ps: with ps; [
-            wrapfig
-            capt-of
-          ]
-        ))
+        # (texlive.combined.scheme-full.withPackages (
+        #   ps: with ps; [
+        #     wrapfig
+        #     capt-of
+        #   ]
+        # ))
         # :lang beancount
         beancount
         fava

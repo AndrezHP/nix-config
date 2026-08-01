@@ -12,17 +12,17 @@ in
   home.packages = with pkgs; [
     jetbrains.idea
     (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
-    (python312.withPackages (
-      p: with p; [
-        numpy
-        pandas
-        scipy
-        matplotlib
-        requests
-        seaborn
-        beautifulsoup4
-      ]
-    ))
+    # (python312.withPackages (
+    #   p: with p; [
+    #     numpy
+    #     pandas
+    #     scipy
+    #     matplotlib
+    #     requests
+    #     seaborn
+    #     beautifulsoup4
+    #   ]
+    # ))
     cifs-utils # Used for mounting smb shares
     sqlite
     alacritty
@@ -112,17 +112,16 @@ in
   homeModules.hyprlandConfig = {
     enable = true;
     additionalConfig = ''
-      monitor=DP-3, 2560x1440@60, 0x0, 1
-      monitor=HDMI-A-1, 2560x1440@144, 2560x0, 1
+      hl.monitor({ output = "HDMI-A-1", mode = "2560x1440@144", position = "2560x0", scale = 1 })
+      hl.monitor({ output = "DP-3", mode = "2560x1440@60", position = "0x0", scale = 1 })
 
-      # Workspace binding
-      workspace=1, monitor:HDMI-A-1
-      workspace=2, monitor:HDMI-A-1
-      workspace=3, monitor:DP-3
-      workspace=4, monitor:DP-3
-      workspace=6, monitor:HDMI-A-1
-      workspace=8, monitor:HDMI-A-1
-      workspace=9, monitor:HDMI-A-1
+      hl.workspace_rule({ workspace = "1", monitor = "HDMI-A-1", default = true })
+      hl.workspace_rule({ workspace = "2", monitor = "HDMI-A-1" })
+      hl.workspace_rule({ workspace = "3", monitor = "DP-3" })
+      hl.workspace_rule({ workspace = "4", monitor = "DP-3" })
+      hl.workspace_rule({ workspace = "7", monitor = "HDMI-A-1" })
+      hl.workspace_rule({ workspace = "8", monitor = "HDMI-A-1" })
+      hl.workspace_rule({ workspace = "9", monitor = "HDMI-A-1" })
     '';
   };
 
