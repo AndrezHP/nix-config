@@ -29,7 +29,7 @@
   homeModules.hyprlandConfig = {
     enable = true;
     additionalConfig = ''
-      monitor=eDP-1, 1920x1080, 0x0, 1
+      hl.monitor({ output = "eDP-1", mode = "1920x1080", position = "0x0", scale = 1 })
     '';
   };
 

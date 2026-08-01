@@ -22,13 +22,10 @@ in
       optionals cfg.basics.enable [
         spotify
         yt-dlp
-
         discord # Chinese spyware
         pavucontrol # Volume
         blueman # Bluetooth manager
         solaar # Manager for Logitech Unifying Receiver
-        # ncmpcpp # Music player
-        # porsmo # Cli Pomodoro
         via # QMK layout editor
 
         qbittorrent
@@ -54,8 +51,6 @@ in
 
         musescore
         lilypond-with-fonts # Music in plaintext
-        # kodi-wayland
-        # mattermost # Slack alternative
 
         meson # Build something
       ]
