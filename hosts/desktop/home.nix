@@ -10,7 +10,6 @@ in
   imports = [ ../../modules/home ];
 
   home.packages = with pkgs; [
-    (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
     jetbrains.idea
     (haskellPackages.ghcWithPackages (pkgs: with pkgs; [ stack ]))
     (python312.withPackages (
@@ -25,7 +24,6 @@ in
       ]
     ))
     cifs-utils # Used for mounting smb shares
-    rusty-path-of-building
     sqlite
     alacritty
     kitty
@@ -35,7 +33,6 @@ in
     go
     cemu # Wii U Emulation
     ryubing # Switch Emulation
-    baobab # Disk usage analyzer
     scripts.gamemode
     scripts.mountSamba
     scripts.takeScreenshot
@@ -55,8 +52,7 @@ in
     jack2
     vscodium
     jetbrains-toolbox
-    rlwrap
-    pv
+    pv # Tool for monitoring the progress of data through a pipeline
     opencode
     clojure
     clojure-lsp
@@ -64,6 +60,10 @@ in
     cljfmt
     jre25_minimal
     gdu
+
+    # These might be useful for setting up oauth for mail
+    # oama # OAuth credential manager
+    # cyrus-sasl-xoauth2
   ];
 
   dconf.settings = {
@@ -104,7 +104,7 @@ in
     applications = {
       basics.enable = true;
       cliTools.enable = true;
-      cyberTools.enable = true;
+      cyberTools.enable = false;
       games.enable = true;
     };
   };
@@ -112,16 +112,14 @@ in
   homeModules.hyprlandConfig = {
     enable = true;
     additionalConfig = ''
-      monitor=DP-1, 1920x1080@60, 0x0, 1
-      workspace=DP-1,1
-      monitor=HDMI-A-1, 2560x1440@144, 1920x0, 1
-      workspace=HDMI-A-1,2
+      monitor=DP-3, 2560x1440@60, 0x0, 1
+      monitor=HDMI-A-1, 2560x1440@144, 2560x0, 1
 
       # Workspace binding
       workspace=1, monitor:HDMI-A-1
       workspace=2, monitor:HDMI-A-1
-      workspace=3, monitor:DP-1
-      workspace=4, monitor:DP-1
+      workspace=3, monitor:DP-3
+      workspace=4, monitor:DP-3
       workspace=6, monitor:HDMI-A-1
       workspace=8, monitor:HDMI-A-1
       workspace=9, monitor:HDMI-A-1
