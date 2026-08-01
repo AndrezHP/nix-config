@@ -5,6 +5,6 @@
     ./ollama.nix
     ./virtualization.nix
     ./desktops
-    ./arm.nix
+    #./arm.nix
   ];
 }

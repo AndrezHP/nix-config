@@ -22,7 +22,7 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    automatic-ripping-machine.url = "github:AndrezHP/automatic-ripping-machine/main?dir=nixos";
+    #automatic-ripping-machine.url = "github:AndrezHP/automatic-ripping-machine/main?dir=nixos";
     autoaspm.url = "github:notthebee/AutoASPM/0c73e0ed98e7bb3f6854bab9505e79a7f61654bd/?shallow=true";
   };
 
@@ -34,7 +34,7 @@
       hyprland,
       disko,
       sops-nix,
-      automatic-ripping-machine,
+      #automatic-ripping-machine,
       ...
     }@inputs:
     with builtins;
@@ -51,7 +51,7 @@
           modules = [
             ./hosts/desktop/configuration.nix
             sops-nix.nixosModules.sops
-            automatic-ripping-machine.nixosModules.default
+            #automatic-ripping-machine.nixosModules.default
           ];
         };
         laptop = nixpkgs.lib.nixosSystem {

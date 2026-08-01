@@ -20,20 +20,15 @@ in
     home.packages =
       with pkgs;
       optionals cfg.basics.enable [
-        tidal-hifi
         spotify
         yt-dlp
-
-        # These might be useful for setting up oauth for mail
-        oama # OAuth credential manager
-        cyrus-sasl-xoauth2
 
         discord # Chinese spyware
         pavucontrol # Volume
         blueman # Bluetooth manager
         solaar # Manager for Logitech Unifying Receiver
-        ncmpcpp # Music player
-        porsmo # Cli Pomodoro
+        # ncmpcpp # Music player
+        # porsmo # Cli Pomodoro
         via # QMK layout editor
 
         qbittorrent
@@ -69,9 +64,6 @@ in
         steam
         steam-run
         runelite
-        lutris-unwrapped
-        bottles-unwrapped
-        heroic-unwrapped
         (retroarch.withCores (
           cores: with cores; [
             mame2003-plus # All-around arcade emulation

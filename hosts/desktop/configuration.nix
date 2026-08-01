@@ -24,10 +24,10 @@ in
   };
   environment.etc."smb-credentials".source = config.sops.secrets.sambaCredentials.path;
 
-  nixosModules.arm = {
-    enable = true;
-    group = mediaGroup;
-  };
+  #nixosModules.arm = {
+  #  enable = true;
+  #  group = mediaGroup;
+  #};
   nixosModules.kanata.enable = true;
   nixosModules.desktops.hyprland.enable = true;
   nixosModules.ollama.enable = false;
@@ -39,6 +39,13 @@ in
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "both";
+  };
+
+  services.sunshine = {
+    enable = true;
+    autoStart = false;
+    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
+    openFirewall = true;
   };
 
   # Bootloader.
@@ -55,31 +62,32 @@ in
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+    # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
   # Nvidia driver options
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-    prime = {
-      sync.enable = true;
-      nvidiaBusId = "PCI:10:0:0";
-      intelBusId = "PCI:0:0:0";
-    };
-  };
+  # hardware.nvidia = {
+  #   modesetting.enable = true;
+  #   powerManagement.enable = false;
+  #   powerManagement.finegrained = false;
+  #   open = false;
+  #   nvidiaSettings = true;
+  #   package = config.boot.kernelPackages.nvidiaPackages.beta;
+  #   prime = {
+  #     sync.enable = true;
+  #     nvidiaBusId = "PCI:10:0:0";
+  #     intelBusId = "PCI:0:0:0";
+  #   };
+  # };
 
   # AMD stuff
   hardware.cpu.amd.updateMicrocode = true;
-  boot.kernelParams = [
-    "amd_pstate=active"
-  ];
+  boot = {
+    kernelParams = [ "amd_pstate=active" ];
+    initrd.kernelModules = [ "amdgpu" ];
+  };
   powerManagement.cpuFreqGovernor = "performance";
 
   hardware.logitech.wireless.enable = true;
@@ -88,9 +96,9 @@ in
   environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
-    GBM_BACKEND = "nvidia-drm";
-    LIBVA_DRIVER_NAME = "nvidia";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    # GBM_BACKEND = "nvidia-drm";
+    # LIBVA_DRIVER_NAME = "nvidia";
+    # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     MOZ_ENABLE_WAYLAND = 1;
     GDK_BACKEND = "wayland";
   };
@@ -133,12 +141,19 @@ in
         fsType = "ntfs-3g";
         inherit options;
       };
-      "/mnt/windowsPartition" = {
-        device = "/dev/disk/by-uuid/5A78427D784257C1";
-        fsType = "ntfs-3g";
-        inherit options;
+      "/mnt/otherSSD" = {
+        device = "/dev/disk/by-uuid/8783a02e-8da9-439a-b721-1efb6b4d4c38";
+        fsType = "ext4";
+        options = [
+          "nofail"
+          "rw"
+        ];
       };
     };
+
+  systemd.tmpfiles.rules = [
+    "d /mnt/otherSSD 0755 1000 1000 - -"
+  ];
 
   networking.hostName = "nixos-desktop";
   networking.networkmanager.enable = true;
@@ -174,6 +189,7 @@ in
         "networkmanager"
         "wheel"
         "docker"
+        "uinput"
         mediaGroup
       ];
     };
@@ -201,7 +217,7 @@ in
 
   environment.systemPackages = with pkgs; [
     neovim
-    htop
+    btop
     git
     lf # Terminal file manager
     mpv # Video player
@@ -235,6 +251,7 @@ in
     quickemu
     quickgui
     ladspaPlugins
+    cpulimit
   ];
 
   xdg.portal.enable = true;
@@ -245,10 +262,7 @@ in
     noto-fonts
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
-    nerd-fonts.iosevka
     jetbrains-mono
-    font-awesome
   ];
 
   programs.mtr.enable = true; # Network diagnostics
