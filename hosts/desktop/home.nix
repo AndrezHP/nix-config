@@ -93,7 +93,6 @@ in
     };
     firefox.enable = true;
     tmux.enable = true;
-    theme.enable = true;
     emacs.enable = true;
     kitty.enable = true;
     nvimConfig = {
@@ -107,7 +106,29 @@ in
       cyberTools.enable = false;
       games.enable = true;
     };
+    theme.enable = false;
   };
+
+  stylix = {
+    enable = true;
+    polarity = "dark";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    cursor = {
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+      size = 24;
+    };
+    icons = {
+      enable = true;
+      package = pkgs.papirus-icon-theme;
+      dark = "Papirus-Dark";
+      light = "Papirus-Light";
+    };
+    targets.waybar.enable = false;
+    targets.firefox.profileNames = [ "andreas" ];
+  };
+
+  home.pointerCursor.enable = true;
 
   homeModules.hyprlandConfig = {
     enable = true;
