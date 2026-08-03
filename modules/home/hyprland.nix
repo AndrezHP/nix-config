@@ -4,7 +4,7 @@ let
 in
 {
   options.homeModules.hyprlandConfig = {
-    enable = lib.mkEnableOption "Enable git with configuration";
+    enable = lib.mkEnableOption "Enable Hyprland configuration";
     additionalConfig = lib.mkOption {
       type = lib.types.str;
       default = ''

@@ -22,6 +22,9 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+
     #automatic-ripping-machine.url = "github:AndrezHP/automatic-ripping-machine/main?dir=nixos";
     autoaspm.url = "github:notthebee/AutoASPM/0c73e0ed98e7bb3f6854bab9505e79a7f61654bd/?shallow=true";
   };
@@ -34,6 +37,7 @@
       hyprland,
       disko,
       sops-nix,
+      stylix,
       #automatic-ripping-machine,
       ...
     }@inputs:
@@ -79,7 +83,10 @@
           value = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             extraSpecialArgs = { inherit inputs outputs; };
-            modules = [ ./hosts/${name}/home.nix ];
+            modules = [
+              stylix.homeModules.stylix
+              ./hosts/${name}/home.nix
+            ];
           };
         }) hosts
       );
