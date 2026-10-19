@@ -8,13 +8,10 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/nixos/displayserver.nix
+    ../../modules/nixos/desktops
   ];
 
-  nixosModules.displayServer.wayland = {
-    enable = true;
-    hyprland.enable = true;
-  };
+  nixosModules.desktops.hyprland.enable = true;
 
   # Bootloader.
   boot.loader = {
@@ -28,6 +25,7 @@
     driSupport = true;
     driSupport32Bit = true;
   };
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
   # Nvidia driver options

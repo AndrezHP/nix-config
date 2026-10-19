@@ -22,6 +22,7 @@ in
       default = "";
     };
   };
+
   config = mkIf cfg.enable {
     programs.zoxide = {
       enable = true;
@@ -40,6 +41,7 @@ in
       syntaxHighlighting.enable = true;
       history.size = 10000;
       prezto.caseSensitive = true;
+
       oh-my-zsh = {
         enable = true;
         theme = "bira";

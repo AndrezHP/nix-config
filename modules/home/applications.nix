@@ -63,11 +63,6 @@ in
         gimp # Gnu image manipulation program
         krita # Foss painting program
 
-        # Virtualization
-        qemu
-        virt-manager
-        wine
-
         musescore
         lilypond-with-fonts # Music in plaintext
         # reaper # Digital audio workstation

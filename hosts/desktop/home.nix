@@ -4,6 +4,13 @@
     ../../modules/home
   ];
 
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
+  };
+
   homeModules = {
     wlogout.enable = true;
     waybar.enable = true;
@@ -36,7 +43,6 @@
 
   programs.home-manager.enable = true;
   programs.nushell.enable = true;
-
   nixpkgs = {
     overlays = [ ];
     config = {
@@ -82,6 +88,7 @@
 
   # Add stuff for your user as you see fit:
   home.packages = with pkgs; [
+    path-of-building
     sqlite
     alacritty
     kitty

@@ -1,21 +1,21 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 {
   imports = [
     # Include the results of the hardware scan.
-    ../../modules/nixos/displayserver.nix
-    ../../modules/nixos/kanata/kanata.nix
     ./hardware-configuration.nix
+    ../../modules/nixos
   ];
 
   nixosModules.kanata.enable = true;
-  nixosModules.displayServer.wayland = {
+  nixosModules.desktops.hyprland.enable = true;
+  nixosModules.ollama.enable = true;
+  nixosModules.virtualization = {
     enable = true;
-    hyprland.enable = true;
+    user = "andreas";
   };
 
   # Bootloader.
@@ -29,20 +29,6 @@
     };
     efi.canTouchEfiVariables = true;
   };
-
-  # For Ollama
-  services.ollama.enable = true;
-  services.ollama.acceleration = "cuda";
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "cuda_cccl"
-      "cuda_cudart"
-      "cuda_nvcc"
-      "libcublas"
-      "nvidia-settings"
-      "nvidia-x11"
-    ];
 
   # Enable OpenGL
   hardware.graphics = {
@@ -68,13 +54,15 @@
     };
   };
 
-  hardware.logitech.wireless.enable = true;
-  hardware.bluetooth.enable = true;
+  # AMD stuff
   hardware.cpu.amd.updateMicrocode = true;
   boot.kernelParams = [
     "amd_pstate=active"
   ];
   powerManagement.cpuFreqGovernor = "performance";
+
+  hardware.logitech.wireless.enable = true;
+  hardware.bluetooth.enable = true;
 
   environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
   environment.sessionVariables = {
@@ -187,10 +175,7 @@
 
   # Allow running executables
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged
-    # programs here, NOT in environment.systemPackages
-  ];
+  programs.nix-ld.libraries = [ ];
 
   programs.noisetorch.enable = true;
   programs.steam = {
@@ -222,8 +207,7 @@
     zip
     unzip
     lm_sensors # Hardware temp sensor
-
-    rustup
+    kitty # Hyprland default terminal
 
     # Mounting flash drives and other harddrives
     usbutils
@@ -234,16 +218,13 @@
     dunst # Notification daemon
     libnotify # Notification daemon depends on this
     networkmanagerapplet
-
-    libva # Implementation of VA-API (Video acceleration)
     xdg-desktop-portal-gtk
-
-    kitty # Hyprland default terminal
 
     # For nvidia compatibility
     vulkan-loader
     vulkan-validation-layers
     vulkan-tools
+    libva # Implementation of VA-API (Video acceleration)
   ];
 
   xdg.portal.enable = true;
@@ -278,11 +259,5 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "23.11";
 }
