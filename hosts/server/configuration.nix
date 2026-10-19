@@ -39,7 +39,7 @@
     ];
   };
 
-  baseDomain = "zetmuse.xyz";
+  baseDomain = "test.zetmuse.xyz";
   services.caddy.enable = true;
   networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
   networking.firewall.allowedTCPPorts = [
@@ -71,6 +71,33 @@
   networking.interfaces."enp3s0".wakeOnLan = {
     enable = true;
     policy = [ "magic" ];
+  };
+
+  ### Config for ZFS with 
+  # zpool create -O atime=off -O compression=on -O mountpoint=none -O xattr=sa -O acltype=posixacl -o ashift=12 vol0 raidz1 /dev/sda /dev/sdb /dev/sdc /dev/sdd
+  # Encryption option with: -O encryption=on -O keyformat=passphrase -O keylocation=prompt 
+  networking.hostId = "deadcafe";
+  boot = {
+    supportedFilesystems = [ "zfs" ];
+    zfs.extraPools = [ "vol0" ];
+  };
+  services.zfs = {
+    autoScrub = {
+      enable = true;
+      interval = "monthly";
+      pools = [ "vol0 "];
+    };
+    autoSnapshot.enable = true;
+  };
+  fileSystems = {
+    "/mnt/media" = {
+      device = "vol0/media";
+      fsType = "zfs";
+    };
+    "/mnt/backup" = {
+      device = "vol0/backup";
+      fsType = "zfs";
+    };
   };
 
   # Bootloader.
@@ -137,7 +164,7 @@
     neovim
     htop
     git
-    fzf
+    fzf # what all the fuzz is about
     lshw
     zip
     unzip
@@ -146,12 +173,13 @@
     sops
     nmap
     kitty
+    zfs #
 
     eza # better ls?
     zoxide # better file path navigation
-    lazygit
-    tealdeer
-    neofetch
+    lazygit # when magit can't reach your destination
+    tealdeer # ain't nobody got time for reading man
+    neofetch # pseudo-flex
 
     # Mounting flash drives and other harddrives
     usbutils

@@ -1,5 +1,11 @@
-{ pkgs, config, lib, ... }: 
-with lib; let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+with lib;
+let
   cfg = config.homeModules.tmux;
 in
 {
@@ -46,8 +52,8 @@ in
         bind-key k select-pane -U
         bind-key l select-pane -R
 
-        bind C-p previous-window
-        bind C-n next-window
+        bind M-p previous-window
+        bind M-n next-window
       '';
     };
   };

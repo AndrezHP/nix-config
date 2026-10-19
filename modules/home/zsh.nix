@@ -59,17 +59,17 @@ in
         '';
         plugins = [ "direnv" ];
       };
-      initContent =
-        ''
-          bindkey '^\b' backward-kill-word
-          source <(fzf --zsh)
-        ''
-        + cfg.initExtra;
+      initContent = ''
+        bindkey '^\b' backward-kill-word
+        source <(fzf --zsh)
+      ''
+      + cfg.initExtra;
       shellAliases = lib.mkMerge [
         cfg.extraAliases
         {
           lf = mkIf (elem pkgs.yazi config.home.packages) "yazi";
           ls = mkIf (elem pkgs.eza config.home.packages) "eza";
+          fzk = "ps aux | grep $USER | fzf --multi | awk '{print $2;}' | xargs kill";
           vim = "nvim";
           lg = "lazygit";
           conf = "cd ~/nix-config && nvim";

@@ -37,8 +37,8 @@ in
         "share" = {
           "path" = "/mnt/share";
           "browseable" = "yes";
-          "read only" = "no";
           "writeable" = "yes";
+          "read only" = "no";
           "guest ok" = "no";
           "create mask" = "0775";
           "directory mask" = "0775";
