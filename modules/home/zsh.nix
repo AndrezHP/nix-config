@@ -63,6 +63,7 @@ in
       initContent = ''
         bindkey '^\b' backward-kill-word
         source <(fzf --zsh)
+        export PATH="$HOME/.config/emacs/bin:$PATH"
       ''
       + cfg.initExtra;
       shellAliases = lib.mkMerge [

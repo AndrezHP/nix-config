@@ -24,6 +24,15 @@ in
   };
   environment.etc."smb-credentials".source = config.sops.secrets.sambaCredentials.path;
 
+  services.flatpak.enable = true;
+  systemd.services.flatpak-repo = {
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.flatpak ];
+    script = ''
+      flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    '';
+  };
+
   #nixosModules.arm = {
   #  enable = true;
   #  group = mediaGroup;
@@ -62,6 +71,11 @@ in
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      libvdpau-va-gl
+      libva-vdpau-driver
+      libva-utils 
+    ];
     # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
@@ -200,7 +214,6 @@ in
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [ ];
 
-  programs.noisetorch.enable = true;
   programs.steam = {
     enable = true;
     extraPackages = [ pkgs.hidapi ];
@@ -252,11 +265,16 @@ in
     quickgui
     ladspaPlugins
     cpulimit
+    game-devices-udev-rules
   ];
 
-  xdg.portal.enable = true;
-  xdg.portal.config.common.default = "*";
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  hardware.uinput.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    config.common.default = "*";
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 
   fonts.packages = with pkgs; [
     noto-fonts

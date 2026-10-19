@@ -7,7 +7,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprctl setcursor Bibata-Modern-Ice 24")
 	hl.exec_cmd("firefox", { workspace = "2 silent" })
 	hl.exec_cmd("kitty emacs --daemon", { workspace = "6 silent" })
-	hl.exec_cmd("kitty noisetorch -i", { workspace = "6 silent" })
+	-- TODO: This hack should be removed once the issue is fixed
+	hl.exec_cmd("systemctl --user start xdg-desktop-portal.service --ignore-dependencies")
 end)
 
 hl.env("XCURSOR_SIZE", "24")
@@ -61,6 +62,7 @@ hl.config({
 		force_default_wallpaper = 0, -- Set to 0 or 1 to disable the default mascot wallpapers
 		disable_splash_rendering = true,
 		disable_hyprland_logo = true,
+		enable_anr_dialog = false,
 	},
 
 	animations = { enabled = false },

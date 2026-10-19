@@ -23,14 +23,12 @@ in
     services.xserver.enable = true;
     services.displayManager = {
       plasma-login-manager.enable = true;
-      # gdm.enable = true;
-      # gdm.autoSuspend = false;
     };
 
     programs.hyprland = {
       enable = true;
       xwayland.enable = true;
-      # withUWSM = true; # if you want to have several wayland compositors
+      withUWSM = true;
     };
   };
 }

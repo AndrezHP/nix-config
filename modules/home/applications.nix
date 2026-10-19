@@ -22,10 +22,11 @@ in
       optionals cfg.basics.enable [
         spotify
         yt-dlp
-        discord # Chinese spyware
+        # discord # Chinese spyware
         pavucontrol # Volume
         blueman # Bluetooth manager
-        solaar # Manager for Logitech Unifying Receiver
+        solaar # Manager for Logitech things
+        piper # Key remapping (for mouse and keyboard)
         via # QMK layout editor
 
         qbittorrent
@@ -39,7 +40,7 @@ in
         yazi
 
         brave # Another browser
-        # calibre # E-book stuff # Fix after build is fixed
+        calibre # E-book stuff
         zathura # PDF viewer
         qimgv # Image viewer
         wakeonlan # Does what it says
