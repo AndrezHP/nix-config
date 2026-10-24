@@ -37,6 +37,8 @@ in
       "d /var/deluge/config 0775 ${hl.user} ${hl.group} -"
       # On the media dataset, so the files can hardlinked into the library
       "d ${downloadDir} 0775 ${hl.user} ${hl.group} -"
+      "d ${downloadDir}/incomplete 0775 ${hl.user} ${hl.group} -"
+      "d ${downloadDir}/complete 0775 ${hl.user} ${hl.group} -"
       "d /var/gluetun 0755 root root -"
     ];
 
@@ -120,6 +122,9 @@ in
           PORT_FORWARD_ONLY = "on";
           VPN_PORT_FORWARDING = "on";
           VPN_PORT_FORWARDING_STATUS_FILE = "/gluetun/forwarded_port";
+          # Proton resets DNS over TLS connections, so use Proton's DNS inside the tunnel
+          DOT = "off";
+          DNS_ADDRESS = "10.2.0.1";
         };
       };
     };
