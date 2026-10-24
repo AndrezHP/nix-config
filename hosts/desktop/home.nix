@@ -83,12 +83,14 @@ in
       extraAliases = {
         bh = "home-manager switch --flake ~/nix-config/#desktop";
         bs = "sudo nixos-rebuild switch --flake ~/nix-config#desktop";
+        cl = "claude";
       };
       initExtra = ''
         export PATH=$PATH:$(go env GOPATH)/bin
         export PATH="/home/andreas/.emacs.d/bin:$PATH"
         export ANDROID_HOME=$HOME/Android/Sdk
         export LADSPA_PATH=/usr/lib/ladspa:
+        export PATH="$HOME/.local/bin:$PATH"
       '';
     };
     firefox.enable = true;
