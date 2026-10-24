@@ -65,7 +65,7 @@ in
 
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud33;
+      package = pkgs.nextcloud35;
       hostName = "nextcloud";
       configureRedis = true;
       maxUploadSize = "20G";
@@ -98,8 +98,11 @@ in
         dbuser = "nextcloud";
         dbhost = "/run/postgresql";
         dbname = "nextcloud";
-        adminuser = "admin";
-        adminpassFile = config.sops.secrets.nextcloudAdminPassword.path;
+        # Use this instead
+        # nextcloud-occ user:add <username>
+        # nextcloud-occ group:adduser admin <username>
+        # adminuser = "admin";
+        # adminpassFile = config.sops.secrets.nextcloudAdminPassword.path;
       };
     };
   };

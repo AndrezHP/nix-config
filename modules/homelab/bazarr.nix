@@ -2,7 +2,7 @@
 let
   cfg = config.homelab.bazarr;
   url = "https://baz.${config.baseDomain}";
-  port = toString config.services.bazarr.listenPort;
+  port = toString config.services.bazarr.settings.general.port;
 in
 {
   options.homelab.bazarr = {
