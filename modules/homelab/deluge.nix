@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.deluge;
+  hl = config.homelab;
+  downloadDir = "/mnt/media/downloads";
   url = "https://deluge.${config.baseDomain}";
   port = 8112;
 in
@@ -32,8 +34,9 @@ in
 
     # Create directories for deluge and gluetun volumes
     systemd.tmpfiles.rules = [
-      "d /var/deluge/config 0775 andreas users -"
-      "d /var/deluge/downloads 0775 andreas users -"
+      "d /var/deluge/config 0775 ${hl.user} ${hl.group} -"
+      # On the media dataset, so the files can hardlinked into the library
+      "d ${downloadDir} 0775 ${hl.user} ${hl.group} -"
       "d /var/gluetun 0755 root root -"
     ];
 
@@ -79,11 +82,14 @@ in
         ];
         volumes = [
           "/var/deluge/config:/config"
-          "/var/deluge/downloads:/var/deluge/downloads"
+          "${downloadDir}:${downloadDir}"
         ];
         environment = {
-          PUID = "1000";
-          PGID = "1000";
+          # Run as the homelab user, so the Arr apps can manage the downloads
+          PUID = toString config.users.users.${hl.user}.uid;
+          PGID = toString config.users.groups.${hl.group}.gid;
+          # Give the group write access, matching the 0775 used elsewhere (e.g. write permissions over SMB)
+          UMASK = "002";
           TZ = "Etc/UTC";
         };
       };
