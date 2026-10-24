@@ -100,10 +100,9 @@
     microbin.enable = true;
     vaultwarden.enable = true;
     audiobookshelf.enable = true;
-    jellyseerr.enable = true;
+    jellyseerr.enable = false;
     nextcloud.enable = true;
-    # gitea.enable = true;
-    # forgejo.enable = true;
+    forgejo.enable = false;
 
     radarr.enable = true;
     sonarr.enable = true;
@@ -126,6 +125,7 @@
   boot = {
     supportedFilesystems = [ "zfs" ];
     zfs.extraPools = [ "vol0" ];
+    zfs.forceImportRoot = false;
   };
   services.zfs = {
     autoScrub = {
