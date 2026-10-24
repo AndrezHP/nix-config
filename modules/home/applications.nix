@@ -40,7 +40,7 @@ in
         yazi
 
         brave # Another browser
-        calibre # E-book stuff
+        # calibre # E-book stuff
         zathura # PDF viewer
         qimgv # Image viewer
         wakeonlan # Does what it says
@@ -50,7 +50,7 @@ in
         gimp # Gnu image manipulation program
         krita # Foss painting program
 
-        musescore
+        # musescore
         lilypond-with-fonts # Music in plaintext
 
         meson # Build something

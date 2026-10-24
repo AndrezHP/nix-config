@@ -56,8 +56,6 @@ in
         (aspellWithDicts (
           ds: with ds; [
             en
-            en-computers
-            en-science
             da
             es
           ]

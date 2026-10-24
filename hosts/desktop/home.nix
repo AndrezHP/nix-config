@@ -38,7 +38,7 @@ in
     scripts.takeScreenshot
     scripts.nixSearch
     scripts.nixClean
-    handbrake
+    # handbrake
     vlc
     makemkv
     mkvtoolnix # Matroska tools for Linux/Unix
@@ -147,7 +147,10 @@ in
   };
 
   programs.home-manager.enable = true;
-  programs.nushell.enable = true;
+  programs.nushell = {
+    enable = true;
+    loadSessionVariables = true;
+  };
   nixpkgs = {
     overlays = [ ];
     config = {

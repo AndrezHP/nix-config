@@ -32,10 +32,7 @@ let
   scripts = import ../../pkgs/scripts.nix { inherit pkgs; };
 in
 {
-  imports = [
-    ../../modules/home
-    # ./nexus.nix
-  ];
+  imports = [ ../../modules/home ];
 
   nixpkgs = {
     overlays = [ ];
@@ -60,13 +57,9 @@ in
     maven # Instead of getting it from sdkman
     jq # like sed, but for JSON
     git
-    # rustc
-    # cargo
-    # rustup
     openssl
     formatScript
     jrun
-    # (pkgs.callPackage ../../pkgs/cargo-pbc.nix { })
 
     ##### Other stuff
     jetbrains-toolbox
