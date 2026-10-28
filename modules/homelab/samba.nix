@@ -62,7 +62,6 @@ in
             "guest account" = "nobody";
             "map to guest" = "bad user";
           };
-          # sudo mount -t cifs //<ip>/share /mnt/samba_share -o username=<username>,password=<password>
           # Remember to set: smbpasswd -a <user>
         }
         // builtins.mapAttrs (name: value: value // common) cfg.shares;

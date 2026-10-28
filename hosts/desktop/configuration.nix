@@ -156,6 +156,22 @@ in
       device = "tank/data";
       fsType = "zfs";
     };
+    "/mnt/media" = {
+      device = "//192.168.8.224/Media";
+      fsType = "cifs";
+      options = [
+        "credentials=/etc/smb-credentials"
+        "uid=1000"
+        "gid=100"
+        "x-systemd.automount" # mount on first access, not at boot
+        "noauto"
+        "x-systemd.idle-timeout=600"
+        "x-systemd.mount-timeout=5s"
+        "x-systemd.device-timeout=5s"
+        "nofail"
+        "_netdev"
+      ];
+    };
   };
 
   systemd.tmpfiles.rules = [

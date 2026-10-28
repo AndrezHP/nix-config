@@ -34,7 +34,6 @@ in
     cemu # Wii U Emulation
     ryubing # Switch Emulation
     scripts.gamemode
-    scripts.mountSamba
     scripts.takeScreenshot
     scripts.nixSearch
     scripts.nixClean
