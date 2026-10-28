@@ -89,9 +89,6 @@
         Media = {
           path = "/mnt/media";
         };
-        Backup = {
-          path = "/mnt/backup";
-        };
       };
     };
     immich.enable = true;
@@ -138,10 +135,6 @@
   fileSystems = {
     "/mnt/media" = {
       device = "vol0/media";
-      fsType = "zfs";
-    };
-    "/mnt/backup" = {
-      device = "vol0/backup";
       fsType = "zfs";
     };
   };

@@ -14,7 +14,7 @@ in
     enable = lib.mkEnableOption "Enable Forgejo";
     stateDir = lib.mkOption {
       type = lib.types.str;
-      default = "/mnt/backup/Other/forgejo";
+      default = "/mnt/media/backup/Other/forgejo";
     };
     category = lib.mkOption {
       type = lib.types.str;

@@ -14,7 +14,7 @@ in
     enable = lib.mkEnableOption "Enable Gitea";
     stateDir = lib.mkOption {
       type = lib.types.str;
-      default = "/mnt/backup/Other/gitea";
+      default = "/mnt/media/backup/Other/gitea";
     };
     category = lib.mkOption {
       type = lib.types.str;
