@@ -62,9 +62,10 @@ in
   boot.loader.grub = {
     enable = true;
     device = "nodev";
-    useOSProber = true;
+    useOSProber = false; # Should be true when dual-booting
     efiSupport = true;
     fsIdentifier = "uuid";
+    configurationLimit = 4;
   };
 
   # Enable OpenGL
@@ -74,7 +75,7 @@ in
     extraPackages = with pkgs; [
       libvdpau-va-gl
       libva-vdpau-driver
-      libva-utils 
+      libva-utils
     ];
     # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
@@ -134,42 +135,35 @@ in
   };
 
   # Setup desktop extra harddisks and windows partition
-  boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems =
-    let
+  boot = {
+    supportedFilesystems = [
+      "ntfs"
+      "zfs"
+    ];
+    zfs.forceImportRoot = false;
+    zfs.extraPools = [ "tank" ];
+  };
+  fileSystems = {
+    "/mnt/otherSSD" = {
+      device = "/dev/disk/by-uuid/8783a02e-8da9-439a-b721-1efb6b4d4c38";
+      fsType = "ext4";
       options = [
         "nofail"
         "rw"
-        "uid=1000"
-        "gid=1000"
       ];
-    in
-    {
-      "/mnt/disk1" = {
-        device = "/dev/disk/by-uuid/CA367026367015A3";
-        fsType = "ntfs-3g";
-        inherit options;
-      };
-      "/mnt/disk2" = {
-        device = "/dev/disk/by-uuid/5822CF301EF6AC78";
-        fsType = "ntfs-3g";
-        inherit options;
-      };
-      "/mnt/otherSSD" = {
-        device = "/dev/disk/by-uuid/8783a02e-8da9-439a-b721-1efb6b4d4c38";
-        fsType = "ext4";
-        options = [
-          "nofail"
-          "rw"
-        ];
-      };
     };
+    "/mnt/HDD" = {
+      device = "tank/data";
+      fsType = "zfs";
+    };
+  };
 
   systemd.tmpfiles.rules = [
     "d /mnt/otherSSD 0755 1000 1000 - -"
   ];
 
   networking.hostName = "nixos-desktop";
+  networking.hostId = "019514d3";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Copenhagen";
