@@ -24,7 +24,6 @@
     ./nextcloud.nix
     ./sabnzbd.nix
     ./deluge.nix
-    ./gitea.nix
     ./forgejo.nix
   ];
 

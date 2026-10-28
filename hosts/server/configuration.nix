@@ -38,6 +38,7 @@
     "/mnt/media/photos"
     "/mnt/media/music"
     "/mnt/media/etc"
+    "/mnt/media/backup" # Must match /mnt/media's owner, or tmpfiles refuses paths below it
   ] (path: "d ${path} 0775 ${config.homelab.user} ${config.homelab.group} -");
 
   sops = {
@@ -68,7 +69,10 @@
 
   baseDomain = "zetmuse.xyz";
   services.caddy.enable = true;
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+  networking.firewall.allowedUDPPorts = [
+    config.services.tailscale.port
+    443 # HTTP/3, which caddy advertises
+  ];
   networking.firewall.allowedTCPPorts = [
     80
     443
@@ -102,7 +106,7 @@
     audiobookshelf.enable = true;
     jellyseerr.enable = false;
     nextcloud.enable = true;
-    forgejo.enable = false;
+    forgejo.enable = true;
 
     radarr.enable = true;
     sonarr.enable = true;

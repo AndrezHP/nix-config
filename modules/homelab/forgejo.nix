@@ -14,7 +14,7 @@ in
     enable = lib.mkEnableOption "Enable Forgejo";
     stateDir = lib.mkOption {
       type = lib.types.str;
-      default = "/mnt/media/backup/Other/forgejo";
+      default = "/mnt/media/backup/forgejo";
     };
     category = lib.mkOption {
       type = lib.types.str;
@@ -33,13 +33,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.tmpfiles.rules = [ "d ${cfg.stateDir} 0775 ${hl.user} ${hl.group} -" ];
+    systemd.services.forgejo.unitConfig.RequiresMountsFor = [ cfg.stateDir ];
     services.forgejo = {
       enable = true;
       user = hl.user;
       group = hl.group;
       stateDir = cfg.stateDir;
       lfs.enable = true; # Large file support
+      dump.enable = true; # Daily dumps to <stateDir>/dump
       settings = {
         server = {
           HTTP_PORT = port;
