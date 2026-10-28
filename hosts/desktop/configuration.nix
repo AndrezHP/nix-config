@@ -224,6 +224,12 @@ in
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [ ];
 
+  # Run AppImages directly
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   programs.steam = {
     enable = true;
     extraPackages = [ pkgs.hidapi ];

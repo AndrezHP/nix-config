@@ -81,7 +81,7 @@ in
             swanstation # PSX (Port of duckstation)
             pcsx2 # PS2
             dolphin # Wii / GameCube
-            citra
+            citra # 3DS
           ]
         ))
       ]
