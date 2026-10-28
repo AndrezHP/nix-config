@@ -91,7 +91,10 @@
         };
       };
     };
-    immich.enable = true;
+    immich = {
+      enable = true;
+      mediaDir = "/mnt/media/backup/immich";
+    };
     homepage.enable = true;
     uptime-kuma.enable = true;
     microbin.enable = true;
