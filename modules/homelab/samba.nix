@@ -44,6 +44,8 @@ in
           "create mask" = "0775";
           "directory mask" = "0775";
           "valid users" = "${hl.user}, @${hl.group}, @wheel, andreas";
+          "force user" = "${hl.user}";
+          "force group" = "${hl.group}";
         };
       in
       {
