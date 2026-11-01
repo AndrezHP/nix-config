@@ -37,21 +37,12 @@ in
     systemd.tmpfiles.rules = [ 
       "d ${cfg.mediaDir}/movies 0775 ${hl.user} ${hl.group} -"
       "d ${cfg.mediaDir}/shows 0775 ${hl.user} ${hl.group} -" ];
-    nixpkgs.config.packageOverrides = pkgs: {
-      vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-    };
-    hardware.graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        intel-vaapi-driver # previously vaapiIntel
-        libva-vdpau-driver
-        libvdpau-va-gl
-        intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-        vpl-gpu-rt # QSV on 11th gen or newer
-        # intel-media-sdk # QSV up to 11th gen # Deprecated
-      ];
-    };
+    # AMD VA-API (radeonsi) ships with Mesa; Jellyfin just needs access to /dev/dri
+    hardware.graphics.enable = true;
+    users.users.${hl.user}.extraGroups = [
+      "render"
+      "video"
+    ];
     services.jellyfin = {
       enable = true;
       user = config.homelab.user;

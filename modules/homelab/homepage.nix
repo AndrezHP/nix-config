@@ -29,7 +29,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    boot.kernelModules = [ "coretemp" ];
+    boot.kernelModules = [ "k10temp" ]; # AMD CPU temperature
     environment.systemPackages = with pkgs; [ lm_sensors ];
     services.caddy.virtualHosts."${config.baseDomain}" = {
       useACMEHost = config.baseDomain;
