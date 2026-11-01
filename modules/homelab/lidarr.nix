@@ -26,7 +26,7 @@ in
     services.lidarr = {
       enable = true;
       user = config.homelab.user;
-      group = config.homelab.user;
+      group = config.homelab.group;
     };
     services.caddy.virtualHosts."${url}" = {
       useACMEHost = config.baseDomain;

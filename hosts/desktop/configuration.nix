@@ -75,28 +75,11 @@ in
     enable32Bit = true;
     extraPackages = with pkgs; [
       libvdpau-va-gl
-      libva-vdpau-driver
       libva-utils
     ];
-    # extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
 
-  # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "amdgpu" ];
-  # Nvidia driver options
-  # hardware.nvidia = {
-  #   modesetting.enable = true;
-  #   powerManagement.enable = false;
-  #   powerManagement.finegrained = false;
-  #   open = false;
-  #   nvidiaSettings = true;
-  #   package = config.boot.kernelPackages.nvidiaPackages.beta;
-  #   prime = {
-  #     sync.enable = true;
-  #     nvidiaBusId = "PCI:10:0:0";
-  #     intelBusId = "PCI:0:0:0";
-  #   };
-  # };
 
   # AMD stuff
   hardware.cpu.amd.updateMicrocode = true;
@@ -111,10 +94,6 @@ in
 
   environment.variables.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
-    # GBM_BACKEND = "nvidia-drm";
-    # LIBVA_DRIVER_NAME = "nvidia";
-    # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     MOZ_ENABLE_WAYLAND = 1;
     GDK_BACKEND = "wayland";
   };
@@ -273,7 +252,7 @@ in
     networkmanagerapplet
     xdg-desktop-portal-gtk
 
-    # For nvidia compatibility
+    # Vulkan / VA-API tooling
     vulkan-loader
     vulkan-validation-layers
     vulkan-tools

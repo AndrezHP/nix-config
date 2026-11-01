@@ -11,18 +11,8 @@ in
   options.nixosModules.ollama.enable = lib.mkEnableOption "Enable Ollama";
   config = lib.mkIf cfg.enable {
     services.ollama = {
-      package = pkgs.ollama-cuda;
+      package = pkgs.ollama-rocm; # desktop is AMD
       enable = true;
     };
-    nixpkgs.config.allowUnfreePredicate =
-      pkg:
-      builtins.elem (lib.getName pkg) [
-        "cuda_cccl"
-        "cuda_cudart"
-        "cuda_nvcc"
-        "libcublas"
-        "nvidia-settings"
-        "nvidia-x11"
-      ];
   };
 }
