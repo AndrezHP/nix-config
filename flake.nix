@@ -46,7 +46,10 @@
       inherit (self) outputs;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      hosts = filter (name: pathExists ./hosts/${name}/home.nix) (attrNames (readDir ./hosts));
+      # Server runs Home Manager as a NixOS module (via nixos-rebuild), not standalone
+      hosts = filter (name: name != "server" && pathExists ./hosts/${name}/home.nix) (
+        attrNames (readDir ./hosts)
+      );
     in
     {
       nixosConfigurations = {

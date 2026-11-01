@@ -7,7 +7,6 @@
   homeModules = {
     zsh.enable = true;
     zsh.extraAliases = {
-      bh = "home-manager switch --flake ~/nix-config/#server";
       bs = "sudo nixos-rebuild switch --flake ~/nix-config/#server";
     };
     nvimConfig = {
@@ -17,19 +16,10 @@
     };
   };
 
-  programs.home-manager.enable = true;
   home = {
     username = "andreas";
     homeDirectory = "/home/andreas";
     sessionVariables.EDITOR = "nvim";
-  };
-
-  nixpkgs = {
-    overlays = [ ];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
   };
 
   # Nicely reload system units when changing configs

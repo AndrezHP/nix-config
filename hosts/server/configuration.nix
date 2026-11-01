@@ -243,7 +243,7 @@
 
   fonts.packages = with pkgs; [ jetbrains-mono ];
 
-  # home-manager.useGlobalPkgs = true;
+  home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.andreas = import ./home.nix;
 
