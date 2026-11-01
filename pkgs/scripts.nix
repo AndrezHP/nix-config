@@ -30,7 +30,24 @@
     fi
     find ~/repos/nixpkgs/pkgs -type f | grep '\.nix' | nvim $(fzf --with-nth=-2.. --delimiter="/" --preview="bat --color=always {}")
   '';
-  qrCopy = pkgs.writeShellScriptBin "qrCopy" ''
+  fzfMove = pkgs.writeShellScriptBin "fmv" ''
+    set -euo pipefail
+
+    DEST="''${1:-}"
+    if [ -z "$DEST" ]; then
+      DEST=$(find ~ -type d -not -path '*/.*' 2>/dev/null | ${pkgs.fzf}/bin/fzf --prompt="Destination: ") || exit 1
+    fi
+    if [ ! -d "$DEST" ]; then
+      echo "Error: '$DEST' is not a directory" >&2
+      exit 1
+    fi
+
+    mapfile -t ENTRIES < <(find . -mindepth 1 -maxdepth 1 -printf '%P\n' | ${pkgs.fzf}/bin/fzf --multi --prompt="Move to $DEST: ")
+    [ ''${#ENTRIES[@]} -eq 0 ] && exit 0
+
+    mv -iv -- "''${ENTRIES[@]}" "$DEST"
+  '';
+  qrCopy =pkgs.writeShellScriptBin "qrCopy" ''
     spectacle -bm -o ~/Downloads/QR.png & zbarimg -q --raw ~/Downloads/QR.png | wl-copy
   '';
   nixClean = pkgs.writeShellScriptBin "nix-clean" ''

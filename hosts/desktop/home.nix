@@ -37,6 +37,7 @@ in
     scripts.takeScreenshot
     scripts.nixSearch
     scripts.nixClean
+    scripts.fzfMove
     # handbrake
     vlc
     makemkv

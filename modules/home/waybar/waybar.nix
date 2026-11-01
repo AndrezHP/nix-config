@@ -8,8 +8,7 @@ in
   config = mkIf cfg.enable {
     programs.waybar = {
       enable = true;
-      systemd.enable = true;
-      systemd.targets = [ "graphical-session.target" ];
+      systemd.enable = false;
       style = ./style.css;
       settings = lib.importJSON ./config.jsonc;
     };

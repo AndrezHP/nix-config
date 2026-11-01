@@ -63,21 +63,28 @@ in
         (retroarch.withCores (
           cores: with cores; [
             mame2003-plus # All-around arcade emulation
+            mame # Arcade (current MAME, ES-DE default)
+            fbneo # Neo Geo / arcade (ES-DE default)
             puae # Commodore Amiga
             dosbox-pure # DOS
             gambatte # GB/GBC
             mgba # GBA
             beetle-vb # Virtual boy
             melonds # Nintendo DS
+            melondsds # Nintendo DS
             quicknes # NES
+            mesen # NES/Famicom (ES-DE default)
             snes9x # SNES
+            mesen-s # Super Game Boy (ES-DE default)
             mupen64plus # N64
+            parallel-n64 # N64DD (ES-DE default)
             genesis-plus-gx # Sega Genesis
             picodrive # Sega MegaDrive/MegaCD/32X emulator
             beetle-saturn # Sega Saturn
             flycast # Sega Dreamcast
             fbalpha2012 # Neo Geo
             pcsx-rearmed # PSX
+            beetle-psx # PSX (ES-DE default)
             swanstation # PSX (Port of duckstation)
             pcsx2 # PS2
             dolphin # Wii / GameCube

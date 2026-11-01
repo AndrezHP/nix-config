@@ -23,6 +23,7 @@ in
     services.xserver.enable = true;
     services.displayManager = {
       plasma-login-manager.enable = true;
+      defaultSession = "hyprland-uwsm";
     };
 
     programs.hyprland = {

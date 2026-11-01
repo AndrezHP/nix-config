@@ -63,6 +63,9 @@ hl.config({
 		disable_splash_rendering = true,
 		disable_hyprland_logo = true,
 		enable_anr_dialog = false,
+		-- Games launched from ES-DE take over its fullscreen, and hand it back when they close
+		on_focus_under_fullscreen = 1,
+		exit_window_retains_fullscreen = true,
 	},
 
 	animations = { enabled = false },
@@ -155,6 +158,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"
 --------------------------------
 
 hl.window_rule({ name = "discord-workspace4", match = { class = "^discord" }, workspace = "4" })
+hl.window_rule({ name = "es-de-fullscreen", match = { class = "^es-de$" }, fullscreen = true })
 
 hl.window_rule({
 	-- Fix some dragging issues with XWayland

@@ -55,6 +55,7 @@ in
     autoStart = false;
     capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
     openFirewall = true;
+    settings.output_name = "HDMI-A-1";
   };
 
   # Bootloader.
