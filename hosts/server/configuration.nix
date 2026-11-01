@@ -27,7 +27,7 @@
     description = "HDD spin down daemon";
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a /dev/sda -i 3600 -a /dev/sdb -i 3600 -a /dev/sdc -i 3600 -a /dev/sdd -i 3600 &";
+      ExecStart = "${pkgs.hd-idle}/bin/hd-idle -i 0 -a /dev/sda -i 3600 -a /dev/sdb -i 3600 -a /dev/sdc -i 3600 -a /dev/sdd -i 3600";
     };
   };
 
@@ -190,19 +190,14 @@
   programs.zsh.enable = true;
 
   systemd.services.udp-gro-forwarding = {
-    description = "Improve UPD throughput using transport layer offloads";
+    description = "Improve UDP throughput using transport layer offloads";
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = ''
-        ${pkgs.bash}/bin/bash -c '
-          NETDEV=$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")
-          ${pkgs.ethtool}/bin/ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
-        '
-      '';
+      ExecStart = "${pkgs.ethtool}/bin/ethtool -K ${config.homelab.networkInterface} rx-udp-gro-forwarding on rx-gro-list off";
     };
   };
 

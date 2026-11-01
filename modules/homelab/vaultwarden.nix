@@ -28,7 +28,7 @@ in
       backupDir = "/var/backup/vaultwarden";
       config = {
         DOMAIN = url;
-        SIGNUPS_ALLOWED = true;
+        SIGNUPS_ALLOWED = false;
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = port;
         EXTENDED_LOGGING = true;
